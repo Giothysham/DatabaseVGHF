@@ -109,4 +109,4 @@ Als laatst kan er ook waargenomen worden dat games een veel met veel relatie heb
 ## conclusie 
 De database bestaat uit zes elementen met hun eigen specifieke eigenschappen zoals identificaties, informatie om de omzet te berekenen en specifieke informatie over de producten. Deze bevatten soms overlappende informatie om ze met elkaar te kunnen koppelen. Het is belangrijk om te weten dat dit uiteindelijk alleen maar een model van de database is en kan uitgebreid worden tijdens het programmeren hiervan. Hieronder kan ook nog het totale domein model schema gevonden worden. Hierbij staat 1..* voor een veel relatie, 1 voor een één relatie en 0 voor een nul relatie.  
 
-![DDL schema](/assets/images/VGHFdatabase.drawio.png)
+![DDL schema](VGHFdatabase.drawio.png)
