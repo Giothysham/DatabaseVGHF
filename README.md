@@ -52,6 +52,7 @@ De entiteit Uitgever bevatten de volgende eigenschappen:
 -	naam
 -	beschrijving
 -	uID.
+
 Deze wordt bijgehouden zodat da klant iets meer info krijgt over een game studio die hij of zij niet kent, maar kan ook gebruikt worden om te bekijken welke game studio het meeste verhuurd. 
 
 ### Genre
@@ -59,6 +60,7 @@ De entiteit genre bevatten de volgende eigenschappen:
 -	naam
 -	beschrijving
 -	geID.
+
 Het genre laat de klant kiezen wat voor game hij of zij zoekt aan de hand van het toedienen van filters op een webpagina of app. Deze wordt per game bijgehouden. 
 
 ### Klant
@@ -73,16 +75,18 @@ De entiteit klant bevatten de volgende eigenschappen:
 -	provincie
 -	land
 -	post code.
+
 Van de klant wordt er verwacht dat hij of zij de benodigde gegevens doorgeeft zodat wanneer er een spel niet wordt terug gebracht die persoon bereikt kan worden. Ook kan de e-mail gebruikt worden voor het versturen van nieuws letters wanneer de klant hiermee instemt. Het adres wordt gevraagd zodat er een factuur naar de klant verstuurd kan worden.  
 
-###factuur 
+### Factuur 
 De entiteit factuur bevat de volgende eigenschappen:
 -	fID (factuur identificatie)
 -	prijs
 -	kID
 -	wID
 -	gID
--	eID
+-	eID.
+
 Een factuur bevat waar de klant voor heeft betaald, vanwaar de klant iets koopt en de prijs waar voor hij of zij wordt gefactureerd. Het facturering adres kan opgevraagd worden via de kID.  
 
 ## Relaties 
@@ -92,10 +96,12 @@ Een game bevat drie eigenschappen die een verbinding tussen drie andere entiteit
 -	geID
 -	kID 
 -	uID. 
+
 De geID of genre ID is een nul-naar-veel relatie. Dit komt omdat een game niet altijd een genre heeft. Het idee hierrond is zo veel mogelijk informatie ter beschikking te stellen, maar tegelijkertijd ook niet ervoor te zorgen dat producten niet verhandeld kunnen worden door te kort aan overbodige informatie. Ook is een genre altijd met een game verbonden omdat deze anders overbodig is. De relatie tussen de uitgever en de game is een één-naar-veel relatie, dit komt omdat een game niet kan bestaan zonder een uitgever. Maar een uitgever kan wel meerdere games maken. 
 Hetzelfde idee geld voor de extra’s. Hier zijn twee eigenschappen die twee verschillende entiteiten verbinden met extra. Deze zijn als volgt:
 -	gaID
--	uID
+-	uID.
+
  De gaID is een nul-naar-veel relatie. De reden hiervoor is dat er geen zekerheid is dat elke game een extra iets maakt dat met de game verkocht wordt. Het kan zijn dat de extra onafhankelijk is gemaakt van een game of dat de game alleenstaand verkocht is. 
 De entiteit factuur heeft twee nul-naar-veel relaties. Omdat een klant of VGHF niet perse iets moet kopen of verkopen, maar een factuur kan wel alleen maar bestaan als zowel de klant als de VGHF bestaat. 
 Als laatst kan er ook waargenomen worden dat games een veel met veel relatie hebben met de klant. Voor games is dit redelijk belangrijk omdat de uitgeleende games natuurlijk ook teruggebracht moeten worden. Hiervoor moet er informatie over de klant opgeslagen worden, zodat een game aan een klant verbonden kan worden. De reden waarom dit ook een veel op veel relatie is, is omdat een klant meerdere games kan uitlenen. Ook omgekeerd zouden verschillende klanten verschillende exemplaren van dezelfde game kunnen lenen. 
@@ -103,4 +109,4 @@ Als laatst kan er ook waargenomen worden dat games een veel met veel relatie heb
 ## conclusie 
 De database bestaat uit zes elementen met hun eigen specifieke eigenschappen zoals identificaties, informatie om de omzet te berekenen en specifieke informatie over de producten. Deze bevatten soms overlappende informatie om ze met elkaar te kunnen koppelen. Het is belangrijk om te weten dat dit uiteindelijk alleen maar een model van de database is en kan uitgebreid worden tijdens het programmeren hiervan. Hieronder kan ook nog het totale domein model schema gevonden worden. Hierbij staat 1..* voor een veel relatie, 1 voor een één relatie en 0 voor een nul relatie.  
 
-	
+![DDL schema](VGHFdatabase.drawio.png)
