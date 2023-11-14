@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Title: project-template
+Implementation-Version: 1.0-SNAPSHOT
+Main-Class: be.kuleuven.dbproject.ProjectMain
+

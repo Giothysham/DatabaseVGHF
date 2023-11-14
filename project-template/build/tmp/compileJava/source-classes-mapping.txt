@@ -1,0 +1,28 @@
+be/kuleuven/dbproject/controller/BeheerScherm1Controller.java
+ be.kuleuven.dbproject.controller.BeheerScherm1Controller
+be/kuleuven/dbproject/ProjectMain.java
+ be.kuleuven.dbproject.ProjectMain
+be/kuleuven/dbproject/model/Game.java
+ be.kuleuven.dbproject.model.Game
+be/kuleuven/dbproject/controller/ProjectMainController.java
+ be.kuleuven.dbproject.controller.ProjectMainController
+be/kuleuven/dbproject/controller/BeheerAttachesController.java
+ be.kuleuven.dbproject.controller.BeheerAttachesController
+be/kuleuven/dbproject/controller/BeheerScherm2Controller.java
+ be.kuleuven.dbproject.controller.BeheerScherm2Controller
+be/kuleuven/dbproject/model/enums/Console.java
+ be.kuleuven.dbproject.model.enums.Console
+be/kuleuven/dbproject/model/Winkel.java
+ be.kuleuven.dbproject.model.Winkel
+be/kuleuven/dbproject/model/Extra.java
+ be.kuleuven.dbproject.model.Extra
+be/kuleuven/dbproject/model/Genre.java
+ be.kuleuven.dbproject.model.Genre
+be/kuleuven/dbproject/model/api/DbConnection.java
+ be.kuleuven.dbproject.model.api.DbConnection
+be/kuleuven/dbproject/controller/PaneHolderController.java
+ be.kuleuven.dbproject.controller.PaneHolderController
+be/kuleuven/dbproject/controller/GameController.java
+ be.kuleuven.dbproject.controller.GameController
+be/kuleuven/dbproject/controller/GameAddController.java
+ be.kuleuven.dbproject.controller.GameAddController

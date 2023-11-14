@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.textfield.*?>
+
+<BorderPane fx:id="borderPaneMain" fx:controller="be.kuleuven.dbproject.controller.ProjectMainController" xmlns:fx="http://javafx.com/fxml" prefHeight="500.0" prefWidth="800.0">
+    <left>
+        <VBox alignment="TOP_CENTER" style="-fx-background-color: #4f46e5;" spacing="5">
+            <Button fx:id="btnBeheerScherm1" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Scherm 1" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Button fx:id="btnBeheerScherm2" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Scherm 2" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Button fx:id="btnConfigAttaches" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Config Attaches" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Button fx:id="btnGames" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="games" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+        </VBox>
+    </left>
+    <center>
+      <VBox fx:id="childerenBox" alignment="CENTER">
+        <fx:include fx:id="paneHolder" style="-fx-padding: 10 40 0 40;" source="paneholder.fxml"/>
+      </VBox>
+    </center>
+</BorderPane>
