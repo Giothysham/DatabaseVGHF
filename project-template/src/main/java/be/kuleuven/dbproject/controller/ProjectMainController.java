@@ -36,7 +36,7 @@ public class ProjectMainController {
 
         btnBeheerScherm1.setOnAction(e -> {
             try {
-                //optimalizeren
+                //optimalizeren => bekijken !!!!!
                 btnGames.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white;");
                 btnConfigAttaches.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white;");
                 btnBeheerScherm2.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white;");

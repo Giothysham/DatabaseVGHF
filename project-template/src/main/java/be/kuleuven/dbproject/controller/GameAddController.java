@@ -97,7 +97,7 @@ public class GameAddController {
         try {
             dbConnection.postGame(tempgame);
 
-            gameController.initTable();
+            gameController.updateOrSearchTable(true);
 
             var stage = (Stage) submitGameBtn.getScene().getWindow();
             stage.close();

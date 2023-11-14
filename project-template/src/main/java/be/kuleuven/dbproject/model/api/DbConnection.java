@@ -97,6 +97,33 @@ public class DbConnection {
         return entityManager.createQuery(select).getResultList();
     }
 
+    public List<Game> getGameById(String ID){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game.class);
+        var root = query.from(Game.class);
+
+        query.where(criteriaBuilder.equal(root.get("gameID"), ID));
+        var result = entityManager.createQuery(query).getResultList();
+        
+        // maak chek zodat lengte van de list 1 is 
+        return result;
+    }
+
+    public List<Game> SearchGamesByName(String naam){
+
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game.class);
+        var root = query.from(Game.class);
+
+        query.where(criteriaBuilder.equal(root.get("naam"), naam));
+
+        var result = entityManager.createQuery(query).getResultList();
+
+        return result;
+    }
+
     public void postGame(Game game){
         entityManager.getTransaction().begin();
         entityManager.persist(game);
@@ -122,7 +149,7 @@ public class DbConnection {
         query.where(criteriaBuilder.equal(root.get("naam"), naam));
 
         var result = entityManager.createQuery(query).getResultList();
-        System.out.println(result.size());
+
         if(result.size() > 1){
             //throw exception
             return 0;
