@@ -7,9 +7,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.textfield.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <GridPane style="-fx-padding: 0 5 10 5;" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.BuySchermController">
     <children>
-        
+        <VBox spacing="10" layoutX="14.0" alignment="TOP_CENTER">
+            <TableView fx:id="tblGames" prefHeight="246.0" prefWidth="567.0">
+                <columns>
+                    <TableColumn text="naam" fx:id="naamColumn" />
+                    <TableColumn text="console" fx:id="consoleColumn" />
+                    <TableColumn text="prise" fx:id="priseColumn" />
+                </columns>
+            </TableView>
+            <HBox>
+                <Text text="total amount:"/>
+                <Text fx:id="amountTxt" text="20$"/>
+                <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                <HBox alignment="TOP_RIGHT">
+                    <Button fx:id="removeBtn" text="remove game" alignment="TOP_RIGHT" style="-fx-background-color: #FA0000; -fx-text-fill: white;"/>
+                </HBox>
+            </HBox>
+            <Button fx:id="buyBtn" text="buy items" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+        </VBox>
     </children>
 </GridPane>

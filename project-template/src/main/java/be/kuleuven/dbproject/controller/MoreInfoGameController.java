@@ -6,7 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
-public class MoreInfoGameController {
+public class 
+MoreInfoGameController {
 
     private DbConnection dbConnection;
 
@@ -26,8 +27,7 @@ public class MoreInfoGameController {
         this.dbConnection = dbConnection;
     }
 
-    public void setGame(String gameID){
-        game = dbConnection.getGameById(gameID).get(0);
+    public void setGame(Game game){
         gameNameTxt.setText(game.getNaam());
 
         //moreInfo to vertical fit. 

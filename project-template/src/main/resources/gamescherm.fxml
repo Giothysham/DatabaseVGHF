@@ -2,23 +2,45 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.GameController" fx:id="game">
-    <children>
-        <VBox spacing="5" layoutX="14.0" alignment="TOP_CENTER">
+    <children >
+        <VBox spacing="5" layoutX="14.0" alignment="CENTER">
+            <HBox spacing="5" alignment="TOP_RIGHT">
+                <Button fx:id="buyBtn" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
+                    <graphic>
+                        <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/image/shopping-cart-3047.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
             <HBox spacing="5" alignment="CENTER">
                 <Text layoutX="19.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="search:" wrappingWidth="56"/>
                 <TextField fx:id="autoCompleteSearch" prefWidth="351.0"/>
                 <Button fx:id="gameSearchBtn" text="search" prefHeight="27.0" prefWidth="151.0" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             </HBox>
-            <TableView fx:id="tblGames" prefHeight="246.0" prefWidth="567.0" onMouseClicked="#onClickGame"/>
+            <TableView fx:id="tblGames" prefHeight="246.0" prefWidth="567.0" onMouseClicked="#onClickGame">
+                <columns>
+                    <TableColumn text="naam" fx:id="naamColumn" />
+                    <TableColumn text="price" fx:id="priceColumn" />
+                    <TableColumn text="avaible" fx:id="avaibleColumn" />
+                    <TableColumn text="console" fx:id="consoleColumn" />
+                </columns>
+            </TableView>
             <HBox spacing="5" alignment="CENTER">
                 <Button fx:id="gamesAdd" text="+" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-                <Button fx:id="buyBtn" text="BUY" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                <Button fx:id="addToCartBtn" text="Add  to cart" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                 <Button fx:id="deleteBtn" text="-" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             </HBox>
         </VBox>

@@ -21,9 +21,7 @@ public class Game {
 
     @Column(name = "gameID")
     @GeneratedValue(generator="sqlite")
-    @TableGenerator(name="sqlite", table="sqlite_sequence",
-        pkColumnName="name", valueColumnName="seq",
-        pkColumnValue="sqliteGameIdTable")
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="sqliteGameIdTable")
     @Id
     private int gameID;
 

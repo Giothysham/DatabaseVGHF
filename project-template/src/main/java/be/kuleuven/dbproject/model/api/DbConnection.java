@@ -2,7 +2,6 @@ package be.kuleuven.dbproject.model.api;
 
 import java.util.List;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,6 +20,7 @@ public class DbConnection {
 
     public DbConnection() {
 
+        //make different class for the game and so on conection
         if(sessionFactory == null || entityManager == null || !sessionFactory.isOpen()){
             sessionFactory = Persistence.createEntityManagerFactory("be.kuleuven.dbproject.model");
             entityManager = sessionFactory.createEntityManager();
@@ -97,7 +97,7 @@ public class DbConnection {
         return entityManager.createQuery(select).getResultList();
     }
 
-    public List<Game> getGameById(String ID){
+    public Game getGameById(String ID){
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Game.class);
@@ -107,7 +107,7 @@ public class DbConnection {
         var result = entityManager.createQuery(query).getResultList();
         
         // maak chek zodat lengte van de list 1 is 
-        return result;
+        return result.get(0);
     }
 
     public List<Game> SearchGamesByName(String naam){
