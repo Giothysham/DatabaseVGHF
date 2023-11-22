@@ -48,8 +48,6 @@ public class GameController {
 
     @FXML
     private TableView<Game> tblGames;
-    ///\omzetten naar specefieken tabelView
-    //||
 
     private ArrayList<String> wantToRentList;
 

@@ -34,6 +34,8 @@ public class ProjectMainController {
 
         //paneHolderController.setDbConnection(this.dbConnection);
 
+        borderPaneMain.setRight(null);
+
         btnBeheerScherm1.setOnAction(e -> {
             try {
                 //optimalizeren => bekijken !!!!!
@@ -89,6 +91,8 @@ public class ProjectMainController {
                 e1.printStackTrace();
             }
         });
+
+        //vragen hoe of we een aparte tab maken, of dat je altijd inlog scherm krijgt en daarna pas naar main aplicatie moogt.  
         
     }
 
