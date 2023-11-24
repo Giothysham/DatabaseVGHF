@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
 
 public class WinkelApi {
@@ -38,5 +39,18 @@ public class WinkelApi {
         var select = query.select(root);
         
         return entityManager.createQuery(select).getResultList();
+    }
+
+    public Winkel getWinkelById(int id){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Winkel.class);
+        var root = query.from(Winkel.class);
+
+        query.where(criteriaBuilder.equal(root.get("winkelID"), id));
+
+        var result = entityManager.createQuery(query).getResultList();
+
+        return result.get(0);
     }
 }

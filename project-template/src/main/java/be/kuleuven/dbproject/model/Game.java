@@ -101,9 +101,38 @@ public class Game {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
     public void setVerkocht(int verkocht) {
         this.verkocht = verkocht;
     }
-
     
+    public void setConsole(Console console) {
+        this.console = console;
+    }
+
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
+
+    public void setWinkelID(int winkelID) {
+        this.winkelID = winkelID;
+    }
+
+    public void setKostPrijs(double kostPrijs) {
+        this.kostPrijs = kostPrijs;
+    }
+
+    public void setGenreID(int genreID) {
+        this.genreID = genreID;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+    
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
+
+
 }

@@ -144,7 +144,16 @@ public class GameController {
         //recht streeks in onClickGame
         if(event.getClickCount() == 2 && tblGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblGames.getSelectionModel().getSelectedItem();
-            openNewWindow("moreinfogame",gameSelected);
+            switch(user.getBevoegdheid()){
+                case 1:
+                    //zie hoe implementern. => zie ho eoptimalizeren
+                    openNewWindow("gameaddscherm", gameSelected);
+                break;
+
+                case 0:
+                    openNewWindow("moreinfogame",gameSelected);
+                break;
+            }
         }
     }
 
@@ -166,6 +175,12 @@ public class GameController {
                 gameAddController.setupDropDown(dbConnection);
                 gameAddController.setDbConnection(dbConnection);
                 gameAddController.setParentController(this);
+                if(user.getBevoegdheid() == 1){
+                    gameAddController.setUpdate(true);
+                    gameAddController.initializeUpdate(gameSelected);
+                }else{
+                    gameAddController.setUpdate(false);
+                }
             }
             else if(controller.getClass() == MoreInfoGameController.class){
                 MoreInfoGameController moreInfoGameController = (MoreInfoGameController) controller;

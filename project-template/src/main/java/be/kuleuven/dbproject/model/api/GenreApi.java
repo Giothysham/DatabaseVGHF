@@ -42,6 +42,19 @@ public class GenreApi {
         return entityManager.createQuery(select).getResultList();
     }
 
+    public Genre getGenreById(int id){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Genre.class);
+        var root = query.from(Genre.class);
+
+        query.where(criteriaBuilder.equal(root.get("genreID"), id));
+
+        var result = entityManager.createQuery(query).getResultList();
+
+        return result.get(0);
+    }
+
     public int getGenreIdByName(String naam) {
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 

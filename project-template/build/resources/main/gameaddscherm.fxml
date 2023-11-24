@@ -11,7 +11,7 @@
         <Label text="stock:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="aantalStock" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         
-        <Label text="uitegeleend:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="aantal uitegeleend:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="aantalUitgeleend" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         
         <Label text="console:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
