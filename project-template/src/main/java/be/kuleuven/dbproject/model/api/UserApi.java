@@ -41,18 +41,32 @@ public class UserApi {
         }
     }
 
-    public Boolean createFactuurForGame(List<Game> gameList, User user){
+    public void createFactuurForGame(List<Game> gameList, User user) throws Exception{
 
-        for(Game game: gameList){
-            var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
-
-            
-            
+        //nog kopel tabel maken.
+        if(!gameList.isEmpty()){
             entityManager.getTransaction().begin();
-            entityManager.persist(factuur);
+            for(Game game: gameList){
+                var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
+
+                var stock = game.getStock();
+                var verkocht = game.getVerkocht();
+                if(stock > 0){
+                    game.setStock(stock-1);
+                    game.setVerkocht(verkocht+1);
+
+                    entityManager.persist(factuur);
+                }
+                else{
+                    //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
+                    entityManager.getTransaction().rollback();
+                    throw new Exception("more items selected than avaible");
+                }
+            }
             entityManager.getTransaction().commit();
         }
-
-        return true;
+        else{
+            throw new Exception("no items selected");
+        }
     }
 }

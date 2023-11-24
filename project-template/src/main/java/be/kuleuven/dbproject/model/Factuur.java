@@ -3,13 +3,16 @@ package be.kuleuven.dbproject.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 @Entity
 public class Factuur {
     
     @Column(name = "factuurID")
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="factuur")
     @Id
     private int factuurID;
 

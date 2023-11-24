@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.sql.Update;
+
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
@@ -91,8 +93,9 @@ public class DbConnection {
 
         var query = criteriaBuilder.createQuery(Game.class);
         var root = query.from(Game.class);
-        var select = query.select(root);
-        
+
+        var select = query.where(criteriaBuilder.greaterThan(root.get("stock"), 1));
+
         return entityManager.createQuery(select).getResultList();
     }
 

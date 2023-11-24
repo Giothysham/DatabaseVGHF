@@ -98,4 +98,12 @@ public class Game {
         return this.beschrijving;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+    public void setVerkocht(int verkocht) {
+        this.verkocht = verkocht;
+    }
+
+    
 }
