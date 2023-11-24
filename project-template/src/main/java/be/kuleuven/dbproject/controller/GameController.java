@@ -175,7 +175,9 @@ public class GameController {
                 gameAddController.setupDropDown(dbConnection);
                 gameAddController.setDbConnection(dbConnection);
                 gameAddController.setParentController(this);
-                if(user.getBevoegdheid() == 1){
+                
+                //iets beter maken game != null is geen goede opl
+                if(user.getBevoegdheid() == 1 && gameSelected != null){
                     gameAddController.setUpdate(true);
                     gameAddController.initializeUpdate(gameSelected);
                 }else{
