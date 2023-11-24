@@ -1,5 +1,7 @@
 package be.kuleuven.dbproject;
 
+import be.kuleuven.dbproject.controller.LoginController;
+import be.kuleuven.dbproject.model.api.DbConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,9 +25,16 @@ public class ProjectMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        DbConnection dbConnection = new DbConnection();
+
         rootStage = stage;
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("loginscherm.fxml"));
-        Scene scene = new Scene(root);
+        var loader = new FXMLLoader(getClass().getClassLoader().getResource("loginscherm.fxml"));
+        var root = loader.load();
+        
+        var parentClass = (LoginController) loader.getController();
+        parentClass.setUserApi(dbConnection);
+
+        Scene scene = new Scene((Parent) root);
         stage.setTitle("store softwear by budo");
         stage.setScene(scene);
         stage.show();

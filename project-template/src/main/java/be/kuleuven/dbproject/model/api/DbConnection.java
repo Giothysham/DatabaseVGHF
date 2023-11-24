@@ -30,7 +30,16 @@ public class DbConnection {
             //creatGenre();
 
         }
-    }   
+    }  
+    
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
+    public EntityManagerFactory getsessionFactory(){
+        return sessionFactory;
+    }
+    
 
     private void creatWinkel() {
         Winkel winkel1 = new Winkel(0, 0, "winkelWandel straat", "diest", "3290", "vlaams-brabant","belgie");

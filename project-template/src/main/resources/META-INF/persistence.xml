@@ -10,6 +10,7 @@
         <class>be.kuleuven.dbproject.model.Game</class>
         <class>be.kuleuven.dbproject.model.Winkel</class>
         <class>be.kuleuven.dbproject.model.Genre</class>
+        <class>be.kuleuven.dbproject.model.User</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

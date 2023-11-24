@@ -3,10 +3,10 @@ package be.kuleuven.dbproject.controller;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
@@ -57,6 +57,8 @@ public class GameController {
 
     private DbConnection dbConnection;
 
+    private User user;
+
     public void initialize(){
 
         wantToRentList = new ArrayList<>();
@@ -71,8 +73,6 @@ public class GameController {
 
         listgames = new ArrayList<Game>();
 
-        dbConnection = new DbConnection();
-
         autoCompleteWords = new ArrayList<String>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
@@ -82,7 +82,6 @@ public class GameController {
 
         //name is deprecated => inittabel is meer => zien hoe optimalizeren
         //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
-        initTable();
     }
 
     public void addToListGames(){
@@ -185,6 +184,23 @@ public class GameController {
 
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm " + resourceName + " niet vinden", e);
+        }
+    }
+
+    public void setDbConnection(DbConnection dbConnection){
+        this.dbConnection = dbConnection;
+        initTable();
+    }
+
+    public void setUser(User user){
+        this.user = user;
+        if(user.getBevoegdheid() == 1){
+            gamesAdd.setDisable(false);
+            deleteBtn.setDisable(false);
+        }
+        else{
+            gamesAdd.setDisable(true);
+            deleteBtn.setDisable(true);
         }
     }
 

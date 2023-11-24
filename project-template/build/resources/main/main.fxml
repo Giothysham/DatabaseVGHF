@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.Button?>
+<?import java.util.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.textfield.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <BorderPane fx:id="borderPaneMain" fx:controller="be.kuleuven.dbproject.controller.ProjectMainController" xmlns:fx="http://javafx.com/fxml">
     <left>
@@ -15,6 +18,18 @@
             <Button fx:id="btnBeheerScherm2" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Scherm 2" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             <Button fx:id="btnConfigAttaches" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Config Attaches" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             <Button fx:id="btnGames" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="games" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Pane maxWidth="-Infinity" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <Label fx:id="naamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Label fx:id="achternaamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button fx:id="logOutBtn" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
+              <graphic>
+                <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@/image/icons8-logout-50.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </Button>
         </VBox>
     </left>
     <center>
