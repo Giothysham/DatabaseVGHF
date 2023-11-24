@@ -8,6 +8,7 @@ import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,17 +100,18 @@ public class GameController {
 
         listgames.clear();
         tblGames.getItems().clear();
+        var gameApi = new GameApi(dbConnection);
 
         if(update){
-            listgames = (ArrayList<Game>) dbConnection.getGames();
+            listgames = (ArrayList<Game>) gameApi.getGames();
         }
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                listgames = (ArrayList<Game>) dbConnection.SearchGamesByName(autoCompleteText);
+                listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
             }
             else{
-                listgames = (ArrayList<Game>) dbConnection.getGames();
+                listgames = (ArrayList<Game>) gameApi.getGames();
             }
         }
         
@@ -117,7 +119,9 @@ public class GameController {
     }
 
     public void initTable() {
-        listgames = (ArrayList<Game>) dbConnection.getGames();
+        var gameApi = new GameApi(dbConnection);
+
+        listgames = (ArrayList<Game>) gameApi.getGames();
 
         for(Game game: listgames){
             if(!autoCompleteWords.contains(game.getNaam())){

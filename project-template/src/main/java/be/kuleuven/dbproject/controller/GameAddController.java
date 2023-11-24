@@ -7,6 +7,9 @@ import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.GameApi;
+import be.kuleuven.dbproject.model.api.GenreApi;
+import be.kuleuven.dbproject.model.api.WinkelApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,8 +52,11 @@ public class GameAddController {
     public void setupDropDown(DbConnection dbConnection){
         //zien of we dit niet voledig door de db kunnen laten doen. b.v => geen lijst bij houden van alle winkels en genres maar eerder gwn met db aan de han van de naam de id zoeken. 
         //zoals bij genres. 
-        winkels = dbConnection.getWinkels();
-        genres = dbConnection.getGenres();
+        var winkelApi = new WinkelApi(dbConnection);
+        var genreApi = new GenreApi(dbConnection);
+
+        winkels = winkelApi.getWinkels();
+        genres = genreApi.getGenres();
 
         ObservableList<String> listGenreNames = FXCollections.observableArrayList();
         ObservableList<String> listWinkelNames = FXCollections.observableArrayList();
@@ -82,7 +88,8 @@ public class GameAddController {
         Integer winkelID = null;
         String nameWinkel = (String) winkelDropDown.getValue();
 
-        var genreID = dbConnection.getGenreIdByName(genre);
+        var genreApi = new GenreApi(dbConnection);
+        var genreID = genreApi.getGenreIdByName(genre);
 
         for (Winkel winkel : winkels) {
             if(nameWinkel.contains(winkel.getFullAdressWithID())){
@@ -95,7 +102,9 @@ public class GameAddController {
         Game tempgame = new Game(aantalStock, 0, console, 0,winkelID, kostPrijs, genreID, naam, beschrijving);
         
         try {
-            dbConnection.postGame(tempgame);
+            var gameApi = new GameApi(dbConnection);
+
+            gameApi.postGame(tempgame);
 
             gameController.updateOrSearchTable(true);
 

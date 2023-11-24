@@ -7,6 +7,7 @@ import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.UserApi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -87,7 +88,9 @@ public class BuySchermController {
         this.wantToRentListID = wantToRentList;
 
         for(String id: wantToRentListID){
-            var tempGame = (Game) dbConnection.getGameById(id);
+            var gameApi = new GameApi(dbConnection);
+            
+            var tempGame = (Game) gameApi.getGameById(id);
             this.wantToRentListGame.add(tempGame);
             price += tempGame.getKostPrijs();
         }
