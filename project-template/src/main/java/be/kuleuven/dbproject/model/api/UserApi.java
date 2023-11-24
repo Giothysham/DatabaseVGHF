@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Game_user;
 import be.kuleuven.dbproject.model.User;
 
 public class UserApi {
@@ -47,7 +48,6 @@ public class UserApi {
         if(!gameList.isEmpty()){
             entityManager.getTransaction().begin();
             for(Game game: gameList){
-                var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
 
                 var stock = game.getStock();
                 var verkocht = game.getVerkocht();
@@ -55,6 +55,10 @@ public class UserApi {
                     game.setStock(stock-1);
                     game.setVerkocht(verkocht+1);
 
+                    var game_user = new Game_user(user.getUserId(), game.getGameID());
+                    var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
+                    
+                    entityManager.persist(game_user);
                     entityManager.persist(factuur);
                 }
                 else{

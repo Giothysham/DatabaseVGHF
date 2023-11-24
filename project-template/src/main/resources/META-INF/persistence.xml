@@ -12,6 +12,7 @@
         <class>be.kuleuven.dbproject.model.Genre</class>
         <class>be.kuleuven.dbproject.model.User</class>
         <class>be.kuleuven.dbproject.model.Factuur</class>
+        <class>be.kuleuven.dbproject.model.Game_user</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
