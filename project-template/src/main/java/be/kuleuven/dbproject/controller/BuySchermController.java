@@ -1,16 +1,20 @@
 package be.kuleuven.dbproject.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.UserApi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 public class BuySchermController {
@@ -21,7 +25,7 @@ public class BuySchermController {
     private Text amountTxt;
 
     @FXML
-    private Button removeBtn;
+    private Button removeBtn, buyBtn;
 
     @FXML 
     private TableView<Game> tblGames;
@@ -41,15 +45,21 @@ public class BuySchermController {
 
     private ArrayList<Game> wantToRentListGame;
 
+    private UserApi userApi;
+
+    private User user;
+
     public void initialize(){
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
         priseColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
         removeBtn.setOnAction(e -> deleteGame());
+        buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
     }
 
     public void setdbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
+        this.userApi = new UserApi(dbConnection);
         wantToRentListID = new ArrayList<>();
         wantToRentListGame = new ArrayList<>();
     }
@@ -85,5 +95,15 @@ public class BuySchermController {
         amountTxt.setText( " "+price + "$");
 
         tblGames.getItems().setAll(this.wantToRentListGame);
+    }
+
+    public void buyGames(List<Game> wantToRentList, User user){
+        userApi.createFactuurForGame(wantToRentList, user);
+        var window = (Stage) removeBtn.getScene().getWindow();
+        window.close();
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

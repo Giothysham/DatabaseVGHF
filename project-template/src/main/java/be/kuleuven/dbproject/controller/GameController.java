@@ -173,6 +173,7 @@ public class GameController {
                 buySchermController.setdbConnection(dbConnection);
                 buySchermController.setWantToRent(wantToRentList);
                 buySchermController.setparentController(this);
+                buySchermController.setUser(user);
             }
 
             var scene = new Scene(root);

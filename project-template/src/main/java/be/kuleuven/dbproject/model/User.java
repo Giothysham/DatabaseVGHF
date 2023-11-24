@@ -5,9 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.Generated;
-
-import javafx.beans.binding.StringBinding;
 
 @Entity
 public class User {

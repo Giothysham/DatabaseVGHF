@@ -9,10 +9,10 @@ import be.kuleuven.dbproject.model.enums.Console;
 @Entity
 public class Game {
 
-    @Column(name = "aantal_in_stock")
+    @Column(name = "aantal_in_stock", updatable = true)
     private int stock;
     
-    @Column(name = "aantal_uitgeleend")
+    @Column(name = "aantal_uitgeleend", updatable = true)
     private int verkocht;
 
     @Enumerated(EnumType.STRING)

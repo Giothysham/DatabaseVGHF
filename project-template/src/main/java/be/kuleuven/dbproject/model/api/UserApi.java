@@ -1,8 +1,11 @@
 package be.kuleuven.dbproject.model.api;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 
@@ -12,10 +15,7 @@ public class UserApi {
 
     private EntityManager entityManager;
 
-    private DbConnection dbConnection;
-
     public UserApi(DbConnection dbConnection){
-        this.dbConnection = dbConnection;
         sessionFactory = dbConnection.getsessionFactory();
         entityManager = dbConnection.getEntityManager();
     }
@@ -39,5 +39,20 @@ public class UserApi {
         else{
             throw new Exception("wrong Email or Password");
         }
+    }
+
+    public Boolean createFactuurForGame(List<Game> gameList, User user){
+
+        for(Game game: gameList){
+            var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
+
+            
+            
+            entityManager.getTransaction().begin();
+            entityManager.persist(factuur);
+            entityManager.getTransaction().commit();
+        }
+
+        return true;
     }
 }
