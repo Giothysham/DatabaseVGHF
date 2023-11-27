@@ -44,11 +44,11 @@ be/kuleuven/dbproject/controller/ProjectMainController.java
  be.kuleuven.dbproject.controller.ProjectMainController
 be/kuleuven/dbproject/model/api/WinkelApi.java
  be.kuleuven.dbproject.model.api.WinkelApi
-be/kuleuven/dbproject/controller/AdminController.java
- be.kuleuven.dbproject.controller.AdminController
-be/kuleuven/dbproject/controller/PaneHolderController.java
- be.kuleuven.dbproject.controller.PaneHolderController
 be/kuleuven/dbproject/model/Uitgever.java
  be.kuleuven.dbproject.model.Uitgever
 be/kuleuven/dbproject/model/api/UitgeverApi.java
  be.kuleuven.dbproject.model.api.UitgeverApi
+be/kuleuven/dbproject/controller/PaneHolderController.java
+ be.kuleuven.dbproject.controller.PaneHolderController
+be/kuleuven/dbproject/controller/AdminController.java
+ be.kuleuven.dbproject.controller.AdminController

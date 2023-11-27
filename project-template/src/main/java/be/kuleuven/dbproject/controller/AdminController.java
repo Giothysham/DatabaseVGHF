@@ -1,5 +1,6 @@
 package be.kuleuven.dbproject.controller;
 
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class AdminController {
     
@@ -57,7 +59,28 @@ public class AdminController {
         idUitgeverColumn.setCellValueFactory(new PropertyValueFactory<Uitgever, Integer>("uitgeverID"));
         nameUitgeverColumn.setCellValueFactory(new PropertyValueFactory<Uitgever,String>("naam"));
 
+        tblWinkels.setOnMouseClicked(mouseEvent -> handleWinkelKlick(mouseEvent));
+        tblGenre.setOnMouseClicked(mouseEvent -> handleGenreKlick(mouseEvent));
+        tblUitgever.setOnMouseClicked(mouseEvent -> handleUitgeverKlick(mouseEvent));
         //implement dubble klick op eender welke zorgt dat je deze kan aanpassen => zorg dat plus en min knop ook werken
+    }
+
+    private void handleUitgeverKlick(MouseEvent event){
+        if(event.getClickCount() == 2 && tblUitgever.getSelectionModel().getSelectedItem() != null){
+            System.out.println("uitgeverklick: " + tblUitgever.getSelectionModel().getSelectedItem().getNaam());
+        }
+    }
+
+    private void handleGenreKlick(MouseEvent event) {
+        if(event.getClickCount() == 2 && tblGenre.getSelectionModel().getSelectedItem() != null){
+            System.out.println("genreKlick : " + tblGenre.getSelectionModel().getSelectedItem().getNaam());
+        }
+    }   
+
+    private void handleWinkelKlick(MouseEvent event) {
+        if(event.getClickCount() == 2 && tblWinkels.getSelectionModel().getSelectedItem() != null){
+            System.out.println("winkelklick: " + tblWinkels.getSelectionModel().getSelectedItem().getWinkelID());
+        }
     }
 
     public void setWinkel(){
