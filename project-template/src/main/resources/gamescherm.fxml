@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.GameController" fx:id="game">
-    <children >
+    <children>
         <HBox alignment="CENTER" layoutX="14.0">
             <VBox spacing="5" layoutX="14.0" alignment="CENTER">
                 <HBox spacing="5" alignment="TOP_RIGHT">

@@ -28,7 +28,7 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,btnConfigAttaches;
+    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn;
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
@@ -49,7 +49,7 @@ public class ProjectMainController {
 
         listOfButtons.add(btnBeheerScherm1);
         listOfButtons.add(btnBeheerScherm2);
-        listOfButtons.add(btnConfigAttaches);
+        listOfButtons.add(adminBtn);
         listOfButtons.add(btnGames);
 
         logOutBtn.setOnAction(e -> {
@@ -63,8 +63,16 @@ public class ProjectMainController {
         btnGames.setOnAction(e -> {
             try {
                 changeButtonStyle(listOfButtons, e);
-                paneHolderController.setUser(user);
                 paneHolderController.changeChildTo("gamescherm",dbConnection);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        adminBtn.setOnAction(e -> {
+            changeButtonStyle(listOfButtons, e);
+            try {
+                paneHolderController.changeChildTo("adminscherm", dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -107,5 +115,11 @@ public class ProjectMainController {
         this.user = user;
         naamTxt.setText(user.getVoornaam());
         achternaamTxt.setText(user.getAchternaam());
+
+        if(user.getBevoegdheid() != 1){
+            adminBtn.setDisable(true);
+        }
+
+        paneHolderController.setUser(user);
     }
 }

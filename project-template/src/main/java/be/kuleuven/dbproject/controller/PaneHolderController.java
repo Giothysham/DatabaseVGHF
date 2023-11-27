@@ -39,6 +39,13 @@ public class PaneHolderController {
             gameController.setDbConnection(dbConnection);
             gameController.setUser(user);
         }
+        else if(childController.getClass() == AdminController.class){
+            var AdminController = (AdminController) childController;
+            AdminController.setdbConnection(dbConnection);
+            AdminController.setGenre();
+            AdminController.setUitgever();
+            AdminController.setWinkel();;
+        }
 
         rootLoader.autosize();
         tmpPane.getChildren().setAll(rootLoader);

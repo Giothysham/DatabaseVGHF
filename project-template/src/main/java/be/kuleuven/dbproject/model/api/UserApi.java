@@ -51,11 +51,12 @@ public class UserApi {
 
                 var stock = game.getStock();
                 var verkocht = game.getVerkocht();
+                System.out.println("elemnt of game:" + game.getNaam() + "   er zijn " + stock + " in stock");
                 if(stock > 0){
                     game.setStock(stock-1);
                     game.setVerkocht(verkocht+1);
 
-                    var game_user = new Game_user(user.getUserId(), game.getGameID());
+                    var game_user = new Game_user(user.getUserId(), game.getGameID(),0);
                     var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
                     
                     entityManager.persist(game_user);
@@ -63,6 +64,7 @@ public class UserApi {
                 }
                 else{
                     //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
+                    //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
                     entityManager.getTransaction().rollback();
                     throw new Exception("more items selected than avaible");
                 }
