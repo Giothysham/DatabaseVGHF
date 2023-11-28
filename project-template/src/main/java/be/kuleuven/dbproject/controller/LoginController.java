@@ -39,7 +39,7 @@ public class LoginController {
     public void initialize(){
         loginBtn.setOnAction(e -> checkLoginCredentials());
 
-        emailTxtField.setText("vranckx.mauro@student.uhasselt.be");
+        emailTxtField.setText("tsampanis.edmond@student.uhasselt.be");
         wachtwoordTxtField.setText("test");
 
         crtAccountBtn.setOnAction(e -> {

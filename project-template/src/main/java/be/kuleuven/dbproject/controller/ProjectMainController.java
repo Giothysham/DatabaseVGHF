@@ -37,6 +37,8 @@ public class ProjectMainController {
     private BorderPane borderPaneMain;
     @FXML
     private Button btnGames;
+    @FXML
+    private Button btnUitgeleendeGames;
 
     @FXML
     private Label naamTxt,achternaamTxt;
@@ -64,6 +66,16 @@ public class ProjectMainController {
             try {
                 changeButtonStyle(listOfButtons, e);
                 paneHolderController.changeChildTo("gamescherm",dbConnection);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        btnUitgeleendeGames.setOnAction(e -> {
+            try {
+                changeButtonStyle(listOfButtons, e);
+                paneHolderController.setUser(user);
+                paneHolderController.changeChildTo("uitgeleendegamescherm",dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.AdminController" fx:id="admin">
+    <ScrollPane prefHeight="400.0" prefWidth="600.0" fx:id="scrollPaneAdmin">
+        <content>
+            <VBox alignment="CENTER">
+                <VBox spacing="10" style="-fx-padding: 0 5 0 5;">
+                    <Label text="- Winkel:" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    <TableView fx:id="tblWinkels" prefHeight="290" prefWidth="567.0">
+                        <columns>
+                            <TableColumn text="ID" fx:id="idColumnWinkel" />
+                            <TableColumn text="name" fx:id="nameColumnWinkel" />
+                        </columns>
+                    </TableView>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" fx:id="addWinkelBtn"/>
+                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" fx:id="removeWinkelBtn"/>
+                    </HBox>
+                </VBox>
+                <VBox spacing="10" style="-fx-padding: 0 5 10 5;">
+                    <Label text="- genre:" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    <TableView fx:id="tblGenre" prefHeight="290" prefWidth="567.0">
+                        <columns>
+                            <TableColumn text="ID" fx:id="idGenreColumn" />
+                            <TableColumn text="name" fx:id="nameGenreColumn" />
+                        </columns>
+                    </TableView>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+                <VBox spacing="10" style="-fx-padding: 0 5 10 5;">
+                    <Label text="- uitgever:" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    <TableView fx:id="tblUitgever" prefHeight="290" prefWidth="567.0">
+                        <columns>
+                            <TableColumn text="ID" fx:id="idUitgeverColumn" />
+                            <TableColumn text="name" fx:id="nameUitgeverColumn" />
+                        </columns>
+                    </TableView>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </content>
+    </ScrollPane>
+</AnchorPane>

@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
@@ -39,6 +40,13 @@ public class PaneHolderController {
             gameController.setDbConnection(dbConnection);
             gameController.setUser(user);
         }
+        
+        else if(childController.getClass() == UitgeleendeGameController.class){
+            var uitgeleendeGameController = (UitgeleendeGameController) childController;
+            uitgeleendeGameController.setDbConnection(dbConnection);
+            uitgeleendeGameController.setUser(user);
+        }
+
         else if(childController.getClass() == AdminController.class){
             var AdminController = (AdminController) childController;
             AdminController.setdbConnection(dbConnection);

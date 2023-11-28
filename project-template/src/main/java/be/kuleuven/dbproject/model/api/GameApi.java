@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Game_user;
 import be.kuleuven.dbproject.model.enums.Console;
 
 public class GameApi {
@@ -80,6 +81,17 @@ public class GameApi {
         entityManager.getTransaction().begin();
         entityManager.persist(game);
         entityManager.getTransaction().commit();
+    }
+
+        public List<Game_user> getUitgeleendeGamesWithUser(int userID){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game_user.class);
+        var root = query.from(Game_user.class);
+
+        query.where(criteriaBuilder.equal(root.get("userID"), userID));
+
+        return entityManager.createQuery(query).getResultList();
     }
 
 }
