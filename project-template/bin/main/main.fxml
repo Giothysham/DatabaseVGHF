@@ -14,10 +14,11 @@
 <BorderPane fx:id="borderPaneMain" fx:controller="be.kuleuven.dbproject.controller.ProjectMainController" xmlns:fx="http://javafx.com/fxml">
     <left>
         <VBox alignment="TOP_CENTER" style="-fx-background-color: #4f46e5;" spacing="5">
+            <Button fx:id="btnGames" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="games" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Button fx:id="btnUitgeleendeGames" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="uitgeleend" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             <Button fx:id="btnBeheerScherm1" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Scherm 1" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             <Button fx:id="btnBeheerScherm2" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Scherm 2" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-            <Button fx:id="btnConfigAttaches" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="Beheer Config Attaches" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-            <Button fx:id="btnGames" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="games" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            <Button fx:id="adminBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="151.0" text="admin" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
             <Pane maxWidth="-Infinity" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
             <Label fx:id="naamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
             <Label fx:id="achternaamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
@@ -34,7 +35,9 @@
     </left>
     <center>
       <VBox fx:id="childerenBox" alignment="CENTER">
-        <fx:include fx:id="paneHolder" style="-fx-padding: 10 40 0 40;" source="paneholder.fxml"/>
+        <HBox alignment="CENTER">
+          <fx:include fx:id="paneHolder" style="-fx-padding: 10 40 0 40;" source="paneholder.fxml"/>
+        </HBox>
       </VBox>
     </center>
 </BorderPane>
