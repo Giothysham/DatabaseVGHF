@@ -17,8 +17,6 @@ public class GenreAddController {
 
     private Genre genre;
 
-    private boolean update;
-
     @FXML
     private Button submitGenreButton;
 
@@ -29,7 +27,7 @@ public class GenreAddController {
     private TextArea beschrijvingTxt;
 
     public void initialize(){
-        submitGenreButton.setOnAction(e -> addOrUpdateGame(update));
+        submitGenreButton.setOnAction(e -> addOrUpdateGame());
     }
 
     public void setGenre(Integer genreID){
@@ -40,11 +38,11 @@ public class GenreAddController {
         beschrijvingTxt.setText(genre.getBeschrijving());
     }
 
-    public void addOrUpdateGame(boolean update){
+    public void addOrUpdateGame(){
         var name = naamTxt.getText();
         var beschrijving = beschrijvingTxt.getText();
 
-        if(update){
+        if(genre != null){
             genre.setNaam(name);
             genre.setBeschrijving(beschrijving);
         }
@@ -56,15 +54,10 @@ public class GenreAddController {
         }
         parentController.setGenre();
 
-        //update parrent list
         var stage = (Stage) naamTxt.getScene().getWindow();
         stage.close();
     }
-
-    public void setUpdate(boolean update){
-        this.update = update;
-    }
-
+    
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
     }

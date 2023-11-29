@@ -61,7 +61,9 @@ public class GameController {
     private User user;
 
     public void initialize(){
-
+        //______________________________________________________
+        //implimenteer remove game
+        //______________________________________________________
         wantToRentList = new ArrayList<>();
 
         gamesAdd.setOnAction(e -> openNewWindow("gameaddscherm",null));
@@ -80,9 +82,6 @@ public class GameController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
-
-        //name is deprecated => inittabel is meer => zien hoe optimalizeren
-        //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
     }
 
     public void addToListGames(){
@@ -141,12 +140,10 @@ public class GameController {
 
     @FXML
     public void onClickGame(MouseEvent event) {
-        //recht streeks in onClickGame
         if(event.getClickCount() == 2 && tblGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblGames.getSelectionModel().getSelectedItem();
             switch(user.getBevoegdheid()){
                 case 1:
-                    //zie hoe implementern. => zie ho eoptimalizeren
                     openNewWindow("gameaddscherm", gameSelected);
                 break;
 
