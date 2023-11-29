@@ -59,10 +59,6 @@ public class GameAddController {
                 
             }
         );
-
-        if(update){
-
-        }
     }
 
     public void setupDropDown(DbConnection dbConnection){

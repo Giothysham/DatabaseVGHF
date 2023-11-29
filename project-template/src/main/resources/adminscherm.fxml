@@ -34,8 +34,8 @@
                         </columns>
                     </TableView>
                     <HBox spacing="10" alignment="CENTER">
-                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="+" fx:id="addGenreBtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="-" fx:id="removeGenrebtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     </HBox>
                 </VBox>
                 <VBox spacing="10" style="-fx-padding: 0 5 10 5;">

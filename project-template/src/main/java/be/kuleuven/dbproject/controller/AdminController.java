@@ -1,6 +1,8 @@
 package be.kuleuven.dbproject.controller;
 
-import be.kuleuven.dbproject.model.Game;
+import java.io.IOException;
+
+import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
@@ -9,16 +11,21 @@ import be.kuleuven.dbproject.model.api.GenreApi;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AdminController {
     
     @FXML
-    private Button addWinkelBtn;
+    private Button addWinkelBtn, addGenreBtn;
 
     @FXML
     private TableView<Winkel> tblWinkels;
@@ -62,6 +69,14 @@ public class AdminController {
         tblWinkels.setOnMouseClicked(mouseEvent -> handleWinkelKlick(mouseEvent));
         tblGenre.setOnMouseClicked(mouseEvent -> handleGenreKlick(mouseEvent));
         tblUitgever.setOnMouseClicked(mouseEvent -> handleUitgeverKlick(mouseEvent));
+
+        addGenreBtn.setOnAction(e -> {
+            try {
+                openNewWindow("genreaddscherm", tblGenre.getSelectionModel().getSelectedItem());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         //implement dubble klick op eender welke zorgt dat je deze kan aanpassen => zorg dat plus en min knop ook werken
     }
 
@@ -72,8 +87,14 @@ public class AdminController {
     }
 
     private void handleGenreKlick(MouseEvent event) {
-        if(event.getClickCount() == 2 && tblGenre.getSelectionModel().getSelectedItem() != null){
+        var selectedItem = tblGenre.getSelectionModel().getSelectedItem();
+        if(event.getClickCount() == 2 && selectedItem != null){
             System.out.println("genreKlick : " + tblGenre.getSelectionModel().getSelectedItem().getNaam());
+            try {
+                openNewWindow("genreaddscherm", selectedItem);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }   
 
@@ -83,7 +104,41 @@ public class AdminController {
         }
     }
 
+    private <T> void openNewWindow(String name, T variable) throws IOException{
+        String resourceName = name+".fxml";
+        
+        var stage = new Stage();
+        var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
+        var root = (GridPane) loader.load();
+        var childController = loader.getController();
+
+        
+        if(childController.getClass() == GenreAddController.class){
+            var genreAddController = (GenreAddController) childController;
+            genreAddController.setParentController(this); 
+            genreAddController.setDbConnection(dbConnection);
+
+            if(variable != null && variable.getClass() == Genre.class){
+                var genre = (Genre) variable;
+                genreAddController.setGenre(genre.getGenreID());
+                genreAddController.setUpdate(true);
+            }
+            else{
+                genreAddController.setUpdate(false);
+            }
+        }
+
+        var scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("budo/"+ resourceName);
+        stage.initOwner(ProjectMain.getRootStage());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
+    }
+
     public void setWinkel(){
+        tblWinkels.getItems().clear();
+
         var winkelApi = new WinkelApi(dbConnection);
         var winkelList = winkelApi.getWinkels();
 
@@ -91,6 +146,8 @@ public class AdminController {
     }
 
     public void setGenre(){
+        tblGenre.getItems().clear();
+
         var genreApi = new GenreApi(dbConnection);
         var genreList = genreApi.getGenres();
         
@@ -98,6 +155,8 @@ public class AdminController {
     }
 
     public void setUitgever(){
+        tblUitgever.getItems().clear();
+
         var uitgeverApi = new UitgeverApi(dbConnection);
         var uitgeverList = uitgeverApi.getUitgevers();
 
