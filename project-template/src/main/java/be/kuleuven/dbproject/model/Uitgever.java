@@ -45,5 +45,12 @@ public class Uitgever {
         return this.uitgeverID;
     }
     
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+    
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
     
 }

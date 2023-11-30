@@ -23,16 +23,19 @@
         <Label text="genre:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
         <ComboBox fx:id="genreIDDropDown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-        <Label text="kostPrijs:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <TextField fx:id="kostPijs"  GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Label text="uitgever:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+        <ComboBox fx:id="uitgeverIDDropDown" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-        <Label text="naam:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-        <TextField fx:id="naam"  GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label text="kostPrijs:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+        <TextField fx:id="kostPijs"  GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-        <Label text="beschrijving:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-        <TextArea fx:id="beschrijving"  GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <Label text="naam:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <TextField fx:id="naam"  GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-        <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+        <Label text="beschrijving:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <TextArea fx:id="beschrijving"  GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+        <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
             <Button fx:id="submitGameBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"  alignment="CENTER" text="submit new game" />
         </HBox>
     </children>

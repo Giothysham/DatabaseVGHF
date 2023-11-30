@@ -53,4 +53,10 @@ public class WinkelApi {
 
         return result.get(0);
     }
+
+    public void postWinkel(Winkel winkel){
+        entityManager.getTransaction().begin();
+        entityManager.persist(winkel);
+        entityManager.getTransaction().commit();
+    }
 }

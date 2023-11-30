@@ -5,10 +5,12 @@ import java.util.List;
 
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.GenreApi;
+import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.collections.FXCollections;
@@ -26,7 +28,7 @@ public class GameAddController {
     private Button submitGameBtn;
 
     @FXML
-    private ComboBox consoleDropDown, winkelDropDown, genreIDDropDown;
+    private ComboBox consoleDropDown, winkelDropDown, genreIDDropDown, uitgeverIDDropDown;
 
     @FXML
     private TextField aantalStock, aantalUitgeleend, gameID, naam, kostPijs;
@@ -36,8 +38,6 @@ public class GameAddController {
 
     private List<Winkel> winkels;
 
-    private List<Genre> genres;
-
     private DbConnection dbConnection;
 
     private GameController gameController;
@@ -45,9 +45,8 @@ public class GameAddController {
     private boolean update;
 
     private Game game;
- 
-    //to do => zien hoe we winkel naar gaan fixen en genre (hier voor denk ik ook weer een neum). 
 
+    private List<Uitgever> uitgevers;
 
     public void initialize(){        
         submitGameBtn.setOnAction(e -> {
@@ -59,23 +58,25 @@ public class GameAddController {
                 
             }
         );
-
-        if(update){
-
-        }
     }
 
     public void setupDropDown(DbConnection dbConnection){
-        //zien of we dit niet voledig door de db kunnen laten doen. b.v => geen lijst bij houden van alle winkels en genres maar eerder gwn met db aan de han van de naam de id zoeken. 
-        //zoals bij genres. 
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
+        var uitgeverApi = new UitgeverApi(dbConnection);
 
         winkels = winkelApi.getWinkels();
-        genres = genreApi.getGenres();
+        var genres = genreApi.getGenres();
+        uitgevers = uitgeverApi.getUitgevers();
+
 
         ObservableList<String> listGenreNames = FXCollections.observableArrayList();
         ObservableList<String> listWinkelNames = FXCollections.observableArrayList();
+        ObservableList<String> listUitgeverNames = FXCollections.observableArrayList(); 
+
+        for(Uitgever uitgever: uitgevers){
+            listUitgeverNames.addAll(uitgever.getNaam());
+        }
 
         for (Genre genre : genres) {
             listGenreNames.add(genre.getNaam());
@@ -89,6 +90,7 @@ public class GameAddController {
         listInstance.addAll(Console.values());
         consoleDropDown.setItems(listInstance);
 
+        uitgeverIDDropDown.setItems(listUitgeverNames);
         genreIDDropDown.setItems(listGenreNames);
         winkelDropDown.setItems(listWinkelNames);
     }
@@ -110,7 +112,9 @@ public class GameAddController {
 
         consoleDropDown.setValue(game.getConsole());
         
-
+        UitgeverApi uitgeverApi = new UitgeverApi(dbConnection);
+        var uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
+        uitgeverIDDropDown.setValue(uitgever.getNaam());
         this.game = game;
     }
 
@@ -125,7 +129,10 @@ public class GameAddController {
         game.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
         game.setNaam(this.naam.getText());
         game.setStock(Integer.parseInt(this.aantalStock.getText()));
-        game.setWinkelID(0);
+
+        var uitgeverName = (String) uitgeverIDDropDown.getValue();
+        var uitgeverApi = new UitgeverApi(dbConnection);
+        game.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
 
         var window = (Stage) beschrijving.getScene().getWindow();
         window.close();
@@ -140,7 +147,9 @@ public class GameAddController {
         var naam = this.naam.getText();
         var beschrijving = this.beschrijving.getText();
         Integer winkelID = null;
+        Integer uitgeverID = null;
         String nameWinkel = (String) winkelDropDown.getValue();
+        String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
 
         var genreApi = new GenreApi(dbConnection);
         var genreID = genreApi.getGenreIdByName(genre);
@@ -151,9 +160,16 @@ public class GameAddController {
                 break;
             }
         }
+
+        for(Uitgever uitgever: uitgevers){
+            if(nameUitgever.contains(uitgever.getNaam())){
+                uitgeverID = uitgever.getUitgeverID();
+                break;
+            }
+        }
         
         //logica voor te zien of iets null is of niet 
-        Game tempgame = new Game(aantalStock, 0, console, 0,winkelID, kostPrijs, genreID, naam, beschrijving);
+        Game tempgame = new Game(aantalStock, 0, console, 0,winkelID, kostPrijs, genreID, naam, beschrijving, uitgeverID);
         
         try {
             var gameApi = new GameApi(dbConnection);

@@ -34,8 +34,8 @@
                         </columns>
                     </TableView>
                     <HBox spacing="10" alignment="CENTER">
-                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="+" fx:id="addGenreBtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="-" fx:id="removeGenreBtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     </HBox>
                 </VBox>
                 <VBox spacing="10" style="-fx-padding: 0 5 10 5;">
@@ -47,8 +47,25 @@
                         </columns>
                     </TableView>
                     <HBox spacing="10" alignment="CENTER">
-                        <Button text="+" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
-                        <Button text="-" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="+" fx:id="addUitgeverBtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="-" fx:id="removeUitgeverBtn" prefWidth="30" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+                <VBox spacing="10" style="-fx-padding: 0 5 10 5;">
+                    <Label text="- user:" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    <TableView fx:id="tblUser" prefHeight="290" prefWidth="567.0">
+                        <columns>
+                             <TableColumn text="ID" fx:id="userIdColumn" />
+                            <TableColumn text="voornaam" fx:id="voornaamColumn" />
+                            <TableColumn text="achternaam" fx:id="achternaamColumn" />
+                            <TableColumn text="email" fx:id="emailColumn" />
+                            <TableColumn text="tell" fx:id="tellColumn" />
+                            <TableColumn text="bevoegd" fx:id="bevoegdColumn" />
+                        </columns>
+                    </TableView>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="maak admin" fx:id="maakAdminBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                        <Button text="remove admin" fx:id="removeAdmingBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     </HBox>
                 </VBox>
             </VBox>

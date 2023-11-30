@@ -40,6 +40,9 @@ public class Game {
     @Column(name = "beschrijving")
     private String beschrijving;
 
+    @Column(name = "uitgeverID")
+    private Integer uitgeverID;
+
     @PrePersist
     private void prePersist() {
         System.out.println("Bezig met het bezigen van het opslaan van extra " + this);
@@ -49,7 +52,7 @@ public class Game {
 
     }
 
-    public Game(int stock, int verkocht, Console console, int gameID, int winkelID, double kostPrijs, int genreID, String naam, String beschrijving) {
+    public Game(int stock, int verkocht, Console console, int gameID, int winkelID, double kostPrijs, int genreID, String naam, String beschrijving,Integer uitgeverID) {
         super();
         this.stock = stock;
         this.verkocht = verkocht;
@@ -59,6 +62,7 @@ public class Game {
         this.kostPrijs = kostPrijs;
         this.genreID = genreID;
         this.naam = naam;
+        this.uitgeverID = uitgeverID;
         this.beschrijving = beschrijving;
     }
 
@@ -134,5 +138,13 @@ public class Game {
         this.beschrijving = beschrijving;
     }
 
+
+    public Integer getUitgever() {
+        return this.uitgeverID;
+    }
+
+    public void setUitgever(Integer uitgeverID) {
+        this.uitgeverID = uitgeverID;
+    }
 
 }

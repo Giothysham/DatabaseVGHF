@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 @Entity
 public class Winkel {
@@ -12,7 +13,10 @@ public class Winkel {
     private int bezoekers;
 
     @Column(name = "winkelID")
-    @GeneratedValue
+    @GeneratedValue(generator="sqlite")
+
+    //fix => vragen wouter waarom negatieve ?????
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="winkel")
     @Id
     private int winkelID;
     
@@ -74,5 +78,38 @@ public class Winkel {
     public String getLand() {
         return this.land;
     }
+    
+    public String getProvincie() {
+        return this.provincie;
+    }
+
+    public void setBezoekers(int bezoekers) {
+        this.bezoekers = bezoekers;
+    }
+
+    public void setWinkelID(int winkelID) {
+        this.winkelID = winkelID;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public void setStad(String stad) {
+        this.stad = stad;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setProvincie(String provincie) {
+        this.provincie = provincie;
+    }
+    
+    public void setLand(String land) {
+        this.land = land;
+    }
+
     
 }

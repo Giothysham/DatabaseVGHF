@@ -9,9 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,10 +20,7 @@ import javafx.stage.StageStyle;
 public class LoginController {
 
     @FXML
-    private Button loginBtn;
-
-    @FXML
-    private Button crtAccountBtn;
+    private Button loginBtn, crtAccountBtn;
 
     @FXML
     private TextField emailTxtField;
@@ -44,7 +42,7 @@ public class LoginController {
 
         crtAccountBtn.setOnAction(e -> {
             try {
-                changeWindow("createaccount");
+                changeWindow("createaccountscherm.fxml");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -56,9 +54,11 @@ public class LoginController {
         var wachtwoord = wachtwoordTxtField.getText();
         try {
             this.user = userApi.chekUserAndWachtwoord(email, wachtwoord);
-            System.out.println(user);
             changeWindow("main.fxml");
         } catch (Exception e) {
+            Alert a = new Alert(AlertType.ERROR);
+            a.setContentText(e.getMessage());
+            a.show();
             e.printStackTrace();
         }
     }
@@ -70,7 +70,7 @@ public class LoginController {
         
         var stage = new Stage();
         var loader = new FXMLLoader(getClass().getClassLoader().getResource(id));
-        Parent root = (BorderPane) loader.load();
+        Parent root = loader.load();
         var controller = loader.getController();
 
 
@@ -78,6 +78,11 @@ public class LoginController {
             var projectMainController = (ProjectMainController) controller;
             projectMainController.setdbConnection(this.dbConnection);
             projectMainController.setUser(user);
+        }
+        else if(controller.getClass() == CreatAccountController.class){
+            var CreatAccountController = (CreatAccountController) controller;
+            CreatAccountController.setDbConnection(dbConnection);
+            CreatAccountController.setUpOnClose(stage);
         }
 
         var scene = new Scene(root);

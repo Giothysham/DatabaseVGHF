@@ -30,7 +30,6 @@ MoreInfoGameController {
     public void setGame(Game game){
         gameNameTxt.setText(game.getNaam());
 
-        //moreInfo to vertical fit. 
         moreInfoTxt.setText(game.getBeschrijving());
     }
     

@@ -4,13 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 @Entity
 public class Genre {
 
-    @Id
     @Column(name = "genreID")
-    @GeneratedValue
+    @GeneratedValue(generator="sqlite")
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="genre")
+    @Id
     private int genreID;
 
     @Column(name = "naam")
@@ -29,6 +31,13 @@ public class Genre {
         this.beschrijving = beschrijving;
     }
 
+    public void setNaam(String naam){
+        this.naam = naam;
+    }
+
+    public void setBeschrijving(String beschrijving){
+        this.beschrijving = beschrijving;
+    }
 
     public int getGenreID() {
         return this.genreID;

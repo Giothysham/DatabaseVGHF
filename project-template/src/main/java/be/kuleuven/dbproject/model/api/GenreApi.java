@@ -74,4 +74,9 @@ public class GenreApi {
         }
     }
 
+    public void postGenre(Genre genre){
+        entityManager.getTransaction().begin();
+        entityManager.persist(genre);
+        entityManager.getTransaction().commit();
+    }
 }

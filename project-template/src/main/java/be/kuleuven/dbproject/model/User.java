@@ -131,4 +131,13 @@ public class User {
         return this.bevoegdheid;
     }
 
+    public void setBevoegdheid(boolean bevoegd){
+        if(bevoegd){
+            bevoegdheid = 1;
+        }
+        else{
+            bevoegdheid = 0;
+        }
+    }
+
 }

@@ -77,13 +77,24 @@ public class UitgeleendeGameController {
     }
 
     public void updateOrSearchTable(Boolean update){
-        //samen bekijke. 
         listgames.clear();
         tblUitgeleendeGames.getItems().clear();
         var gameApi = new GameApi(dbConnection);
 
         if(update){
+<<<<<<< HEAD
             listgames = user.getUitgeleendeGames();
+=======
+            listuitgeleendegames = (ArrayList<Game_user>) gameApi.getUitgeleendeGamesWithUser(user.getUserId());
+            for(Game_user game: listuitgeleendegames){
+                try{
+                    listgames.add(gameApi.getGameById(Integer.toString(game.getGameID())));
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+>>>>>>> 9b68d61ecf079eff2baf5f24fb981df618e92eb8
         }
         else{
             var autoCompleteText = autoCompleteSearch.getText();
@@ -100,7 +111,23 @@ public class UitgeleendeGameController {
     }
 
     public void initTable() {
+<<<<<<< HEAD
             listgames = user.getUitgeleendeGames();
+=======
+            var gameApi = new GameApi(dbConnection);
+            listuitgeleendegames = (ArrayList<Game_user>) gameApi.getUitgeleendeGamesWithUser(user.getUserId());
+                                        System.out.println("length  list 1= -----------------------------------" + listuitgeleendegames.size());
+            for(Game_user game: listuitgeleendegames){
+                                            System.out.println("length  list 2= -----------------------------------" + listgames.size());
+                                            System.out.println("length  list 3= -----------------------------------" + listuitgeleendegames.size());
+                try{
+                    listgames.add(gameApi.getGameById(Integer.toString(game.getGameID()))); // werkt niet bij 2 idk why
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+>>>>>>> 9b68d61ecf079eff2baf5f24fb981df618e92eb8
             
             for(Game game: listgames){
                 if(!autoCompleteWords.contains(game.getNaam())){
@@ -120,7 +147,6 @@ public class UitgeleendeGameController {
 
     @FXML
     public void onClickGame(MouseEvent event) {
-        //recht streeks in onClickGame
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
             openNewWindow("moreinfogame",gameSelected);
