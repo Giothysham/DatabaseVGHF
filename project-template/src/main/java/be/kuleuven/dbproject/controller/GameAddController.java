@@ -58,6 +58,8 @@ public class GameAddController {
                 
             }
         );
+
+        beschrijving.setWrapText(true);
     }
 
     public void setupDropDown(DbConnection dbConnection){

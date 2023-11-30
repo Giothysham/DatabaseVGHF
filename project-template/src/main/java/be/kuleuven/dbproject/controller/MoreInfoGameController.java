@@ -1,8 +1,12 @@
 package be.kuleuven.dbproject.controller;
 
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.UitgeverApi;
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
@@ -11,10 +15,11 @@ MoreInfoGameController {
 
     private DbConnection dbConnection;
 
-    private Game game;
+    @FXML
+    private Text consoleTxt, stockTxt, uitgeverTxt;
 
     @FXML
-    private Text gameNameTxt; 
+    private Label gameNameTxt; 
 
     @FXML
     private TextArea moreInfoTxt;
@@ -31,6 +36,16 @@ MoreInfoGameController {
         gameNameTxt.setText(game.getNaam());
 
         moreInfoTxt.setText(game.getBeschrijving());
+        moreInfoTxt.setEditable(false);
+        moreInfoTxt.setWrapText(true);
+
+        var uitgeverApi = new UitgeverApi(dbConnection);
+        Uitgever uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
+        uitgeverTxt.setText(uitgever.getNaam());
+
+        stockTxt.setText(Integer.toString(game.getStock()));
+
+        consoleTxt.setText(game.getConsole().toString());
     }
     
 }

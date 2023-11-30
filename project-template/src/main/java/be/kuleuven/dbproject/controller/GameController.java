@@ -12,6 +12,7 @@ import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
@@ -20,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -164,7 +164,7 @@ public class GameController {
 
             var stage = new Stage();
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
-            var root = (GridPane) loader.load();
+            var root = loader.load();
             var controller = loader.getController();
 
             if(controller.getClass() == GameAddController.class){
@@ -194,7 +194,7 @@ public class GameController {
                 buySchermController.setUser(user);
             }
 
-            var scene = new Scene(root);
+            var scene = new Scene((Parent) root);
             stage.setScene(scene);
             stage.setTitle("budo/"+ id);
             stage.initOwner(ProjectMain.getRootStage());
