@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.*; //later fixen specifieke imports
+
+import java.util.List;
 
 
 @Entity
@@ -47,6 +50,11 @@ public class User {
     @Column(name = "bevoegdheid")
     private Integer bevoegdheid;
 
+    @ManyToMany(targetEntity = Game.class, cascade = { CascadeType.ALL })
+	@JoinTable(name = "game_user_test",
+				joinColumns = { @JoinColumn(name = "userID") }, 
+				inverseJoinColumns = { @JoinColumn(name = "gameID") })
+	private List<Game> uitgeleendeGame;
 
     public User() {
     }
@@ -67,6 +75,13 @@ public class User {
         this.bevoegdheid = bevoegdheid;
     }
 
+    public void addToListGames(List<Game> game){
+        uitgeleendeGame.addAll(game);
+    }
+
+    public List<Game> getUitgeleendeGames(){
+        return uitgeleendeGame;
+    }
 
     public String getAchternaam() {
         return this.achternaam;

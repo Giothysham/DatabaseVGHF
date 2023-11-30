@@ -6,7 +6,6 @@ import org.controlsfx.control.textfield.TextFields;
 
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
-import be.kuleuven.dbproject.model.Game_user;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
@@ -24,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class UitgeleendeGameController {
 
@@ -50,9 +51,7 @@ public class UitgeleendeGameController {
 
     private ArrayList<String> autoCompleteWords;
 
-    private ArrayList<Game> listgames;
-
-    private ArrayList<Game_user> listuitgeleendegames;
+    private List<Game> listgames;
 
     private DbConnection dbConnection;
 
@@ -65,8 +64,6 @@ public class UitgeleendeGameController {
         //addToCartBtn.setOnAction(e -> addToListGames()); return button
 
         autoCompleteWords = new ArrayList<String>();
-
-        listuitgeleendegames = new ArrayList<Game_user>();
 
         listgames = new ArrayList<Game>();
 
@@ -85,6 +82,9 @@ public class UitgeleendeGameController {
         var gameApi = new GameApi(dbConnection);
 
         if(update){
+<<<<<<< HEAD
+            listgames = user.getUitgeleendeGames();
+=======
             listuitgeleendegames = (ArrayList<Game_user>) gameApi.getUitgeleendeGamesWithUser(user.getUserId());
             for(Game_user game: listuitgeleendegames){
                 try{
@@ -94,22 +94,26 @@ public class UitgeleendeGameController {
                     System.out.println(e);
                 }
             }
+>>>>>>> 9b68d61ecf079eff2baf5f24fb981df618e92eb8
         }
-
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
+            //     listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
             }
+            // TODO: aan wouter fix vragen
             else{
-                listgames = (ArrayList<Game>) gameApi.getGames();
+                listgames = user.getUitgeleendeGames();
             }
         }
-        
+
         tblUitgeleendeGames.getItems().setAll(listgames);
     }
 
     public void initTable() {
+<<<<<<< HEAD
+            listgames = user.getUitgeleendeGames();
+=======
             var gameApi = new GameApi(dbConnection);
             listuitgeleendegames = (ArrayList<Game_user>) gameApi.getUitgeleendeGamesWithUser(user.getUserId());
                                         System.out.println("length  list 1= -----------------------------------" + listuitgeleendegames.size());
@@ -123,6 +127,7 @@ public class UitgeleendeGameController {
                     System.out.println(e);
                 }
             }
+>>>>>>> 9b68d61ecf079eff2baf5f24fb981df618e92eb8
             
             for(Game game: listgames){
                 if(!autoCompleteWords.contains(game.getNaam())){
