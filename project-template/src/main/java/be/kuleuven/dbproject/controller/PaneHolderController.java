@@ -52,7 +52,8 @@ public class PaneHolderController {
             AdminController.setdbConnection(dbConnection);
             AdminController.setGenre();
             AdminController.setUitgever();
-            AdminController.setWinkel();;
+            AdminController.setWinkel();
+            AdminController.setUser();
         }
 
         rootLoader.autosize();

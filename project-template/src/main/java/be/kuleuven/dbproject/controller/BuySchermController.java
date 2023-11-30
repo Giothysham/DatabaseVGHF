@@ -90,11 +90,16 @@ public class BuySchermController {
         this.wantToRentListID = wantToRentList;
 
         for(String id: wantToRentListID){
-            var gameApi = new GameApi(dbConnection);
+            try{
+                var gameApi = new GameApi(dbConnection);
             
-            var tempGame = (Game) gameApi.getGameById(id);
-            this.wantToRentListGame.add(tempGame);
-            price += tempGame.getKostPrijs();
+                var tempGame = (Game) gameApi.getGameById(id);
+                this.wantToRentListGame.add(tempGame);
+                price += tempGame.getKostPrijs();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
         }
         
         amountTxt.setText( " "+price + "$");
@@ -110,7 +115,6 @@ public class BuySchermController {
             parentController.setwantToRentList(new ArrayList<>());
             window.close();
         } catch (Exception e) {
-            //show not posibal aller beacus of the throw
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
             a.show();

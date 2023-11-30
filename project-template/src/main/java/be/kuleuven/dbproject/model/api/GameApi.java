@@ -9,7 +9,6 @@ import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Game_user;
 
 public class GameApi {
-    //haal alles van DbConnection naar hier
 
     private EntityManagerFactory sessionFactory;
 
@@ -49,7 +48,8 @@ public class GameApi {
         return entityManager.createQuery(select).getResultList();
     }
     
-    public Game getGameById(String ID){
+    public Game getGameById(String ID) throws Exception{
+        System.out.println(ID);
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Game.class);
@@ -58,8 +58,13 @@ public class GameApi {
         query.where(criteriaBuilder.equal(root.get("gameID"), ID));
         var result = entityManager.createQuery(query).getResultList();
         
-        // maak chek zodat lengte van de list 1 is 
-        return result.get(0);
+        if(result.size() > 0){
+            return result.get(0);
+        }
+        else{
+            throw new Exception("no game found with id: "+ ID);
+        }
+    
     }
     
     public List<Game> SearchGamesByName(String naam){

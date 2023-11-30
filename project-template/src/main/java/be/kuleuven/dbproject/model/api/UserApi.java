@@ -53,6 +53,7 @@ public class UserApi {
                 var verkocht = game.getVerkocht();
                 System.out.println("elemnt of game:" + game.getNaam() + "   er zijn " + stock + " in stock");
                 if(stock > 0){
+                    //fix => vragen aan wouter
                     game.setStock(stock-1);
                     game.setVerkocht(verkocht+1);
 
@@ -74,5 +75,15 @@ public class UserApi {
         else{
             throw new Exception("no items selected");
         }
+    }
+
+    public List<User> getUsers() {
+        var criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(User.class);
+        var root = query.from(User.class);
+        var select = query.select(root);
+        
+        return entityManager.createQuery(select).getResultList();
     }
 }

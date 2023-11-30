@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 public class Extra {
 
-    //interface maken voor Extra en Game zodat deze in een TabelView bewaart kunnen worden !!
     @Column(name = "aantal_in_stock")
     private int stock;
 

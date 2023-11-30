@@ -80,7 +80,6 @@ public class UitgeleendeGameController {
     }
 
     public void updateOrSearchTable(Boolean update){
-        //samen bekijke. 
         listgames.clear();
         tblUitgeleendeGames.getItems().clear();
         var gameApi = new GameApi(dbConnection);
@@ -88,7 +87,12 @@ public class UitgeleendeGameController {
         if(update){
             listuitgeleendegames = (ArrayList<Game_user>) gameApi.getUitgeleendeGamesWithUser(user.getUserId());
             for(Game_user game: listuitgeleendegames){
-                listgames.add(gameApi.getGameById(Integer.toString(game.getGameID())));
+                try{
+                    listgames.add(gameApi.getGameById(Integer.toString(game.getGameID())));
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
             }
         }
 
@@ -112,7 +116,12 @@ public class UitgeleendeGameController {
             for(Game_user game: listuitgeleendegames){
                                             System.out.println("length  list 2= -----------------------------------" + listgames.size());
                                             System.out.println("length  list 3= -----------------------------------" + listuitgeleendegames.size());
-                listgames.add(gameApi.getGameById(Integer.toString(game.getGameID()))); // werkt niet bij 2 idk why
+                try{
+                    listgames.add(gameApi.getGameById(Integer.toString(game.getGameID()))); // werkt niet bij 2 idk why
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
             }
             
             for(Game game: listgames){
@@ -133,7 +142,6 @@ public class UitgeleendeGameController {
 
     @FXML
     public void onClickGame(MouseEvent event) {
-        //recht streeks in onClickGame
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
             openNewWindow("moreinfogame",gameSelected);

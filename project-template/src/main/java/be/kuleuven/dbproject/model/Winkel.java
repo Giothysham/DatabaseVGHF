@@ -14,7 +14,8 @@ public class Winkel {
 
     @Column(name = "winkelID")
     @GeneratedValue(generator="sqlite")
-    //waarom negatieve ?????
+
+    //fix => vragen wouter waarom negatieve ?????
     @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="winkel")
     @Id
     private int winkelID;

@@ -7,11 +7,14 @@ import javax.persistence.EntityManager;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Uitgever;
+import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GenreApi;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
+import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,7 +30,7 @@ import javafx.stage.Stage;
 public class AdminController {
     
     @FXML
-    private Button addWinkelBtn ,removeUitgeverBtn ,removeWinkelBtn ,removeGenreBtn , addGenreBtn, addUitgeverBtn;
+    private Button addWinkelBtn ,removeUitgeverBtn ,removeWinkelBtn ,removeGenreBtn , addGenreBtn, addUitgeverBtn, maakAdminBtn, removeAdmingBtn;
 
     @FXML
     private TableView<Winkel> tblWinkels;
@@ -37,6 +40,9 @@ public class AdminController {
 
     @FXML
     private TableView<Uitgever> tblUitgever;
+
+    @FXML
+    private TableView<User> tblUser;
 
     @FXML
     private TableColumn<Winkel, Integer> idColumnWinkel; 
@@ -56,6 +62,12 @@ public class AdminController {
     @FXML
     private TableColumn<Uitgever, String> nameUitgeverColumn; 
 
+    @FXML
+    private TableColumn<User, String> voornaamColumn, achternaamColumn, emailColumn, tellColumn;
+
+    @FXML
+    private TableColumn<User, Integer> userIdColumn, bevoegdColumn;
+
     private DbConnection dbConnection;
 
     private EntityManager entityManager;
@@ -69,6 +81,13 @@ public class AdminController {
 
         idUitgeverColumn.setCellValueFactory(new PropertyValueFactory<Uitgever, Integer>("uitgeverID"));
         nameUitgeverColumn.setCellValueFactory(new PropertyValueFactory<Uitgever,String>("naam"));
+
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<User, Integer>("userId"));
+        voornaamColumn.setCellValueFactory(new PropertyValueFactory<User,String>("voornaam"));
+        achternaamColumn.setCellValueFactory(new PropertyValueFactory<User,String>("achternaam"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<User,String>("email"));
+        tellColumn.setCellValueFactory(new PropertyValueFactory<User,String>("telefoonnummer"));
+        bevoegdColumn.setCellValueFactory(new PropertyValueFactory<User, Integer>("bevoegdheid"));
 
         tblWinkels.setOnMouseClicked(mouseEvent -> handleWinkelKlick(mouseEvent));
         tblGenre.setOnMouseClicked(mouseEvent -> handleGenreKlick(mouseEvent));
@@ -94,11 +113,13 @@ public class AdminController {
             try {
                 openNewWindow("uitgeveraddscherm", null);
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         });
 
+        maakAdminBtn.setOnAction(e -> switchAdmin(true));
+
+        //fix
         //als een van de bedrijven ofzo wordt verwijderd dan ook games van deze verwijderen => implementeren. 
         //zorg dat als ze op verwijderen klikken dat ze een ben je zker pop up krijgen. 
         removeUitgeverBtn.setOnAction(e -> deleteSelectedUitgever());
@@ -106,6 +127,21 @@ public class AdminController {
         removeWinkelBtn.setOnAction(e -> deleteSelectedWinkel());
 
         removeGenreBtn.setOnAction(e -> deleteSelectedGenre());
+
+        removeAdmingBtn.setOnAction(e -> switchAdmin(false));
+    }
+
+    private void switchAdmin(boolean admin) {
+        var user = tblUser.getSelectionModel().getSelectedItem();
+
+        if(user.getBevoegdheid() != 1 && admin){
+            user.setBevoegdheid(admin);
+        }
+        else if(user.getBevoegdheid() != 0 && !admin){
+            user.setBevoegdheid(admin);
+        }
+
+        this.setUser();
     }
 
     private void deleteSelectedUitgever(){
@@ -242,6 +278,15 @@ public class AdminController {
         var uitgeverList = uitgeverApi.getUitgevers();
 
         tblUitgever.getItems().addAll(uitgeverList);
+    }
+
+    public void setUser(){
+        tblUser.getItems().clear();
+
+        var userApi = new UserApi(dbConnection);
+        var userList = userApi.getUsers();
+
+        tblUser.getItems().addAll(userList);
     }
 
     public void setdbConnection(DbConnection dbConnection){

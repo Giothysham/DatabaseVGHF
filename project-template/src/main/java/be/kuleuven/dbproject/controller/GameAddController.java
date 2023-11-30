@@ -47,9 +47,6 @@ public class GameAddController {
     private Game game;
 
     private List<Uitgever> uitgevers;
- 
-    //to do => zien hoe we winkel naar gaan fixen en genre (hier voor denk ik ook weer een neum). 
-
 
     public void initialize(){        
         submitGameBtn.setOnAction(e -> {
@@ -64,8 +61,6 @@ public class GameAddController {
     }
 
     public void setupDropDown(DbConnection dbConnection){
-        //zien of we dit niet voledig door de db kunnen laten doen. b.v => geen lijst bij houden van alle winkels en genres maar eerder gwn met db aan de han van de naam de id zoeken. 
-        //zoals bij genres. 
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
         var uitgeverApi = new UitgeverApi(dbConnection);
