@@ -1,9 +1,5 @@
 package be.kuleuven.dbproject.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.*; //later fixen specifieke imports
 
 import java.util.List;
@@ -37,7 +33,8 @@ public class User {
     private String land;
 
     @Column(name = "userId")
-    @GeneratedValue
+    @GeneratedValue(generator="sqlite")
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="user")
     @Id
     private int userId;
 

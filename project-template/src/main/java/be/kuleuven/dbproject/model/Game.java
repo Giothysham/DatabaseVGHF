@@ -43,6 +43,9 @@ public class Game {
     @Column(name = "uitgeverID")
     private Integer uitgeverID;
 
+    @Transient
+    private Integer tempStock;
+
     @PrePersist
     private void prePersist() {
         System.out.println("Bezig met het bezigen van het opslaan van extra " + this);
@@ -145,6 +148,19 @@ public class Game {
 
     public void setUitgever(Integer uitgeverID) {
         this.uitgeverID = uitgeverID;
+    }
+
+    public Integer getTempStock(){
+        return tempStock;
+    }
+
+    public void setTempStock(Integer tempStock){
+        this.tempStock = tempStock;
+    }
+
+    public void setTempToStock(){
+        this.stock = tempStock;
+        this.verkocht = tempStock + verkocht;
     }
 
 }

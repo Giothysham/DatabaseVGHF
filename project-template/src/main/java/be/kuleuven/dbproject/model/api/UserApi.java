@@ -1,5 +1,6 @@
 package be.kuleuven.dbproject.model.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -43,18 +44,23 @@ public class UserApi {
 
     public void createFactuurForGame(List<Game> gameList, User user) throws Exception{
 
-        //nog kopel tabel maken.
         if(!gameList.isEmpty()){
-            entityManager.getTransaction().begin();
-            for(Game game: gameList){
 
-                var stock = game.getStock();
-                var verkocht = game.getVerkocht();
-                System.out.println("elemnt of game:" + game.getNaam() + "   er zijn " + stock + " in stock");
+            var rentedgames = new ArrayList<Game>();
+            entityManager.getTransaction().begin();
+
+            var stock = 0;
+
+            for(Game game: gameList){
+                if(!rentedgames.contains(game)){
+                    rentedgames.add(game);
+                    stock = game.getStock();
+                }
+
                 if(stock > 0){
                     //fix => vragen aan wouter
-                    game.setStock(stock-1);
-                    game.setVerkocht(verkocht+1);
+                    game.setTempStock(stock-1);
+                    stock = stock - 1;
                     
                     var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
                     
@@ -68,11 +74,22 @@ public class UserApi {
                     throw new Exception("more items selected than avaible");
                 }
             }
+            
+            for(Game game: rentedgames){
+                game.setTempToStock();
+            }
+
             entityManager.getTransaction().commit();
         }
         else{
             throw new Exception("no items selected");
         }
+    }
+
+    public void creatUser(User user){
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
     }
 
     public List<User> getUsers() {
