@@ -61,7 +61,7 @@ public class UitgeleendeGameController {
 
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
 
-        //addToCartBtn.setOnAction(e -> addToListGames()); return button
+        returnBtn.setOnAction(e -> returnGame());
 
         autoCompleteWords = new ArrayList<String>();
 
@@ -74,6 +74,10 @@ public class UitgeleendeGameController {
 
         //name is deprecated => inittabel is meer => zien hoe optimalizeren
         //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
+    }
+
+    private Object returnGame() {
+        return null;
     }
 
     public void updateOrSearchTable(Boolean update){
