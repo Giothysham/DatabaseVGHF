@@ -51,7 +51,7 @@ public class User {
     private Integer bevoegdheid;
 
     @ManyToMany(targetEntity = Game.class, cascade = { CascadeType.ALL })
-	@JoinTable(name = "game_user_test",
+	@JoinTable(name = "game_user",
 				joinColumns = { @JoinColumn(name = "userID") }, 
 				inverseJoinColumns = { @JoinColumn(name = "gameID") })
 	private List<Game> uitgeleendeGame;

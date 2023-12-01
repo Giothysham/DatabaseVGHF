@@ -28,11 +28,7 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-<<<<<<< HEAD
     private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn,btnUitgeleendeGames;
-=======
-    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn, btnUitgeleendeGames;
->>>>>>> 9b68d61ecf079eff2baf5f24fb981df618e92eb8
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
