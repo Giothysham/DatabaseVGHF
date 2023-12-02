@@ -65,9 +65,8 @@ public class UserApi {
                     
                     var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
                     
-                    entityManager.persist(user);
+                    //entityManager.persist(user);
                     entityManager.persist(factuur);
-                                System.out.println("gothere ------------------------------------------------------");
                 }
                 else{
                     //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
@@ -108,7 +107,7 @@ public class UserApi {
                     extra.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user.getUserId(),extra.getKostprijs(),extra.getExtraID(),0, extra.getWinkelID());
+                    var factuur = new Factuur(0,user.getUserId(),extra.getKostprijs(),0,extra.getExtraID(), extra.getWinkelID());
                     
                     entityManager.persist(user);
                     entityManager.persist(factuur);

@@ -28,7 +28,7 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn,btnUitgeleendeGames,btnExtras;
+    private Button logOutBtn,adminBtn,btnUitgeleendeGames,btnExtras;
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
@@ -47,8 +47,6 @@ public class ProjectMainController {
 
         listOfButtons = new ArrayList<>();
 
-        listOfButtons.add(btnBeheerScherm1);
-        listOfButtons.add(btnBeheerScherm2);
         listOfButtons.add(adminBtn);
         listOfButtons.add(btnGames);
         listOfButtons.add(btnUitgeleendeGames);

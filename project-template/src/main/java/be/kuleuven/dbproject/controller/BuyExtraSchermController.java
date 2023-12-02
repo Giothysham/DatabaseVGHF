@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.dbproject.model.Extra;
-import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
-import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.ExtraApi;
-import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.UserApi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
