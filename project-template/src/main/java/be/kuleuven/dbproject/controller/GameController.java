@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 public class GameController {
 
     @FXML
-    private Button gamesAdd, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn;
+    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn;
 
     @FXML
     private GameAddController gameAddController;
@@ -66,13 +66,13 @@ public class GameController {
         //______________________________________________________
         wantToRentList = new ArrayList<>();
 
-        gamesAdd.setOnAction(e -> openNewWindow("gameaddscherm",null));
+        gamesAddBtn.setOnAction(e -> openNewWindow("gameaddscherm",null));
         addToCartBtn.setOnAction(e -> addToListGames());
         deleteBtn.setOnAction(e -> removeSelectedGames());
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
 
         //alles met ty/catch in een deel?
-        buyBtn.setOnAction(e -> {openNewWindow("buyscherm",null);});
+        buyBtn.setOnAction(e -> {openNewWindow("buygamescherm",null);});
 
         listgames = new ArrayList<Game>();
 
@@ -195,12 +195,12 @@ public class GameController {
                 moreInfoGameController.setdbConnection(dbConnection);
                 moreInfoGameController.setGame(gameSelected);
             }
-            else if(controller.getClass() == BuySchermController.class){
-                BuySchermController buySchermController = (BuySchermController) controller;
-                buySchermController.setdbConnection(dbConnection);
-                buySchermController.setWantToRent(wantToRentList);
-                buySchermController.setparentController(this);
-                buySchermController.setUser(user);
+            else if(controller.getClass() == BuyGameSchermController.class){
+                BuyGameSchermController buyGameSchermController = (BuyGameSchermController) controller;
+                buyGameSchermController.setdbConnection(dbConnection);
+                buyGameSchermController.setWantToRent(wantToRentList);
+                buyGameSchermController.setparentController(this);
+                buyGameSchermController.setUser(user);
             }
 
             var scene = new Scene((Parent) root);
@@ -223,11 +223,11 @@ public class GameController {
     public void setUser(User user){
         this.user = user;
         if(user.getBevoegdheid() == 1){
-            gamesAdd.setDisable(false);
+            gamesAddBtn.setDisable(false);
             deleteBtn.setDisable(false);
         }
         else{
-            gamesAdd.setDisable(true);
+            gamesAddBtn.setDisable(true);
             deleteBtn.setDisable(true);
         }
     }

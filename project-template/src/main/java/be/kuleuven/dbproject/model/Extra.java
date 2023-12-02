@@ -26,10 +26,13 @@ public class Extra {
     private int kostprijs;
 
     @Column(name = "type")
-    private int type;
+    private int type; //TODO: aanpassen naar enum met verschillende types, zie games
 
     @Column(name = "naam")
-    private int naam;
+    private String naam;
+
+    @Transient
+    private Integer tempStock;
 
     @PrePersist
     private void prePersist() {
@@ -40,7 +43,7 @@ public class Extra {
         
     }
 
-    public Extra(int stock, int verkocht, int extraID, int winkelID, int uitgeverID, int kostprijs, int type, int naam) {
+    public Extra(int stock, int verkocht, int extraID, int winkelID, int uitgeverID, int kostprijs, int type, String naam) {
         this.stock = stock;
         this.verkocht = verkocht;
         this.extraID = extraID;
@@ -81,8 +84,21 @@ public class Extra {
         return this.type;
     }
 
-    public int getNaam() {
+    public String getNaam() {
         return this.naam;
+    }
+
+    public Integer getTempStock(){
+        return tempStock;
+    }
+
+    public void setTempStock(Integer tempStock){
+        this.tempStock = tempStock;
+    }
+
+    public void setTempToStock(){
+        this.stock = tempStock;
+        this.verkocht = tempStock + verkocht;
     }
 
 }

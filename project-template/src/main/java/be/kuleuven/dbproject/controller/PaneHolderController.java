@@ -56,6 +56,12 @@ public class PaneHolderController {
             AdminController.setUser();
         }
 
+        else if(childController.getClass() == ExtraController.class){
+            var extraController = (ExtraController) childController;
+            extraController.setDbConnection(dbConnection);
+            extraController.setUser(user);
+        }
+
         rootLoader.autosize();
         tmpPane.getChildren().setAll(rootLoader);
     }

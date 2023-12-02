@@ -28,7 +28,7 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn,btnUitgeleendeGames;
+    private Button btnBeheerScherm1,logOutBtn,btnBeheerScherm2,adminBtn,btnUitgeleendeGames,btnExtras;
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
@@ -52,6 +52,7 @@ public class ProjectMainController {
         listOfButtons.add(adminBtn);
         listOfButtons.add(btnGames);
         listOfButtons.add(btnUitgeleendeGames);
+        listOfButtons.add(btnExtras);
 
         logOutBtn.setOnAction(e -> {
             try {
@@ -84,6 +85,15 @@ public class ProjectMainController {
             changeButtonStyle(listOfButtons, e);
             try {
                 paneHolderController.changeChildTo("adminscherm", dbConnection);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        btnExtras.setOnAction(e -> {
+            changeButtonStyle(listOfButtons, e);
+            try {
+                paneHolderController.changeChildTo("extrascherm", dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.api.DbConnection;
@@ -20,7 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class BuySchermController {
+public class BuyGameSchermController {
 
     private DbConnection dbConnection;
 
@@ -40,7 +41,7 @@ public class BuySchermController {
     private TableColumn<Game, Console> consoleColumn;
     
     @FXML 
-    private TableColumn<Game, Double>priseColumn;
+    private TableColumn<Game, Double>priseColumn; //TODO: typefout 
 
     private GameController parentController;
 
@@ -56,6 +57,7 @@ public class BuySchermController {
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
         priseColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
+        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game
         removeBtn.setOnAction(e -> deleteGame());
         buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
     }

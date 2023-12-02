@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
@@ -66,6 +67,7 @@ public class UserApi {
                     
                     entityManager.persist(user);
                     entityManager.persist(factuur);
+                                System.out.println("gothere ------------------------------------------------------");
                 }
                 else{
                     //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
@@ -77,6 +79,50 @@ public class UserApi {
             
             for(Game game: rentedgames){
                 game.setTempToStock();
+            }
+
+            entityManager.getTransaction().commit();
+        }
+        else{
+            throw new Exception("no items selected");
+        }
+    }
+
+    public void createFactuurForExtra(List<Extra> extraList, User user) throws Exception{
+
+        if(!extraList.isEmpty()){
+
+            var boughtExtra = new ArrayList<Extra>();
+            entityManager.getTransaction().begin();
+
+            var stock = 0;
+
+            for(Extra extra: extraList){
+                if(!boughtExtra.contains(extra)){
+                    boughtExtra.add(extra);
+                    stock = extra.getStock();
+                }
+
+                if(stock > 0){
+                    //fix => vragen aan wouter
+                    extra.setTempStock(stock-1);
+                    stock = stock - 1;
+                    
+                    var factuur = new Factuur(0,user.getUserId(),extra.getKostprijs(),extra.getExtraID(),0, extra.getWinkelID());
+                    
+                    entityManager.persist(user);
+                    entityManager.persist(factuur);
+                }
+                else{
+                    //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
+                    //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
+                    entityManager.getTransaction().rollback();
+                    throw new Exception("more items selected than avaible");
+                }
+            }
+            
+            for(Extra extra: boughtExtra){
+                extra.setTempToStock();
             }
 
             entityManager.getTransaction().commit();

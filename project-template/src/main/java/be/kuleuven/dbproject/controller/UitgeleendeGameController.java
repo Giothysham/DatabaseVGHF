@@ -9,7 +9,6 @@ import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
-import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;

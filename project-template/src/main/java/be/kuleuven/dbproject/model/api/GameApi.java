@@ -6,8 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import be.kuleuven.dbproject.model.Game;
-import be.kuleuven.dbproject.model.enums.Console;
-import javassist.util.proxy.RuntimeSupport;
 
 public class GameApi {
 
@@ -37,7 +35,7 @@ public class GameApi {
     //     entityManager.persist(game5);
     //     entityManager.persist(game6);
     //     entityManager.getTransaction().commit();
-    // }
+    // } TODO: DELETE
     
     public List<Game> getGames(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
