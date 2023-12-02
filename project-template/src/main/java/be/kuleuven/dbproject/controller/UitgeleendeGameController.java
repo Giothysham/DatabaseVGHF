@@ -7,6 +7,7 @@ import org.controlsfx.control.textfield.TextFields;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
+import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.enums.Console;
@@ -47,6 +48,9 @@ public class UitgeleendeGameController {
     private TableColumn<Game,Console> consoleColumn;
 
     @FXML
+    private TableColumn<Winkel,String> locatieColumn;
+
+    @FXML
     private TableView<Game> tblUitgeleendeGames;
 
     private ArrayList<String> autoCompleteWords;
@@ -68,22 +72,37 @@ public class UitgeleendeGameController {
         listgames = new ArrayList<Game>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
-        avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
+        //locatieColumn.setCellValueFactory(new PropertyValueFactory<Game,Winkel>("stad"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
         //name is deprecated => inittabel is meer => zien hoe optimalizeren
         //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
     }
 
-    private Object returnGame() {
-        return null;
-    }
+        private void returnGame() {
+            var tempList = tblUitgeleendeGames.getSelectionModel().getSelectedItems();
+
+            if(tempList.size() > 0){
+                System.out.println("gothere-----------------------------------------------");
+                var uitgeleendeGames = user.getUitgeleendeGames();
+
+                for (int i = 0; i<tempList.size(); i++) {
+                    //vragen of dit hard code cava is. 
+                    var gameID = ((Game) tempList.get(i)).getGameID();
+                    for(Game game: uitgeleendeGames){
+                        if(gameID == game.getGameID()){
+                            game.setStock(game.getStock() + 1);
+                            uitgeleendeGames.remove(game);
+                            break;
+                        }
+                    }
+                }
+            } 
+            updateOrSearchTable(false);
+        }
 
     public void updateOrSearchTable(Boolean update){
-        listgames.clear();
         tblUitgeleendeGames.getItems().clear();
-        var gameApi = new GameApi(dbConnection);
 
         if(update){
             listgames = user.getUitgeleendeGames();

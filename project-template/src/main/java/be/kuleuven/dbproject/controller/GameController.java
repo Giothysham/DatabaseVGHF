@@ -68,7 +68,7 @@ public class GameController {
 
         gamesAdd.setOnAction(e -> openNewWindow("gameaddscherm",null));
         addToCartBtn.setOnAction(e -> addToListGames());
-        deleteBtn.setOnAction(e -> initTable());
+        deleteBtn.setOnAction(e -> removeSelectedGames());
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
 
         //alles met ty/catch in een deel?
@@ -82,6 +82,13 @@ public class GameController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
+    }
+
+    private void removeSelectedGames() {
+        var gameApi = new GameApi(dbConnection);
+        var tempList = tblGames.getSelectionModel().getSelectedItems();
+        gameApi.deleteGame(tempList);
+        updateOrSearchTable(true);
     }
 
     public void addToListGames(){

@@ -78,7 +78,7 @@ public class BuySchermController {
         for(Game tempGame: wantToRentListGame){
             price =+ tempGame.getKostPrijs();
         }
-        amountTxt.setText( " "+price + "$");
+        amountTxt.setText( " " + price + "$");
     }
 
     public void setparentController(GameController controller){
@@ -111,7 +111,6 @@ public class BuySchermController {
         try {
             user.addToListGames(wantToRentList);
             userApi.createFactuurForGame(wantToRentList, user);
-            System.out.println("size of list = " + user.getUitgeleendeGames().size() + "-----------------------------------------------");
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setwantToRentList(new ArrayList<>());

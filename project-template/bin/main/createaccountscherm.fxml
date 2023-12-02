@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="CENTER" fx:id="creatAccountPane" style="-fx-padding: 10 5 10 5;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.CreatAccountController" prefHeight="300.0" prefWidth="500.0">
+    <children>
+        <VBox alignment="CENTER" spacing="10">
+            <HBox alignment="CENTER">
+                <Label text="Creat vghf account" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="voornaam:"/>
+                <TextField fx:id="achterNaamTxtField"/>
+
+                <Label text="achternaam:"/>
+                <TextField fx:id="voorNaamTxtField"/>
+            </HBox>
+
+            <Label text="straatNaam:"/>
+            <TextField fx:id="straatNaamTxt"/>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="stad:"/>
+                <TextField fx:id="stadTxtField"/>
+
+                <Label text="postcode:"/>
+                <TextField fx:id="postcodeTxtField"/>
+            </HBox>
+
+            <Label text="provincie:"/>
+            <TextField fx:id="provincieTxtField"/>
+
+            <Label text="land:"/>
+            <TextField fx:id="landTxtField"/>
+
+            <Text fx:id="telText" text="tel:"/>
+            <TextField fx:id="telefoonNummerTxtField"/>
+
+            <Text fx:id="emailTxt" text="email:"/>
+            <TextField fx:id="emailTxtField"/>
+            
+            <Text fx:id="wachtwoordText" text="wachtwoord:"/>
+            <TextField fx:id="wachtwoordTxtField"/>
+
+            <Text fx:id="wachtwoordHerhaalText" text="herhaal wachtwoord:"/>
+            <TextField fx:id="wachtwoordHerhaalTxtField"/>
+
+            <Text fx:id="foutMeldingTxt"/>
+
+            <HBox alignment="CENTER" spacing="5">
+                <Button fx:id="creatAccountBtn" text="Creat account" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </children>
+</GridPane>

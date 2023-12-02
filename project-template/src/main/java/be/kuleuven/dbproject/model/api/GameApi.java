@@ -87,4 +87,12 @@ public class GameApi {
         entityManager.getTransaction().commit();
     }
 
+    public void deleteGame(List<Game> games){ //try rond gooien om mislopende transactie te rollbacken 
+        entityManager.getTransaction().begin();
+        for(Game game: games){
+            var delete = entityManager.find(Game.class, game.getGameID());
+            entityManager.remove(delete);
+            entityManager.getTransaction().commit();
+        }
+    }
 }
