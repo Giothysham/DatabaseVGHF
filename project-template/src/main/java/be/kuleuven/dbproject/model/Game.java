@@ -48,7 +48,7 @@ public class Game {
 
     @PrePersist
     private void prePersist() {
-        System.out.println("Bezig met het bezigen van het opslaan van extra " + this);
+        System.out.println("Bezig met het bezigen van het opslaan van game " + this);
     }
 
     public Game(){

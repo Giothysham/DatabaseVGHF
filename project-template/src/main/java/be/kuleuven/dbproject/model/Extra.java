@@ -2,6 +2,8 @@ package be.kuleuven.dbproject.model;
 
 import javax.persistence.*;
 
+import be.kuleuven.dbproject.model.enums.Type;
+
 @Entity
 public class Extra {
 
@@ -12,7 +14,8 @@ public class Extra {
     private int verkocht;
 
     @Column(name = "extraID")
-    @GeneratedValue
+    @GeneratedValue(generator="sqlite")
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="sqliteGameIdTable")
     @Id
     private int extraID;
 
@@ -23,10 +26,11 @@ public class Extra {
     private int uitgeverID;
 
     @Column(name = "kostprijs")
-    private int kostprijs;
+    private double kostprijs;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private int type; //TODO: aanpassen naar enum met verschillende types, zie games
+    private Type type; 
 
     @Column(name = "naam")
     private String naam;
@@ -43,7 +47,7 @@ public class Extra {
         
     }
 
-    public Extra(int stock, int verkocht, int extraID, int winkelID, int uitgeverID, int kostprijs, int type, String naam) {
+    public Extra(int stock, int verkocht, int extraID, int winkelID, int uitgeverID, double kostprijs, Type type, String naam) {
         this.stock = stock;
         this.verkocht = verkocht;
         this.extraID = extraID;
@@ -76,11 +80,11 @@ public class Extra {
         return this.uitgeverID;
     }
 
-    public int getKostprijs() {
+    public double getKostprijs() {
         return this.kostprijs;
     }
 
-    public int getType() {
+    public Type getType() {
         return this.type;
     }
 
@@ -101,4 +105,23 @@ public class Extra {
         this.verkocht = tempStock + verkocht;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setType(Type type){
+        this.type = type;
+    }
+
+    public void setKostprijs(double kostprijs) {
+        this.kostprijs = kostprijs;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setUitgever(Integer uitgeverID) {
+        this.uitgeverID = uitgeverID;
+    }
 }

@@ -107,7 +107,7 @@ public class BuyExtraSchermController {
         tblExtras.getItems().setAll(this.wantToBuyListExtra);
     }
 
-    public void buyExtra(List<Extra> wantToBuyList, User user){
+    public void buyExtra(List<Extra> wantToBuyList, User user){ //TODO: testen of verkocht +1
         try {
             userApi.createFactuurForExtra(wantToBuyList, user);
             var window = (Stage) removeBtn.getScene().getWindow();

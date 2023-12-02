@@ -54,7 +54,7 @@ public class ExtraController {
     @FXML
     private TableView<Extra> tblExtras;
 
-    private ArrayList<String> wantToBuyList; //no clue wat dees is 
+    private ArrayList<String> wantToBuyList;
 
     private ArrayList<String> autoCompleteWords;
 
@@ -70,7 +70,7 @@ public class ExtraController {
         //______________________________________________________
         wantToBuyList = new ArrayList<>();
 
-        extraAddBtn.setOnAction(e -> openNewWindow("buyextrascherm", null));
+        extraAddBtn.setOnAction(e -> openNewWindow("extraaddscherm", null));
         addToCartBtn.setOnAction(e -> addToListExtra());
         deleteBtn.setOnAction(e -> removeSelectedExtras());
         extraSearchBtn.setOnAction(e -> updateOrSearchTable(false));
@@ -83,7 +83,7 @@ public class ExtraController {
         autoCompleteWords = new ArrayList<String>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Extra, String>("naam"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));//TODO: laat alleen int zien, niet sure why
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));//TODO: laat alleen int zien, niet sure why -> aan mauro vragen
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Extra,Integer>("stock"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("type"));
         //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game
@@ -158,7 +158,7 @@ public class ExtraController {
             Extra extraSelected = tblExtras.getSelectionModel().getSelectedItem();
             switch(user.getBevoegdheid()){
                 case 1:
-                    openNewWindow("gameaddscherm", extraSelected);
+                    openNewWindow("extraaddscherm", extraSelected);
                 break;
 
                 case 0:
@@ -181,20 +181,20 @@ public class ExtraController {
             var root = loader.load();
             var controller = loader.getController();
         //     //TODO: mag uit commentaar wanneer klassen worden aangemaakt of classenaam aanpassen naar algemeen en daar in steken
-        //     if(controller.getClass() == ExtraAddController.class){
-        //         ExtraAddController extraAddController = (ExtraAddController) controller; 
-        //         extraAddController.setupDropDown(dbConnection);
-        //         extraAddController.setDbConnection(dbConnection);
-        //         extraAddController.setParentController(this);
+            if(controller.getClass() == ExtraAddController.class){
+                ExtraAddController extraAddController = (ExtraAddController) controller; 
+                extraAddController.setupDropDown(dbConnection);
+                extraAddController.setDbConnection(dbConnection);
+                extraAddController.setParentController(this);
                 
-        //         //iets beter maken game != null is geen goede opl
-        //         if(user.getBevoegdheid() == 1 && extraSelected != null){
-        //             extraAddController.setUpdate(true);
-        //             extraAddController.initializeUpdate(extraSelected);
-        //         }else{
-        //             extraAddController.setUpdate(false);
-        //         }
-        //     }
+                //iets beter maken game != null is geen goede opl
+                if(user.getBevoegdheid() == 1 && extraSelected != null){
+                    extraAddController.setUpdate(true);
+                    extraAddController.initializeUpdate(extraSelected);
+                }else{
+                    extraAddController.setUpdate(false);
+                }
+            }
         //     else if(controller.getClass() == MoreInfoExtraController.class){
         //         MoreInfoExtraController moreInfoExtraController = (MoreInfoExtraController) controller;
         //         moreInfoExtraController.setdbConnection(dbConnection);
