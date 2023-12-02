@@ -101,4 +101,15 @@ public class UserApi {
         
         return entityManager.createQuery(select).getResultList();
     }
+
+    public void updateUser(User user){
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.merge(user);
+            entityManager.getTransaction().commit();
+        } catch(Exception e){
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        }
+    }
 }

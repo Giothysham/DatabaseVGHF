@@ -10,6 +10,7 @@ import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
+import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,9 +82,9 @@ public class UitgeleendeGameController {
 
         private void returnGame() {
             var tempList = tblUitgeleendeGames.getSelectionModel().getSelectedItems();
+            var userApi = new UserApi(dbConnection);
 
             if(tempList.size() > 0){
-                System.out.println("gothere-----------------------------------------------");
                 var uitgeleendeGames = user.getUitgeleendeGames();
 
                 for (int i = 0; i<tempList.size(); i++) {
@@ -97,6 +98,7 @@ public class UitgeleendeGameController {
                         }
                     }
                 }
+                userApi.updateUser(user);
             } 
             updateOrSearchTable(false);
         }

@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.enums.Console;
+import javassist.util.proxy.RuntimeSupport;
 
 public class GameApi {
 
@@ -87,12 +88,19 @@ public class GameApi {
         entityManager.getTransaction().commit();
     }
 
-    public void deleteGame(List<Game> games){ //try rond gooien om mislopende transactie te rollbacken 
-        entityManager.getTransaction().begin();
-        for(Game game: games){
-            var delete = entityManager.find(Game.class, game.getGameID());
-            entityManager.remove(delete);
-            entityManager.getTransaction().commit();
-        }
+    public void deleteGame(List<Game> games){ //try rond gooien om mislopende transactie te rollbacken4
+        try{ 
+            if(games.size() > 0){
+                entityManager.getTransaction().begin();
+                for(Game game: games){
+                    var delete = entityManager.find(Game.class, game.getGameID());
+                    entityManager.remove(delete);
+                    entityManager.getTransaction().commit();
+                }
+            }
+        } catch(Exception e){
+            entityManager.getTransaction().rollback();
+            e.printStackTrace();
+        } 
     }
 }

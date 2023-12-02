@@ -62,7 +62,7 @@ public class GameController {
 
     public void initialize(){
         //______________________________________________________
-        //implimenteer remove game
+        //implimenteer remove game (Done)
         //______________________________________________________
         wantToRentList = new ArrayList<>();
 
@@ -87,7 +87,9 @@ public class GameController {
     private void removeSelectedGames() {
         var gameApi = new GameApi(dbConnection);
         var tempList = tblGames.getSelectionModel().getSelectedItems();
+        
         gameApi.deleteGame(tempList);
+        
         updateOrSearchTable(true);
     }
 
