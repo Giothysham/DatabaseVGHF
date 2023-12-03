@@ -17,11 +17,6 @@ public class DbConnection {
         if(sessionFactory == null || entityManager == null || !sessionFactory.isOpen()){
             sessionFactory = Persistence.createEntityManagerFactory("be.kuleuven.dbproject.model");
             entityManager = sessionFactory.createEntityManager();
-
-            //createWinkel();
-            //createGames();
-            //createGenre(); TODO: DELETE
-
         }
     }  
     

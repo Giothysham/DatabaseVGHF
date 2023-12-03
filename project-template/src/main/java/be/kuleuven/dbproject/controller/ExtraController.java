@@ -82,10 +82,10 @@ public class ExtraController {
         autoCompleteWords = new ArrayList<String>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Extra, String>("naam"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));//TODO: laat alleen int zien, niet sure why -> aan mauro vragen
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Extra,Integer>("stock"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("type"));
-        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game
+        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever"));
     }
 
     private void removeSelectedExtras() {

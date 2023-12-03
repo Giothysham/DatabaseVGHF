@@ -18,7 +18,7 @@
                 <columns>
                     <TableColumn text="naam" fx:id="naamColumn" />
                     <TableColumn text="console" fx:id="consoleColumn" />
-                    <TableColumn text="prise" fx:id="priseColumn" />
+                    <TableColumn text="price" fx:id="priceColumn" />
                 </columns>
             </TableView>
             <HBox>

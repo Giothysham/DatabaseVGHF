@@ -13,7 +13,7 @@ public class Game {
     private int stock;
     
     @Column(name = "aantal_uitgeleend", updatable = true)
-    private int verkocht;
+    private int verkocht; //TODO: rare naamgeving, veranderen naar uitgeleend
 
     @Enumerated(EnumType.STRING)
     @Column(name = "console")
@@ -109,7 +109,7 @@ public class Game {
         this.stock = stock;
     }
 
-    public void setVerkocht(int verkocht) {
+    public void setVerkocht(int verkocht) { //TODO: rare naamgeving, veranderen naar uitgeleend
         this.verkocht = verkocht;
     }
     
@@ -158,9 +158,14 @@ public class Game {
         this.tempStock = tempStock;
     }
 
+    // public void setTempToStock(){
+    //     this.stock = tempStock;
+    //     this.verkocht = tempStock + verkocht;
+    // } TODO: was dit precies? want wanneer iets verkocht wordt gebeuren er rare dingen. (fix hieronder)
+
     public void setTempToStock(){
         this.stock = tempStock;
-        this.verkocht = tempStock + verkocht;
+        this.verkocht++;
     }
 
 }

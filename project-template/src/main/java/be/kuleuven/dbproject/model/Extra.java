@@ -100,9 +100,8 @@ public class Extra {
         this.tempStock = tempStock;
     }
 
-    public void setTempToStock(){
-        this.stock = tempStock;
-        this.verkocht = tempStock + verkocht;
+    public void itemVerkocht(){
+        this.verkocht++;
     }
 
     public void setStock(int stock) {

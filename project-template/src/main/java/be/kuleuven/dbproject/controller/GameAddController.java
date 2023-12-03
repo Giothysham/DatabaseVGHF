@@ -134,10 +134,13 @@ public class GameAddController {
         game.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
         game.setNaam(this.naam.getText());
         game.setStock(Integer.parseInt(this.aantalStock.getText()));
+        //game.setVerkocht(Integer.parseInt(this.aantalUitgeleend.getText())); // TODO: bestaat niet?, methodes moeten aangemaakt worden
 
         var uitgeverName = (String) uitgeverIDDropDown.getValue();
         var uitgeverApi = new UitgeverApi(dbConnection);
         game.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
+
+        gameController.updateOrSearchTable(true);
 
         var window = (Stage) beschrijving.getScene().getWindow();
         window.close();

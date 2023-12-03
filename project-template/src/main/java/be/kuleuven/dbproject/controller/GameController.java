@@ -154,6 +154,7 @@ public class GameController {
             switch(user.getBevoegdheid()){
                 case 1:
                     openNewWindow("gameaddscherm", gameSelected);
+                    
                 break;
 
                 case 0:

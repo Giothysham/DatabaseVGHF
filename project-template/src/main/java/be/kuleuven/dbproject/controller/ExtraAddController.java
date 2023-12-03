@@ -118,6 +118,8 @@ public class ExtraAddController {
         var uitgeverApi = new UitgeverApi(dbConnection);
         extra.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
 
+        extraController.updateOrSearchTable(true);
+
         var window = (Stage) typeDropDown.getScene().getWindow();
         window.close();
     }

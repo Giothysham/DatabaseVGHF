@@ -121,7 +121,7 @@ public class UserApi {
             }
             
             for(Extra extra: boughtExtra){
-                extra.setTempToStock();
+                extra.itemVerkocht();
             }
 
             entityManager.getTransaction().commit();

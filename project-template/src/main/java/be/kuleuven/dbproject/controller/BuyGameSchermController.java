@@ -40,7 +40,7 @@ public class BuyGameSchermController {
     private TableColumn<Game, Console> consoleColumn;
     
     @FXML 
-    private TableColumn<Game, Double>priseColumn; //TODO: typefout 
+    private TableColumn<Game, Double>priceColumn;
 
     private GameController parentController;
 
@@ -55,8 +55,9 @@ public class BuyGameSchermController {
     public void initialize(){
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
-        priseColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
-        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
+        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game, extra & buy extra
+                                                                                                     //verwarrend, innerjoin nodig met naam? want alleen ID gegeven en niet naam (ook aan game toepassen)
         removeBtn.setOnAction(e -> deleteGame());
         buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
     }
