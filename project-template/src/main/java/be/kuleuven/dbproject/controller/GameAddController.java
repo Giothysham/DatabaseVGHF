@@ -28,7 +28,10 @@ public class GameAddController {
     private Button submitGameBtn;
 
     @FXML
-    private ComboBox consoleDropDown, winkelDropDown, genreIDDropDown, uitgeverIDDropDown;
+    private ComboBox<Console> consoleDropDown;
+    
+    @FXML
+    private ComboBox<String> winkelDropDown, uitgeverIDDropDown, genreIDDropDown;
 
     @FXML
     private TextField aantalStock, aantalUitgeleend, gameID, naam, kostPijs;

@@ -26,7 +26,10 @@ public class ExtraAddController {
     private Button submitExtraBtn;
 
     @FXML
-    private ComboBox typeDropDown, winkelDropDown, uitgeverIDDropDown;
+    private ComboBox<Type> typeDropDown;
+    
+    @FXML
+    private ComboBox<String> winkelDropDown, uitgeverIDDropDown;
 
     @FXML
     private TextField aantalStock, aantalVerkocht, extraID, naam, kostPijs;

@@ -14,7 +14,6 @@ import be.kuleuven.dbproject.model.api.GenreApi;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
-import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

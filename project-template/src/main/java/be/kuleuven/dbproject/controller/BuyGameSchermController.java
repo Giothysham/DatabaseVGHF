@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.dbproject.model.Game;
-import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.api.DbConnection;

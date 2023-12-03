@@ -10,7 +10,6 @@ import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.ExtraApi;
-import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +30,7 @@ public class ExtraController {
     private Button extraAddBtn, deleteBtn, buyBtn, extraSearchBtn, addToCartBtn;
 
     @FXML
-    private GameAddController extraAddController; //aanpassen naar extra add controller 
+    private GameAddController extraAddController; 
 
     @FXML
     private TextField autoCompleteSearch;
@@ -156,14 +155,8 @@ public class ExtraController {
     public void onClickGame(MouseEvent event) {
         if(event.getClickCount() == 2 && tblExtras.getSelectionModel().getSelectedItem() != null){
             Extra extraSelected = tblExtras.getSelectionModel().getSelectedItem();
-            switch(user.getBevoegdheid()){
-                case 1:
+            if(user.getBevoegdheid() == 1){
                     openNewWindow("extraaddscherm", extraSelected);
-                break;
-
-                case 0:
-                    openNewWindow("moreinfogame",extraSelected);
-                break;
             }
         }
     }
