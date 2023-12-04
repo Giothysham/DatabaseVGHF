@@ -82,6 +82,8 @@ public class GameController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
+
+        //Media media = new Media("out-attach-dubbelklik-op-mij.mp3");  
     }
 
     private void removeSelectedGames() {
