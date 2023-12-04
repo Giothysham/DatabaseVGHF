@@ -1,8 +1,19 @@
 package be.kuleuven.dbproject.model;
 
-import javax.persistence.*; //later fixen specifieke imports
+ //later fixen specifieke imports
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.TableGenerator;
+import javax.persistence.JoinColumn;
 
 
 @Entity
@@ -52,6 +63,9 @@ public class User {
 				joinColumns = { @JoinColumn(name = "userID") }, 
 				inverseJoinColumns = { @JoinColumn(name = "gameID") })
 	private List<Game> uitgeleendeGame;
+
+    @OneToMany(mappedBy = "user")
+    private List<Factuur> factuur;
 
     public User() {
     }

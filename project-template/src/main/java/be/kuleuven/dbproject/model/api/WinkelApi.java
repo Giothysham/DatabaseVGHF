@@ -17,18 +17,6 @@ public class WinkelApi {
         sessionFactory = dbConnection.getsessionFactory();
         entityManager = dbConnection.getEntityManager();
     }
-    
-    // private void createWinkel() {
-    //     Winkel winkel1 = new Winkel(0, 0, "winkelWandel straat", "diest", "3290", "vlaams-brabant","belgie");
-    //     Winkel winkel2 = new Winkel(0, 0, "straat 3", "antwerpen", "3290", "antwerpen","belgie");
-    //     Winkel winkel3 = new Winkel(0, 0, "straat doet raar", "brussel", "3290", "brussel","belgie");
-
-    //     entityManager.getTransaction().begin();
-    //     entityManager.persist(winkel1);
-    //     entityManager.persist(winkel2);
-    //     entityManager.persist(winkel3);
-    //     entityManager.getTransaction().commit();
-    // } TODO: DELETE
 
     public List<Winkel> getWinkels(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -40,7 +28,7 @@ public class WinkelApi {
         return entityManager.createQuery(select).getResultList();
     }
 
-    public Winkel getWinkelById(int id){
+    public Winkel getWinkelById(int id){ //TODO: DELETE IF NOT NEEDED
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Winkel.class);

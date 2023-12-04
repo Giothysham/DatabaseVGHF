@@ -72,7 +72,6 @@ public class AdminController {
     private EntityManager entityManager;
 
     public void initialize(){
-        //TODO: toevoegen van facturen om door te kunnen scrollen
         idColumnWinkel.setCellValueFactory(new PropertyValueFactory<Winkel, Integer>("winkelID"));
         nameColumnWinkel.setCellValueFactory(new PropertyValueFactory<Winkel,String>("adres"));
 

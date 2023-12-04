@@ -1,9 +1,12 @@
 package be.kuleuven.dbproject.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 @Entity
@@ -20,6 +23,9 @@ public class Genre {
 
     @Column(name = "beschrijving")
     private String beschrijving;
+
+    @OneToMany(mappedBy = "genre")
+    private List<Game> game;
 
     public Genre(){
 

@@ -38,8 +38,9 @@ MoreInfoGameController {
         moreInfoTxt.setEditable(false);
         moreInfoTxt.setWrapText(true);
 
-        var uitgeverApi = new UitgeverApi(dbConnection);
-        Uitgever uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
+        //var uitgeverApi = new UitgeverApi(dbConnection);
+        // Uitgever uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
+        var uitgever = game.getUitgever();
         uitgeverTxt.setText(uitgever.getNaam());
 
         stockTxt.setText(Integer.toString(game.getStock()));

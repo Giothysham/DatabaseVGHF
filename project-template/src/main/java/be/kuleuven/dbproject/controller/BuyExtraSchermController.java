@@ -55,7 +55,6 @@ public class BuyExtraSchermController {
         naamColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("naam"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("type"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));
-        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game
         removeBtn.setOnAction(e -> deleteExtra());
         buyBtn.setOnAction(e -> buyExtra(this.wantToBuyListExtra, this.user));
     }

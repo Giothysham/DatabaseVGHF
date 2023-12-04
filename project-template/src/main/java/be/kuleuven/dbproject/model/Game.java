@@ -1,8 +1,20 @@
 package be.kuleuven.dbproject.model;
 
+import java.util.List;
 
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
 
 import be.kuleuven.dbproject.model.enums.Console;
 
@@ -12,8 +24,8 @@ public class Game {
     @Column(name = "aantal_in_stock", updatable = true)
     private int stock;
     
-    @Column(name = "aantal_uitgeleend", updatable = true)
-    private int verkocht; //TODO: rare naamgeving, veranderen naar uitgeleend
+    @Column(name = "aantal_verkocht", updatable = true)
+    private int verkocht;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "console")
@@ -25,14 +37,16 @@ public class Game {
     @Id
     private int gameID;
 
-    @Column(name = "winkelID")
-    private int winkelID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "winkelID")
+    private Winkel winkel;
 
     @Column(name = "kostprijs")
     private double kostPrijs;
 
-    @Column(name = "genreID")
-    private int genreID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "genreID")
+    private Genre genre;
 
     @Column(name = "naam")
     private String naam;
@@ -40,11 +54,15 @@ public class Game {
     @Column(name = "beschrijving")
     private String beschrijving;
 
-    @Column(name = "uitgeverID")
-    private Integer uitgeverID;
-
     @Transient
     private Integer tempStock;
+
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "uitgeverID")
+	private Uitgever uitgever;
+
+    @OneToMany(mappedBy = "game")
+    private List<Factuur> factuur;
 
     @PrePersist
     private void prePersist() {
@@ -55,17 +73,17 @@ public class Game {
 
     }
 
-    public Game(int stock, int verkocht, Console console, int gameID, int winkelID, double kostPrijs, int genreID, String naam, String beschrijving,Integer uitgeverID) {
+    public Game(int stock, int verkocht, Console console, int gameID, Winkel winkel, double kostPrijs, Genre genre, String naam, String beschrijving,Uitgever uitgever) {
         super();
         this.stock = stock;
         this.verkocht = verkocht;
         this.console = console;
         this.gameID = gameID;
-        this.winkelID = winkelID;
+        this.winkel = winkel;
         this.kostPrijs = kostPrijs;
-        this.genreID = genreID;
+        this.genre = genre;
         this.naam = naam;
-        this.uitgeverID = uitgeverID;
+        this.uitgever = uitgever;
         this.beschrijving = beschrijving;
     }
 
@@ -85,16 +103,16 @@ public class Game {
         return this.gameID;
     }
 
-    public int getWinkelID() {
-        return this.winkelID;
+    public Winkel getWinkel() {
+        return this.winkel;
     }
 
     public double getKostPrijs() {
         return this.kostPrijs;
     }
 
-    public int getGenreID() {
-        return this.genreID;
+    public Genre getGenre() {
+        return this.genre;
     }
 
     public String getNaam() {
@@ -121,16 +139,16 @@ public class Game {
         this.gameID = gameID;
     }
 
-    public void setWinkelID(int winkelID) {
-        this.winkelID = winkelID;
+    public void setWinkelID(Winkel winkel) {
+        this.winkel = winkel;
     }
 
     public void setKostPrijs(double kostPrijs) {
         this.kostPrijs = kostPrijs;
     }
 
-    public void setGenreID(int genreID) {
-        this.genreID = genreID;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public void setNaam(String naam) {
@@ -142,12 +160,12 @@ public class Game {
     }
 
 
-    public Integer getUitgever() {
-        return this.uitgeverID;
+    public Uitgever getUitgever() {
+        return this.uitgever;
     }
 
-    public void setUitgever(Integer uitgeverID) {
-        this.uitgeverID = uitgeverID;
+    public void setUitgever(Uitgever uitgever) {
+        this.uitgever = uitgever;
     }
 
     public Integer getTempStock(){

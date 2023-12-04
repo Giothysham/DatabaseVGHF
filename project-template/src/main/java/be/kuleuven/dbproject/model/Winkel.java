@@ -1,21 +1,24 @@
 package be.kuleuven.dbproject.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 @Entity
 public class Winkel {
 
-    @Column(name = "bezoekers")
+    @Column(name = "bezoekers") //TODO: doen we echt saus mee???
     private int bezoekers;
 
     @Column(name = "winkelID")
     @GeneratedValue(generator="sqlite")
 
-    //fix => vragen wouter waarom negatieve ?????
+    //TODO: fix => vragen wouter waarom negatieve ?????
     @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="winkel")
     @Id
     private int winkelID;
@@ -34,6 +37,15 @@ public class Winkel {
 
     @Column(name = "land")
     private String land; 
+
+    @OneToMany(mappedBy = "winkel")
+    private List<Game> game;
+
+    @OneToMany(mappedBy = "winkel")
+    private List<Extra> extra;
+
+    @OneToMany(mappedBy = "winkel")
+    private List<Factuur> factuur;
 
     public Winkel(){
         
