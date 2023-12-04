@@ -20,10 +20,10 @@ public class Extra {
     private int extraID;
 
     @Column(name = "winkelID")
-    private int winkelID;
+    private int winkelID; //TODO: edmond veranderd naar inner joins + exra
 
     @Column(name = "uitgeverID")
-    private int uitgeverID;
+    private int uitgeverID; //TODO: edmond veranderd naar inner joins + exra
 
     @Column(name = "kostprijs")
     private double kostprijs;

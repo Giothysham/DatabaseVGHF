@@ -63,6 +63,7 @@ public class GameController {
     public void initialize(){
         //______________________________________________________
         //implimenteer remove game (Done)
+        //TODO => Mauro zoek uit voor filteren op winkel of console of andere. 
         //______________________________________________________
         wantToRentList = new ArrayList<>();
 

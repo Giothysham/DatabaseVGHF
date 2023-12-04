@@ -121,7 +121,8 @@ public class UserApi {
             }
             
             for(Extra extra: boughtExtra){
-                extra.itemVerkocht();
+                extra.itemVerkocht(); //TODO zoals in games
+                //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
             }
 
             entityManager.getTransaction().commit();

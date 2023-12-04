@@ -173,7 +173,7 @@ public class ExtraController {
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
             var root = loader.load();
             var controller = loader.getController();
-        //     //TODO: mag uit commentaar wanneer klassen worden aangemaakt of classenaam aanpassen naar algemeen en daar in steken
+            //TODO: mag uit commentaar wanneer klassen worden aangemaakt of classenaam aanpassen naar algemeen en daar in steken
             if(controller.getClass() == ExtraAddController.class){
                 ExtraAddController extraAddController = (ExtraAddController) controller; 
                 extraAddController.setupDropDown(dbConnection);

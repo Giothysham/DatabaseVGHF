@@ -26,7 +26,7 @@ public class Game {
     private int gameID;
 
     @Column(name = "winkelID")
-    private int winkelID;
+    private int winkelID; //TODO: edmond veranderd naar inner joins + exra
 
     @Column(name = "kostprijs")
     private double kostPrijs;
@@ -41,7 +41,7 @@ public class Game {
     private String beschrijving;
 
     @Column(name = "uitgeverID")
-    private Integer uitgeverID;
+    private Integer uitgeverID; //TODO: edmond veranderd naar inner joins + exra
 
     @Transient
     private Integer tempStock;
@@ -158,14 +158,10 @@ public class Game {
         this.tempStock = tempStock;
     }
 
-    // public void setTempToStock(){
-    //     this.stock = tempStock;
-    //     this.verkocht = tempStock + verkocht;
-    // } TODO: was dit precies? want wanneer iets verkocht wordt gebeuren er rare dingen. (fix hieronder)
-
     public void setTempToStock(){
+        var tempverkocht = stock - tempStock;
         this.stock = tempStock;
-        this.verkocht++;
+        this.verkocht = tempverkocht + verkocht;
     }
 
 }

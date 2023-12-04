@@ -14,8 +14,11 @@
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.GameController" fx:id="game">
     <children>
         <HBox alignment="CENTER" layoutX="14.0">
-            <VBox spacing="5" layoutX="14.0" alignment="CENTER">
+            <VBox spacing="5" layoutX="14.0" alignment="CENTER"> 
                 <HBox spacing="5" alignment="TOP_RIGHT">
+                    <MenuButton fx:id="consoleMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="Console" textFill="WHITE"/>
+                    <MenuButton fx:id="winkelMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="winkel" textFill="WHITE"/>
+                    <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     <Button fx:id="buyBtn" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
                         <graphic>
                             <ImageView fitHeight="30" fitWidth="30" pickOnBounds="true" preserveRatio="true">

@@ -56,8 +56,6 @@ public class BuyGameSchermController {
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
-        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game, extra & buy extra
-                                                                                                     //verwarrend, innerjoin nodig met naam? want alleen ID gegeven en niet naam (ook aan game toepassen)
         removeBtn.setOnAction(e -> deleteGame());
         buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
     }
@@ -111,8 +109,8 @@ public class BuyGameSchermController {
 
     public void buyGames(List<Game> wantToRentList, User user){
         try {
-            user.addToListGames(wantToRentList);
             userApi.createFactuurForGame(wantToRentList, user);
+            user.addToListGames(wantToRentList);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setwantToRentList(new ArrayList<>());
