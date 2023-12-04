@@ -219,7 +219,7 @@ public class AdminController {
 
             if(variable != null){
                 var genre = (Genre) variable;
-                genreAddController.setGenre(genre.getGenreID());
+                genreAddController.setGenre(genre);
             }
             
         }

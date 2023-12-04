@@ -127,7 +127,7 @@ public class Game {
         this.stock = stock;
     }
 
-    public void setVerkocht(int verkocht) { //TODO: rare naamgeving, veranderen naar uitgeleend
+    public void setVerkocht(int verkocht) { 
         this.verkocht = verkocht;
     }
     

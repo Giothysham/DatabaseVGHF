@@ -82,10 +82,13 @@ public class Extra {
         return this.stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public int getVerkocht() {
         return this.verkocht;
     }
-
 
     public int getExtraID() {
         return this.extraID;
@@ -119,12 +122,14 @@ public class Extra {
         this.tempStock = tempStock;
     }
 
-    public void itemVerkocht(){
-        this.verkocht++;
+    public void setTempToStock(){
+        var tempverkocht = stock - tempStock;
+        this.stock = tempStock;
+        this.verkocht = tempverkocht + verkocht;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void itemVerkocht(){
+        this.verkocht++;
     }
 
     public void setType(Type type){

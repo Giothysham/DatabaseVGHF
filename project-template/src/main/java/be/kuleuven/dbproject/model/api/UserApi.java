@@ -121,7 +121,7 @@ public class UserApi {
             }
             
             for(Extra extra: boughtExtra){
-                extra.itemVerkocht(); //TODO zoals in games
+                extra.setTempToStock();
                 //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
             }
 

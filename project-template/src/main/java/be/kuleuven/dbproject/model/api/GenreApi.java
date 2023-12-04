@@ -42,37 +42,37 @@ public class GenreApi {
         return entityManager.createQuery(select).getResultList();
     }
 
-    public Genre getGenreById(int id){ //TODO: misschien verwijderen als niet emer gebruikt wordt.
-        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+    // public Genre getGenreById(int id){ //TODO: misschien verwijderen als niet emer gebruikt wordt (nog geen error gevonden na korte test)
+    //     var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
-        var query = criteriaBuilder.createQuery(Genre.class);
-        var root = query.from(Genre.class);
+    //     var query = criteriaBuilder.createQuery(Genre.class);
+    //     var root = query.from(Genre.class);
 
-        query.where(criteriaBuilder.equal(root.get("genreID"), id));
+    //     query.where(criteriaBuilder.equal(root.get("genreID"), id));
 
-        var result = entityManager.createQuery(query).getResultList();
+    //     var result = entityManager.createQuery(query).getResultList();
 
-        return result.get(0);
-    }
+    //     return result.get(0);
+    // }
 
-    public int getGenreIdByName(String naam) { //TODO: delete als niet meer wordt gebruikt
-        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+    // public int getGenreIdByName(String naam) { //TODO: delete als niet meer wordt gebruikt (nog geen error gevonden na korte test)
+    //     var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
-        var query = criteriaBuilder.createQuery(Genre.class);
-        var root = query.from(Genre.class);
+    //     var query = criteriaBuilder.createQuery(Genre.class);
+    //     var root = query.from(Genre.class);
 
-        query.where(criteriaBuilder.equal(root.get("naam"), naam));
+    //     query.where(criteriaBuilder.equal(root.get("naam"), naam));
 
-        var result = entityManager.createQuery(query).getResultList();
+    //     var result = entityManager.createQuery(query).getResultList();
 
-        if(result.size() > 1){
-            //TODO: throw exception
-            return 0;
-        }
-        else{
-            return result.get(0).getGenreID();
-        }
-    }
+    //     if(result.size() > 1){
+    //         //TODO: throw exception
+    //         return 0;
+    //     }
+    //     else{
+    //         return result.get(0).getGenreID();
+    //     }
+    // }
 
     public Genre getGenreByName(String naam){
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();

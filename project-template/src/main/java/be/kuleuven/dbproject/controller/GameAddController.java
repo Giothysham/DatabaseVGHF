@@ -107,18 +107,12 @@ public class GameAddController {
         beschrijving.setText(game.getBeschrijving());
         aantalUitgeleend.setText(Integer.toString(game.getVerkocht()));
 
-        // GenreApi genreApi= new GenreApi(dbConnection);
-        // var genre = game.getGenre(); //TODO: verwijderen als werkt
         genreIDDropDown.setValue(game.getGenre().getNaam());
 
-        //WinkelApi winkelApi = new WinkelApi(dbConnection);
-        //var winkel = winkelApi.getWinkelById(game.getWinkelID());
         winkelDropDown.setValue(game.getWinkel().getFullAdressWithID());
 
         consoleDropDown.setValue(game.getConsole());
         
-        //UitgeverApi uitgeverApi = new UitgeverApi(dbConnection);
-        //var uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
         uitgeverIDDropDown.setValue(game.getUitgever().getNaam());
         this.game = game;
     }
@@ -166,7 +160,7 @@ public class GameAddController {
                 winkel = testwinkel;
                 break;
             }
-        } //TODO: kijken als dit ook kan met inner join ipv list
+        } 
 
         for(Uitgever testuitgever: uitgevers){
             if(nameUitgever.contains(testuitgever.getNaam())){

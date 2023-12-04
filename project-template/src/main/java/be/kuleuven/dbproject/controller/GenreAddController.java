@@ -30,10 +30,7 @@ public class GenreAddController {
         submitGenreButton.setOnAction(e -> addOrUpdateGame());
     }
 
-    public void setGenre(Integer genreID){
-        var genreApi = new GenreApi(dbConnection);
-        this.genre = genreApi.getGenreById(genreID);
-
+    public void setGenre(Genre genre){
         naamTxt.setText(genre.getNaam());
         beschrijvingTxt.setText(genre.getBeschrijving());
     }

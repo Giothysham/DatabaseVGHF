@@ -95,13 +95,10 @@ public class ExtraAddController {
         naam.setText(extra.getNaam());
         aantalVerkocht.setText(Integer.toString(extra.getVerkocht()));
 
-        //WinkelApi winkelApi = new WinkelApi(dbConnection);
-        //var winkel = winkelApi.getWinkelById(extra.getWinkelID());
         winkelDropDown.setValue(extra.getWinkel().getFullAdressWithID());
 
         typeDropDown.setValue(extra.getType());
         
-        //UitgeverApi uitgeverApi = new UitgeverApi(dbConnection); TODO: DELETE
         var uitgever = extra.getUitgever();
         uitgeverIDDropDown.setValue(uitgever.getNaam());
         this.extra = extra;
