@@ -176,14 +176,10 @@ public class Game {
         this.tempStock = tempStock;
     }
 
-    // public void setTempToStock(){
-    //     this.stock = tempStock;
-    //     this.verkocht = tempStock + verkocht;
-    // } TODO: was dit precies? want wanneer iets verkocht wordt gebeuren er rare dingen. (fix hieronder)
-
     public void setTempToStock(){
+        var tempverkocht = stock - tempStock;
         this.stock = tempStock;
-        this.verkocht++;
+        this.verkocht = tempverkocht + verkocht;
     }
 
 }
