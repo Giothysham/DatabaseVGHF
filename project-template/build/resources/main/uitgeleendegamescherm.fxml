@@ -25,8 +25,7 @@
                 <TableView fx:id="tblUitgeleendeGames" prefHeight="246.0" prefWidth="567.0" onMouseClicked="#onClickGame">
                     <columns>
                         <TableColumn text="naam" fx:id="naamColumn" />
-                        <TableColumn text="price" fx:id="priceColumn" />
-                        <TableColumn text="avaible" fx:id="avaibleColumn" />
+                        <TableColumn text="locatie" fx:id="locatieColumn" />
                         <TableColumn text="console" fx:id="consoleColumn" />
                     </columns>
                 </TableView>

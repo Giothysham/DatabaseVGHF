@@ -2,6 +2,7 @@ package be.kuleuven.dbproject.controller;
 
 import java.io.IOException;
 
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UserApi;
@@ -17,6 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.ArrayList;
 
 public class CreatAccountController {
 
@@ -55,10 +58,11 @@ public class CreatAccountController {
         var email = emailTxtField.getText();
         var wachtwoord = wachtwoordTxtField.getText();
         var harhaalWachtwoord = wachtwoordHerhaalTxtField.getText();
+        var uitgeleendeGame =  new ArrayList<Game>();
 
         if(wachtwoord.equals(harhaalWachtwoord) && wachtwoord != ""){
 
-            user = new User(achternaam,voorNaam,tel,straatNaam,stad,postcode,provincie,land,0,email,wachtwoord,0);
+            user = new User(achternaam,voorNaam,tel,straatNaam,stad,postcode,provincie,land,0,email,wachtwoord,0,uitgeleendeGame);
 
             try{
                 userApi.creatUser(user);

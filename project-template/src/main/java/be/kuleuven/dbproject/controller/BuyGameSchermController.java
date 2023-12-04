@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class BuySchermController {
+public class BuyGameSchermController {
 
     private DbConnection dbConnection;
 
@@ -40,7 +40,7 @@ public class BuySchermController {
     private TableColumn<Game, Console> consoleColumn;
     
     @FXML 
-    private TableColumn<Game, Double>priseColumn;
+    private TableColumn<Game, Double>priceColumn;
 
     private GameController parentController;
 
@@ -55,7 +55,9 @@ public class BuySchermController {
     public void initialize(){
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
-        priseColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
+        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever")); //TODO: moet nog gefixt worden, ook toevoegen aan game, extra & buy extra
+                                                                                                     //verwarrend, innerjoin nodig met naam? want alleen ID gegeven en niet naam (ook aan game toepassen)
         removeBtn.setOnAction(e -> deleteGame());
         buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
     }
@@ -78,7 +80,7 @@ public class BuySchermController {
         for(Game tempGame: wantToRentListGame){
             price =+ tempGame.getKostPrijs();
         }
-        amountTxt.setText( " "+price + "$");
+        amountTxt.setText( " " + price + "$");
     }
 
     public void setparentController(GameController controller){
@@ -111,7 +113,6 @@ public class BuySchermController {
         try {
             user.addToListGames(wantToRentList);
             userApi.createFactuurForGame(wantToRentList, user);
-            System.out.println("size of list = " + user.getUitgeleendeGames().size() + "-----------------------------------------------");
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setwantToRentList(new ArrayList<>());

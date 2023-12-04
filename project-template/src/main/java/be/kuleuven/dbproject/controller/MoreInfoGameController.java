@@ -4,7 +4,6 @@ import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
-import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

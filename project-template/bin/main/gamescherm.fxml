@@ -40,7 +40,7 @@
                     </columns>
                 </TableView>
                 <HBox spacing="5" alignment="CENTER">
-                    <Button fx:id="gamesAdd" text="+" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    <Button fx:id="gamesAddBtn" text="+" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     <Button fx:id="addToCartBtn" text="Add  to cart" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     <Button fx:id="deleteBtn" text="-" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                 </HBox>

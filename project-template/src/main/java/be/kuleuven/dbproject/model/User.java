@@ -57,7 +57,7 @@ public class User {
     }
 
 
-    public User(String achternaam, String voornaam, String telefoonnummer, String adres, String stad, String postcode, String provincie, String land, int userId, String email, String wachtwoord, Integer bevoegdheid) {
+    public User(String achternaam, String voornaam, String telefoonnummer, String adres, String stad, String postcode, String provincie, String land, int userId, String email, String wachtwoord, Integer bevoegdheid, List<Game> uitgeleendeGame) {
         this.achternaam = achternaam;
         this.voornaam = voornaam;
         this.telefoonnummer = telefoonnummer;
@@ -70,6 +70,7 @@ public class User {
         this.email = email;
         this.wachtwoord = wachtwoord;
         this.bevoegdheid = bevoegdheid;
+        this.uitgeleendeGame = uitgeleendeGame;
     }
 
     public void addToListGames(List<Game> game){

@@ -14,7 +14,6 @@ import be.kuleuven.dbproject.model.api.GenreApi;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
-import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,6 +72,7 @@ public class AdminController {
     private EntityManager entityManager;
 
     public void initialize(){
+        //TODO: toevoegen van facturen om door te kunnen scrollen
         idColumnWinkel.setCellValueFactory(new PropertyValueFactory<Winkel, Integer>("winkelID"));
         nameColumnWinkel.setCellValueFactory(new PropertyValueFactory<Winkel,String>("adres"));
 
