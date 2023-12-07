@@ -14,7 +14,6 @@ public class Winkel {
 
     @Column(name = "winkelID")
     @GeneratedValue(generator="sqlite")
-
     //fix => vragen wouter waarom negatieve ?????
     @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="winkel")
     @Id
@@ -51,6 +50,12 @@ public class Winkel {
 
     public String getFullAdressWithID(){
         String adress = adres+"/"+stad+"/"+provincie+"/"+postcode+"/"+land+"/id: "+winkelID;
+
+        return adress;
+    }
+
+    public String getSmallAdress(){
+        String adress = stad+"/"+provincie+"/"+postcode+"/"+land;
 
         return adress;
     }

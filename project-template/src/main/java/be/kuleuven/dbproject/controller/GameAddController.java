@@ -3,6 +3,7 @@ package be.kuleuven.dbproject.controller;
 
 import java.util.List;
 
+import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Uitgever;
@@ -16,16 +17,20 @@ import be.kuleuven.dbproject.model.enums.Console;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GameAddController {
 
     @FXML
-    private Button submitGameBtn;
+    private Button submitGameBtn, viewGamePageBtn;
 
     @FXML
     private ComboBox<Console> consoleDropDown;
@@ -62,7 +67,35 @@ public class GameAddController {
             }
         );
 
+        viewGamePageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfogame"));
+
+        viewGamePageBtn.setDisable(update);
+
         beschrijving.setWrapText(true);
+    }
+
+    public void changeWindowToMoreInfo(String id){
+        try{
+            var resourceName = id+".fxml";
+
+            var stage = new Stage();
+            var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
+            var root = loader.load();
+            var controller = (MoreInfoGameController) loader.getController();
+
+            controller.setdbConnection(dbConnection);
+            controller.setGame(game);
+
+            var scene = new Scene((Parent) root);
+            stage.setScene(scene);
+            stage.setTitle("budo/"+ id);
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setupDropDown(DbConnection dbConnection){
@@ -140,7 +173,7 @@ public class GameAddController {
         var uitgeverApi = new UitgeverApi(dbConnection);
         game.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
 
-        gameController.updateOrSearchTable(true);
+        gameController.updateOrSearchTable(false);
 
         var window = (Stage) beschrijving.getScene().getWindow();
         window.close();

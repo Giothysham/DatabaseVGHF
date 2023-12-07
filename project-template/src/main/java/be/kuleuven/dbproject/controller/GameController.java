@@ -6,15 +6,21 @@ import java.util.ArrayList;
 
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.User;
+import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
+import be.kuleuven.dbproject.model.api.GenreApi;
+import be.kuleuven.dbproject.model.api.WinkelApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,7 +33,7 @@ import javafx.stage.Stage;
 public class GameController {
 
     @FXML
-    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn;
+    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn, filterBtn;
 
     @FXML
     private GameAddController gameAddController;
@@ -60,6 +66,8 @@ public class GameController {
 
     private User user;
 
+    private GameApi gameApi;
+
     public void initialize(){
         //______________________________________________________
         //implimenteer remove game (Done)
@@ -71,6 +79,10 @@ public class GameController {
         addToCartBtn.setOnAction(e -> addToListGames());
         deleteBtn.setOnAction(e -> removeSelectedGames());
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
+        filterBtn.setOnAction(e -> openNewWindow("filterscherm", null));
+
+        gameSearchBtn.setMaxWidth(Double.MAX_VALUE);
+        filterBtn.setMaxWidth(Double.MAX_VALUE);
 
         //alles met ty/catch in een deel?
         buyBtn.setOnAction(e -> {openNewWindow("buygamescherm",null);});
@@ -86,7 +98,6 @@ public class GameController {
     }
 
     private void removeSelectedGames() {
-        var gameApi = new GameApi(dbConnection);
         var tempList = tblGames.getSelectionModel().getSelectedItems();
         
         gameApi.deleteGame(tempList);
@@ -109,7 +120,6 @@ public class GameController {
 
         listgames.clear();
         tblGames.getItems().clear();
-        var gameApi = new GameApi(dbConnection);
 
         if(update){
             listgames = (ArrayList<Game>) gameApi.getGames();
@@ -117,10 +127,10 @@ public class GameController {
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
+                listgames = (ArrayList<Game>) gameApi.searchGamesByFilters(autoCompleteText);
             }
             else{
-                listgames = (ArrayList<Game>) gameApi.getGames();
+                listgames = (ArrayList<Game>) gameApi.searchGamesByFilters(null);
             }
         }
         
@@ -128,7 +138,8 @@ public class GameController {
     }
 
     public void initTable() {
-        var gameApi = new GameApi(dbConnection);
+        var winkelApi = new WinkelApi(dbConnection);
+        var genreApi = new GenreApi(dbConnection);
 
         listgames = (ArrayList<Game>) gameApi.getGames();
 
@@ -204,6 +215,11 @@ public class GameController {
                 buyGameSchermController.setparentController(this);
                 buyGameSchermController.setUser(user);
             }
+            else if(controller.getClass() == FilterSchermController.class){
+                FilterSchermController filterSchermController = (FilterSchermController) controller;
+                filterSchermController.setParentController(this);
+                filterSchermController.setUpFilters(dbConnection, gameApi);
+            }
 
             var scene = new Scene((Parent) root);
             stage.setScene(scene);
@@ -219,6 +235,7 @@ public class GameController {
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
+        gameApi = new GameApi(dbConnection);
         initTable();
     }
 
