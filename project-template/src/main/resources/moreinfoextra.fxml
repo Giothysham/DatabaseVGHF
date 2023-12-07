@@ -33,6 +33,10 @@
             <HBox alignment="CENTER">
                 <TextArea fx:id="moreInfoTxt" prefHeight="400.0" prefWidth="600.0"/>
             </HBox>
+            <HBox alignment="CENTER">
+                <Text text="locatie: " style="-fx-font-size: 14;"/>
+                <Text fx:id="locatieTxt" style="-fx-font-size: 14;"/>
+            </HBox>
         </VBox>
     </children>
 </AnchorPane>

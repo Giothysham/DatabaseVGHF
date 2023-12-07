@@ -11,7 +11,7 @@ public class
 MoreInfoExtraController {
 
     @FXML
-    private Text typeTxt, stockTxt, uitgeverTxt;
+    private Text typeTxt, stockTxt, uitgeverTxt, locatieTxt;
 
     @FXML
     private Label extraNameTxt; 
@@ -38,6 +38,8 @@ MoreInfoExtraController {
         stockTxt.setText(Integer.toString(extra.getStock()));
 
         typeTxt.setText(extra.getType().toString());
+
+        locatieTxt.setText(extra.getWinkel().getFullAdressWithID());
     }
     
         public void setDbConnection(DbConnection dbConnection) {

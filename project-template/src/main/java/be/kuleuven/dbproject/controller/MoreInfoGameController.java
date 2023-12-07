@@ -1,9 +1,7 @@
 package be.kuleuven.dbproject.controller;
 
 import be.kuleuven.dbproject.model.Game;
-import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.api.DbConnection;
-import be.kuleuven.dbproject.model.api.UitgeverApi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -15,7 +13,7 @@ MoreInfoGameController {
     private DbConnection dbConnection;
 
     @FXML
-    private Text consoleTxt, stockTxt, uitgeverTxt;
+    private Text consoleTxt, stockTxt, uitgeverTxt, locatieTxt;
 
     @FXML
     private Label gameNameTxt; 
@@ -38,14 +36,14 @@ MoreInfoGameController {
         moreInfoTxt.setEditable(false);
         moreInfoTxt.setWrapText(true);
 
-        //var uitgeverApi = new UitgeverApi(dbConnection);
-        // Uitgever uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
         var uitgever = game.getUitgever();
         uitgeverTxt.setText(uitgever.getNaam());
 
         stockTxt.setText(Integer.toString(game.getStock()));
 
         consoleTxt.setText(game.getConsole().toString());
+
+        locatieTxt.setText(game.getWinkel().getFullAdressWithID());
     }
     
 }

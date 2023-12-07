@@ -7,7 +7,6 @@ import org.controlsfx.control.textfield.TextFields;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
-import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.enums.Console;

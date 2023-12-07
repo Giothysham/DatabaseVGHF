@@ -5,26 +5,36 @@ import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.VisualFilter;
 import be.kuleuven.dbproject.model.Extra;
-import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
+import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.ExtraApi;
+import be.kuleuven.dbproject.model.api.WinkelApi;
+import be.kuleuven.dbproject.model.enums.Type;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 
-public class ExtraController {
+public class ExtraController implements BuyScreenInterface {
+
+    @FXML
+    private Menu typeMenu, winkelMenu;
 
     @FXML
     private Button extraAddBtn, deleteBtn, buyBtn, extraSearchBtn, addToCartBtn;
@@ -50,6 +60,9 @@ public class ExtraController {
     @FXML
     private TableView<Extra> tblExtras;
 
+    @FXML
+    private HBox scrlPaneFilters;
+
     private ArrayList<String> wantToBuyList;
 
     private ArrayList<String> autoCompleteWords;
@@ -59,6 +72,10 @@ public class ExtraController {
     private DbConnection dbConnection;
 
     private User user;
+
+    private ArrayList<VisualFilter> visualFilters;
+
+    private ExtraApi extraApi;
 
     public void initialize(){
         //______________________________________________________
@@ -71,6 +88,7 @@ public class ExtraController {
         deleteBtn.setOnAction(e -> removeSelectedExtras());
         extraSearchBtn.setOnAction(e -> updateOrSearchTable(false));
 
+        extraSearchBtn.setMaxWidth(Double.MAX_VALUE);
         //alles met try/catch in een deel?
         buyBtn.setOnAction(e -> {openNewWindow("buyextrascherm",null);});
 
@@ -82,10 +100,11 @@ public class ExtraController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Extra,Integer>("stock"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("type"));
+
+        visualFilters = new ArrayList<VisualFilter>();
     }
 
     private void removeSelectedExtras() {
-        var extraApi = new ExtraApi(dbConnection);
         var tempList = tblExtras.getSelectionModel().getSelectedItems();
         
         extraApi.deleteExtra(tempList);
@@ -108,7 +127,6 @@ public class ExtraController {
 
         listExtra.clear();
         tblExtras.getItems().clear();
-        var extraApi = new ExtraApi(dbConnection);
 
         if(update){
             listExtra = (ArrayList<Extra>) extraApi.getExtras();
@@ -116,10 +134,11 @@ public class ExtraController {
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                listExtra = (ArrayList<Extra>) extraApi.SearchExtraByName(autoCompleteText);
+                System.out.println("got here at update-----------------------------------------------");
+                listExtra = (ArrayList<Extra>) extraApi.searchExtraByFilters(autoCompleteText);
             }
             else{
-                listExtra = (ArrayList<Extra>) extraApi.getExtras();
+                listExtra = (ArrayList<Extra>) extraApi.searchExtraByFilters(null);
             }
         }
         
@@ -127,7 +146,6 @@ public class ExtraController {
     }
 
     public void initTable() {
-        var extraApi = new ExtraApi(dbConnection);
 
         listExtra = (ArrayList<Extra>) extraApi.getExtras();
 
@@ -151,8 +169,15 @@ public class ExtraController {
     public void onClickGame(MouseEvent event) {
         if(event.getClickCount() == 2 && tblExtras.getSelectionModel().getSelectedItem() != null){
             Extra extraSelected = tblExtras.getSelectionModel().getSelectedItem();
-            if(user.getBevoegdheid() == 1){
+            switch(user.getBevoegdheid()){
+                case 1:
                     openNewWindow("extraaddscherm", extraSelected);
+                    
+                break;
+
+                case 0:
+                    openNewWindow("moreinfoextra",extraSelected);
+                break;
             }
         }
     }
@@ -169,7 +194,7 @@ public class ExtraController {
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
             var root = loader.load();
             var controller = loader.getController();
-            //TODO: mag uit commentaar wanneer klassen worden aangemaakt of classenaam aanpassen naar algemeen en daar in steken
+        
             if(controller.getClass() == ExtraAddController.class){
                 ExtraAddController extraAddController = (ExtraAddController) controller; 
                 extraAddController.setupDropDown(dbConnection);
@@ -184,17 +209,22 @@ public class ExtraController {
                     extraAddController.setUpdate(false);
                 }
             }
-        //     else if(controller.getClass() == MoreInfoExtraController.class){
-        //         MoreInfoExtraController moreInfoExtraController = (MoreInfoExtraController) controller;
-        //         moreInfoExtraController.setdbConnection(dbConnection);
-        //         moreInfoExtraController.setGame(extraSelected);
-        //     }
+            else if(controller.getClass() == MoreInfoExtraController.class){
+                MoreInfoExtraController moreInfoExtraController = (MoreInfoExtraController) controller;
+                moreInfoExtraController.setDbConnection(dbConnection);
+                moreInfoExtraController.setExtra(extraSelected);
+            }
             if(controller.getClass() == BuyExtraSchermController.class){
                 BuyExtraSchermController buyExtraSchermController = (BuyExtraSchermController) controller;
                 buyExtraSchermController.setdbConnection(dbConnection);
                 buyExtraSchermController.setWantToRent(wantToBuyList);
                 buyExtraSchermController.setparentController(this);
                 buyExtraSchermController.setUser(user);
+            }
+            else if(controller.getClass() == FilterSchermController.class){
+                FilterSchermController filterSchermController = (FilterSchermController) controller;
+                filterSchermController.setParentController(this);
+                filterSchermController.setUpFilters(dbConnection, extraApi);
             }
 
             var scene = new Scene((Parent) root);
@@ -211,6 +241,7 @@ public class ExtraController {
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
+        extraApi = new ExtraApi(dbConnection);
         initTable();
     }
 
@@ -224,6 +255,63 @@ public class ExtraController {
             extraAddBtn.setDisable(true);
             deleteBtn.setDisable(true);
         }
+    }
+
+     public void setUpFilters(){
+        var winkelApi = new WinkelApi(dbConnection);
+
+        for(Type type: Type.values()){
+            var menuItem = new MenuItem(type.name());
+            menuItem.setOnAction(e ->{
+                System.out.println("gothere------------------------------------------------");
+                extraApi.creatSearchQuerry((type));
+                extraApi.searchExtraByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(type);
+            });
+            typeMenu.getItems().add(menuItem);
+        }   
+
+        for(Winkel winkel: winkelApi.getWinkels()){
+            var menuItem = new MenuItem(winkel.getFullAdressWithID());
+            menuItem.setOnAction(e -> {
+                extraApi.creatSearchQuerry(winkel);
+                extraApi.searchExtraByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(winkel);
+            });
+            winkelMenu.getItems().add(menuItem);
+        }
+    }
+
+    private <T> void addFilterToPane(T filter){
+        if(extraApi.getSearchType() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+        else if(extraApi.getSearchWinkel() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+
+        var visualFilter = new VisualFilter<>(filter);
+        var visualFilterHbox = visualFilter.getVisualFilter(extraApi, this);
+
+        visualFilters.add(visualFilter);
+
+        scrlPaneFilters.getChildren().add(visualFilterHbox);   
+    }
+
+    public <T> void searchAndDeleteVisualFilterByType(T filter){
+        for(VisualFilter visualFilter: visualFilters){
+            if(visualFilter.getUsedFilter().getClass() == filter.getClass()){
+                scrlPaneFilters.getChildren().remove(visualFilter.getVisualFilterHbox());
+                visualFilters.remove(visualFilter);
+                break;
+            }
+        }
+    }
+
+    public HBox getScrlPaneFilters(){
+        return this.scrlPaneFilters;
     }
 
 }

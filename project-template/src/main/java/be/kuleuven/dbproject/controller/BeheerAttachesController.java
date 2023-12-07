@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class BeheerAttachesController {
+public class BeheerAttachesController { //TODO: verwijderen?
 
     @FXML
     private TableView tblTips;

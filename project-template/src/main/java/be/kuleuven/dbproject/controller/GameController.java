@@ -107,9 +107,7 @@ public class GameController implements BuyScreenInterface{
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
-        visualFilters = new ArrayList<VisualFilter>();
-
-        //Media media = new Media("out-attach-dubbelklik-op-mij.mp3");  
+        visualFilters = new ArrayList<VisualFilter>();  
     }
 
     private void removeSelectedGames() {
@@ -152,9 +150,6 @@ public class GameController implements BuyScreenInterface{
     }
 
     public void initTable() {
-        var winkelApi = new WinkelApi(dbConnection);
-        var genreApi = new GenreApi(dbConnection);
-
         listgames = (ArrayList<Game>) gameApi.getGames();
 
         for(Game game: listgames){
@@ -249,7 +244,7 @@ public class GameController implements BuyScreenInterface{
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
-        gameApi = new GameApi(dbConnection);
+        gameApi = new GameApi(dbConnection); //TODO: wordt hier bij databaseconnectie aangemaakt, normaal is dit per functie (moet aangepast worden???)
         initTable();
     }
 
@@ -272,6 +267,7 @@ public class GameController implements BuyScreenInterface{
         for(Console console: Console.values()){
             var menuItem = new MenuItem(console.name());
             menuItem.setOnAction(e ->{
+                System.out.println("gothere------------------------------------------------");
                 gameApi.creatSearchQuerry((console));
                 gameApi.searchGamesByFilters(null);
                 this.updateOrSearchTable(false);
