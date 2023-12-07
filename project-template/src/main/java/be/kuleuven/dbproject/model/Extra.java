@@ -1,6 +1,20 @@
 package be.kuleuven.dbproject.model;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
 
 import be.kuleuven.dbproject.model.enums.Type;
 
@@ -19,11 +33,13 @@ public class Extra {
     @Id
     private int extraID;
 
-    @Column(name = "winkelID")
-    private int winkelID; //TODO: edmond veranderd naar inner joins + exra
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "winkelID")
+    private Winkel winkel;
 
-    @Column(name = "uitgeverID")
-    private int uitgeverID; //TODO: edmond veranderd naar inner joins + exra
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "uitgeverID")
+    private Uitgever uitgever;
 
     @Column(name = "kostprijs")
     private double kostprijs;
@@ -34,6 +50,9 @@ public class Extra {
 
     @Column(name = "naam")
     private String naam;
+
+    @OneToMany(mappedBy = "extra")
+    private List<Factuur> factuur;
 
     @Transient
     private Integer tempStock;
@@ -47,12 +66,12 @@ public class Extra {
         
     }
 
-    public Extra(int stock, int verkocht, int extraID, int winkelID, int uitgeverID, double kostprijs, Type type, String naam) {
+    public Extra(int stock, int verkocht, int extraID, Winkel winkel, Uitgever uitgever, double kostprijs, Type type, String naam) {
         this.stock = stock;
         this.verkocht = verkocht;
         this.extraID = extraID;
-        this.winkelID = winkelID;
-        this.uitgeverID = uitgeverID;
+        this.winkel = winkel;
+        this.uitgever = uitgever;
         this.kostprijs = kostprijs;
         this.type = type;
         this.naam = naam;
@@ -63,21 +82,24 @@ public class Extra {
         return this.stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public int getVerkocht() {
         return this.verkocht;
     }
-
 
     public int getExtraID() {
         return this.extraID;
     }
 
-    public int getWinkelID() {
-        return this.winkelID;
+    public Winkel getWinkel() {
+        return this.winkel;
     }
 
-    public int getUitgeverID() {
-        return this.uitgeverID;
+    public Uitgever getUitgever() {
+        return this.uitgever;
     }
 
     public double getKostprijs() {
@@ -100,12 +122,14 @@ public class Extra {
         this.tempStock = tempStock;
     }
 
-    public void itemVerkocht(){
-        this.verkocht++;
+    public void setTempToStock(){
+        var tempverkocht = stock - tempStock;
+        this.stock = tempStock;
+        this.verkocht = tempverkocht + verkocht;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void itemVerkocht(){
+        this.verkocht++;
     }
 
     public void setType(Type type){
@@ -120,7 +144,7 @@ public class Extra {
         this.naam = naam;
     }
 
-    public void setUitgever(Integer uitgeverID) {
-        this.uitgeverID = uitgeverID;
+    public void setUitgever(Uitgever uitgever) {
+        this.uitgever = uitgever;
     }
 }

@@ -63,7 +63,7 @@ public class UserApi {
                     game.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user.getUserId(),game.getKostPrijs(),game.getGameID(),0, game.getWinkelID());
+                    var factuur = new Factuur(0,user,game.getKostPrijs(),game,null, game.getWinkel());
                     
                     //entityManager.persist(user);
                     entityManager.persist(factuur);
@@ -107,7 +107,7 @@ public class UserApi {
                     extra.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user.getUserId(),extra.getKostprijs(),0,extra.getExtraID(), extra.getWinkelID());
+                    var factuur = new Factuur(0,user ,extra.getKostprijs(), null,extra, extra.getWinkel());
                     
                     entityManager.persist(user);
                     entityManager.persist(factuur);
@@ -121,7 +121,7 @@ public class UserApi {
             }
             
             for(Extra extra: boughtExtra){
-                extra.itemVerkocht(); //TODO zoals in games
+                extra.setTempToStock();
                 //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
             }
 

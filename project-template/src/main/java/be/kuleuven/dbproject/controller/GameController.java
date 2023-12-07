@@ -5,6 +5,8 @@ import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.VisualFilter;
+import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.User;
@@ -19,7 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -27,13 +29,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class GameController {
+public class GameController implements BuyScreenInterface{
 
     @FXML
-    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn, filterBtn;
+    private Menu consoleMenu, winkelMenu, genreMenu;
+
+    @FXML
+    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn; //filterBtn;
 
     @FXML
     private GameAddController gameAddController;
@@ -55,6 +61,11 @@ public class GameController {
 
     @FXML
     private TableView<Game> tblGames;
+
+    @FXML
+    private HBox scrlPaneFilters;
+
+    private ArrayList<VisualFilter> visualFilters;
 
     private ArrayList<String> wantToRentList;
 
@@ -79,10 +90,10 @@ public class GameController {
         addToCartBtn.setOnAction(e -> addToListGames());
         deleteBtn.setOnAction(e -> removeSelectedGames());
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
-        filterBtn.setOnAction(e -> openNewWindow("filterscherm", null));
+        //filterBtn.setOnAction(e -> openNewWindow("filterscherm", null));
 
         gameSearchBtn.setMaxWidth(Double.MAX_VALUE);
-        filterBtn.setMaxWidth(Double.MAX_VALUE);
+        //filterBtn.setMaxWidth(Double.MAX_VALUE);
 
         //alles met ty/catch in een deel?
         buyBtn.setOnAction(e -> {openNewWindow("buygamescherm",null);});
@@ -95,6 +106,10 @@ public class GameController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Game,Double>("kostPrijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
+
+        visualFilters = new ArrayList<VisualFilter>();
+
+        //Media media = new Media("out-attach-dubbelklik-op-mij.mp3");  
     }
 
     private void removeSelectedGames() {
@@ -116,7 +131,6 @@ public class GameController {
     }
 
     public void updateOrSearchTable(Boolean update){
-        //samen bekijke. 
 
         listgames.clear();
         tblGames.getItems().clear();
@@ -249,6 +263,77 @@ public class GameController {
             gamesAddBtn.setDisable(true);
             deleteBtn.setDisable(true);
         }
+    }
+
+    public void setUpFilters(){
+        var winkelApi = new WinkelApi(dbConnection);
+        var genreApi = new GenreApi(dbConnection);
+
+        for(Console console: Console.values()){
+            var menuItem = new MenuItem(console.name());
+            menuItem.setOnAction(e ->{
+                gameApi.creatSearchQuerry((console));
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(console);
+            });
+            consoleMenu.getItems().add(menuItem);
+        }   
+
+        for(Winkel winkel: winkelApi.getWinkels()){
+            var menuItem = new MenuItem(winkel.getFullAdressWithID());
+            menuItem.setOnAction(e -> {
+                gameApi.creatSearchQuerry(winkel);
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(winkel);
+            });
+            winkelMenu.getItems().add(menuItem);
+        }
+
+        for(Genre genre: genreApi.getGenres()){
+            var menuItem = new MenuItem(genre.getNaam());
+            menuItem.setOnAction(e -> {
+                gameApi.creatSearchQuerry(genre);
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(genre);
+            });
+            genreMenu.getItems().add(menuItem);
+        }
+    }
+
+    private <T> void addFilterToPane(T filter){
+        if(gameApi.getSearchConsole() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+        else if(gameApi.getSearchGenre() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+        else if(gameApi.getSearchWinkel() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+
+        var visualFilter = new VisualFilter<>(filter);
+        var visualFilterHbox = visualFilter.getVisualFilter(gameApi, this);
+
+        visualFilters.add(visualFilter);
+
+        scrlPaneFilters.getChildren().add(visualFilterHbox);   
+    }
+
+    public <T> void searchAndDeleteVisualFilterByType(T filter){
+        for(VisualFilter visualFilter: visualFilters){
+            if(visualFilter.getUsedFilter().getClass() == filter.getClass()){
+                scrlPaneFilters.getChildren().remove(visualFilter.getVisualFilterHbox());
+                visualFilters.remove(visualFilter);
+                break;
+            }
+        }
+    }
+
+    public HBox getScrlPaneFilters(){
+        return this.scrlPaneFilters;
     }
 
 }

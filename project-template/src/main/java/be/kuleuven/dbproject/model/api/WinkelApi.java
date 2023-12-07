@@ -28,7 +28,7 @@ public class WinkelApi {
         return entityManager.createQuery(select).getResultList();
     }
 
-    public Winkel getWinkelById(int id){
+    public Winkel getWinkelById(int id){ 
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Winkel.class);

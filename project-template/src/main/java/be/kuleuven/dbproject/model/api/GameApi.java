@@ -94,18 +94,22 @@ public class GameApi {
         var root = query.from(Game.class);
 
         if(searchConsole != null){
+            System.out.println("searching for console: "+searchConsole);
            querryFilterList.add(criteriaBuilder.equal(root.get("console"), searchConsole));
         }
         
         if(searchGenre != null){
-            querryFilterList.add(criteriaBuilder.equal(root.get("genreID"), searchGenre.getGenreID()));
+            System.out.println("searching for genre: "+searchGenre);
+            querryFilterList.add(criteriaBuilder.equal(root.get("genre"), searchGenre));
         }
         
         if(searchWinkel != null){
-            querryFilterList.add(criteriaBuilder.equal(root.get("winkelID"), searchWinkel.getWinkelID()));
+            System.out.println("searching for winkel: "+searchWinkel);
+            querryFilterList.add(criteriaBuilder.equal(root.get("winkel"), searchWinkel));
         }
 
         if(naam != null){
+            System.out.println("searching for name: "+naam);
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
 

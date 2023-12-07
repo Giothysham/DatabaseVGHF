@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,19 +21,21 @@ import javafx.stage.StageStyle;
 public class LoginController {
 
     @FXML
-    private Button loginBtn, crtAccountBtn;
+    private Button loginBtn, crtAccountBtn, showPasswordButton;
 
     @FXML
     private TextField emailTxtField;
 
     @FXML
-    private TextField wachtwoordTxtField;
+    private PasswordField wachtwoordTxtField;
 
     private UserApi userApi;
 
     private DbConnection dbConnection;
 
     private User user;
+
+    private boolean togleSchowWw;
     
     public void initialize(){
         loginBtn.setOnAction(e -> checkLoginCredentials());
@@ -47,6 +50,16 @@ public class LoginController {
                 e1.printStackTrace();
             }
         });
+
+        togleSchowWw = false;
+
+        showPasswordButton.setOnAction(e -> togleWw());
+    }
+
+    private void togleWw(){
+        //implement show password
+        togleSchowWw = !togleSchowWw;
+        wachtwoordTxtField.setVisible(togleSchowWw);
     }
 
     private void checkLoginCredentials(){

@@ -140,38 +140,31 @@ public class GameAddController {
         beschrijving.setText(game.getBeschrijving());
         aantalUitgeleend.setText(Integer.toString(game.getVerkocht()));
 
-        GenreApi genreApi= new GenreApi(dbConnection);
-        var genre = genreApi.getGenreById(game.getGenreID());
-        genreIDDropDown.setValue(genre.getNaam());
+        genreIDDropDown.setValue(game.getGenre().getNaam());
 
-        WinkelApi winkelApi = new WinkelApi(dbConnection);
-        var winkel = winkelApi.getWinkelById(game.getWinkelID());
-        winkelDropDown.setValue(winkel.getFullAdressWithID());
+        winkelDropDown.setValue(game.getWinkel().getFullAdressWithID());
 
         consoleDropDown.setValue(game.getConsole());
         
-        UitgeverApi uitgeverApi = new UitgeverApi(dbConnection);
-        var uitgever = uitgeverApi.getUitgeverById(game.getUitgever());
-        uitgeverIDDropDown.setValue(uitgever.getNaam());
+        uitgeverIDDropDown.setValue(game.getUitgever().getNaam());
         this.game = game;
     }
 
-    private void updateGame(){
+    private void updateGame(){ //TODO: aantal verkocht is niet het enige dat niet aangepast kan worden (vb winkel), checken, implementeren of verwijderen
         game.setBeschrijving(this.beschrijving.getText());
         game.setConsole((Console) consoleDropDown.getValue());
 
         var genre = (String) genreIDDropDown.getValue();
         var genreApi = new GenreApi(dbConnection);
-        game.setGenreID(genreApi.getGenreIdByName(genre));
+        game.setGenre(genreApi.getGenreByName(genre));
 
         game.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
         game.setNaam(this.naam.getText());
         game.setStock(Integer.parseInt(this.aantalStock.getText()));
-        //game.setVerkocht(Integer.parseInt(this.aantalUitgeleend.getText())); // TODO: bestaat niet?, methodes moeten aangemaakt worden
-
+        
         var uitgeverName = (String) uitgeverIDDropDown.getValue();
         var uitgeverApi = new UitgeverApi(dbConnection);
-        game.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
+        game.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
 
         gameController.updateOrSearchTable(false);
 
@@ -184,33 +177,33 @@ public class GameAddController {
         var aantalStock = Integer.parseInt(this.aantalStock.getText());
         Console console = (Console) consoleDropDown.getValue();
         var kostPrijs = Double.parseDouble(this.kostPijs.getText());
-        var genre = (String) genreIDDropDown.getValue();
+        var genreNaam = (String) genreIDDropDown.getValue();
         var naam = this.naam.getText();
         var beschrijving = this.beschrijving.getText();
-        Integer winkelID = null;
-        Integer uitgeverID = null;
+        Winkel winkel = null;
+        Uitgever uitgever = null;
         String nameWinkel = (String) winkelDropDown.getValue();
         String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
 
         var genreApi = new GenreApi(dbConnection);
-        var genreID = genreApi.getGenreIdByName(genre);
+        var genre = genreApi.getGenreByName(genreNaam);
 
-        for (Winkel winkel : winkels) {
-            if(nameWinkel.contains(winkel.getFullAdressWithID())){
-                winkelID = winkel.getWinkelID();
+        for (Winkel testwinkel : winkels) {
+            if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
+                winkel = testwinkel;
                 break;
             }
-        }
+        } 
 
-        for(Uitgever uitgever: uitgevers){
-            if(nameUitgever.contains(uitgever.getNaam())){
-                uitgeverID = uitgever.getUitgeverID();
+        for(Uitgever testuitgever: uitgevers){
+            if(nameUitgever.contains(testuitgever.getNaam())){
+                uitgever = testuitgever;
                 break;
             }
         }
         
         //logica voor te zien of iets null is of niet 
-        Game tempgame = new Game(aantalStock, 0, console, 0,winkelID, kostPrijs, genreID, naam, beschrijving, uitgeverID);
+        Game tempgame = new Game(aantalStock, 0, console, 0,winkel, kostPrijs, genre, naam, beschrijving, uitgever);
         
         try {
             var gameApi = new GameApi(dbConnection);

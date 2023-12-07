@@ -1,10 +1,13 @@
 package be.kuleuven.dbproject.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 
 @Entity
@@ -16,33 +19,37 @@ public class Factuur {
     @Id
     private int factuurID;
 
-    @Column(name = "userID")
-    private int userID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "userID")
+    private User user;
 
     @Column(name = "kostprijs")
     private double kostPrijs;
 
-    @Column(name = "gameID")
-    private int gameID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "gameID")
+    private Game game;
 
-    @Column(name = "extraID")
-    private int extraID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "extraID")
+    private Extra extra;
 
-    @Column(name = "winkelID")
-    private int winkelID;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "winkelID")
+    private Winkel winkel;
 
     public Factuur(){
 
     }
 
 
-    public Factuur(int factuurID, int userID, double kostprijs, int gameID, int extraID, int winkelID) {
+    public Factuur(int factuurID, User user, double kostprijs, Game game, Extra extra, Winkel winkel) {
         this.factuurID = factuurID;
-        this.userID = userID;
+        this.user = user;
         this.kostPrijs = kostprijs;
-        this.gameID = gameID;
-        this.extraID = extraID;
-        this.winkelID = winkelID;
+        this.game = game;
+        this.extra = extra;
+        this.winkel = winkel;
     }
 
 
@@ -50,24 +57,24 @@ public class Factuur {
         return this.factuurID;
     }
 
-    public int getUserID() {
-        return this.userID;
+    public User getUser() {
+        return this.user;
     }
 
     public double getKostPrijs() {
         return this.kostPrijs;
     }
 
-    public int getGameID() {
-        return this.gameID;
+    public Game getGame() {
+        return this.game;
     }
 
-    public int getExtraID() {
-        return this.extraID;
+    public Extra getExtra() {
+        return this.extra;
     }
 
-    public int getWinkelID() {
-        return this.winkelID;
+    public Winkel getWinkel() {
+        return this.winkel;
     }
 
 }

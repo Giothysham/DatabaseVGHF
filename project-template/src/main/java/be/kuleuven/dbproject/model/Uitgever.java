@@ -1,9 +1,12 @@
 package be.kuleuven.dbproject.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 @Entity
@@ -20,6 +23,12 @@ public class Uitgever {
     @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="uitgever")
     @Id
     private int uitgeverID;
+
+    @OneToMany(mappedBy = "uitgever")
+    private List<Game> game;
+
+    @OneToMany(mappedBy = "uitgever")
+    private List<Extra> extra;
 
     public Uitgever(){
 

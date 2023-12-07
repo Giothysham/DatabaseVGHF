@@ -95,14 +95,11 @@ public class ExtraAddController {
         naam.setText(extra.getNaam());
         aantalVerkocht.setText(Integer.toString(extra.getVerkocht()));
 
-        WinkelApi winkelApi = new WinkelApi(dbConnection);
-        var winkel = winkelApi.getWinkelById(extra.getWinkelID());
-        winkelDropDown.setValue(winkel.getFullAdressWithID());
+        winkelDropDown.setValue(extra.getWinkel().getFullAdressWithID());
 
         typeDropDown.setValue(extra.getType());
         
-        UitgeverApi uitgeverApi = new UitgeverApi(dbConnection);
-        var uitgever = uitgeverApi.getUitgeverById(extra.getUitgeverID());
+        var uitgever = extra.getUitgever();
         uitgeverIDDropDown.setValue(uitgever.getNaam());
         this.extra = extra;
     }
@@ -116,7 +113,7 @@ public class ExtraAddController {
 
         var uitgeverName = (String) uitgeverIDDropDown.getValue();
         var uitgeverApi = new UitgeverApi(dbConnection);
-        extra.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)).getUitgeverID());
+        extra.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
 
         extraController.updateOrSearchTable(true);
 
@@ -130,27 +127,27 @@ public class ExtraAddController {
         Type type = (Type) typeDropDown.getValue();
         var kostPrijs = Double.parseDouble(this.kostPijs.getText());
         var naam = this.naam.getText();
-        Integer winkelID = null;
-        Integer uitgeverID = null;
+        Winkel winkel = null;
+        Uitgever uitgever = null;
         String nameWinkel = (String) winkelDropDown.getValue();
         String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
 
-        for (Winkel winkel : winkels) {
-            if(nameWinkel.contains(winkel.getFullAdressWithID())){
-                winkelID = winkel.getWinkelID();
+        for (Winkel testwinkel : winkels) {
+            if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
+                winkel = testwinkel;
                 break;
             }
         }
 
-        for(Uitgever uitgever: uitgevers){
-            if(nameUitgever.contains(uitgever.getNaam())){
-                uitgeverID = uitgever.getUitgeverID();
+        for(Uitgever testuitgever: uitgevers){
+            if(nameUitgever.contains(testuitgever.getNaam())){
+                uitgever = testuitgever;
                 break;
             }
         }
         
         //logica voor te zien of iets null is of niet 
-        Extra tempextra= new Extra(aantalStock, 0, 0, winkelID, uitgeverID, kostPrijs, type, naam);
+        Extra tempextra= new Extra(aantalStock, 0, 0, winkel, uitgever, kostPrijs, type, naam);
         
         try {
             var extraApi = new ExtraApi(dbConnection);
