@@ -24,7 +24,7 @@ MoreInfoGameController {
     private TextArea moreInfoTxt;
 
     public void initialize(){
-
+        //TODO => zorg dat plek waar het aanwezig is te zien is. 
     }
     
     public void setdbConnection(DbConnection dbConnection){

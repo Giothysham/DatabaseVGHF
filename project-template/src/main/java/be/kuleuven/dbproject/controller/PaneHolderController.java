@@ -39,6 +39,7 @@ public class PaneHolderController {
             var gameController = (GameController) childController;
             gameController.setDbConnection(dbConnection);
             gameController.setUser(user);
+            gameController.setUpFilters();
         }
         
         else if(childController.getClass() == UitgeleendeGameController.class){

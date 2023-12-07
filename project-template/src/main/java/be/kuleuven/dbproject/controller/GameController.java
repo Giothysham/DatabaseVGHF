@@ -5,29 +5,41 @@ import org.controlsfx.control.textfield.TextFields;
 import java.util.ArrayList;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.VisualFilter;
+import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.User;
+import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GameApi;
+import be.kuleuven.dbproject.model.api.GenreApi;
+import be.kuleuven.dbproject.model.api.WinkelApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class GameController {
+public class GameController implements BuyScreenInterface{
 
     @FXML
-    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn;
+    private Menu consoleMenu, winkelMenu, genreMenu;
+
+    @FXML
+    private Button gamesAddBtn, deleteBtn, buyBtn, gameSearchBtn, addToCartBtn; //filterBtn;
 
     @FXML
     private GameAddController gameAddController;
@@ -50,6 +62,11 @@ public class GameController {
     @FXML
     private TableView<Game> tblGames;
 
+    @FXML
+    private HBox scrlPaneFilters;
+
+    private ArrayList<VisualFilter> visualFilters;
+
     private ArrayList<String> wantToRentList;
 
     private ArrayList<String> autoCompleteWords;
@@ -59,6 +76,8 @@ public class GameController {
     private DbConnection dbConnection;
 
     private User user;
+
+    private GameApi gameApi;
 
     public void initialize(){
         //______________________________________________________
@@ -71,6 +90,10 @@ public class GameController {
         addToCartBtn.setOnAction(e -> addToListGames());
         deleteBtn.setOnAction(e -> removeSelectedGames());
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
+        //filterBtn.setOnAction(e -> openNewWindow("filterscherm", null));
+
+        gameSearchBtn.setMaxWidth(Double.MAX_VALUE);
+        //filterBtn.setMaxWidth(Double.MAX_VALUE);
 
         //alles met ty/catch in een deel?
         buyBtn.setOnAction(e -> {openNewWindow("buygamescherm",null);});
@@ -84,11 +107,12 @@ public class GameController {
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Game,Integer>("stock"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
+        visualFilters = new ArrayList<VisualFilter>();
+
         //Media media = new Media("out-attach-dubbelklik-op-mij.mp3");  
     }
 
     private void removeSelectedGames() {
-        var gameApi = new GameApi(dbConnection);
         var tempList = tblGames.getSelectionModel().getSelectedItems();
         
         gameApi.deleteGame(tempList);
@@ -107,11 +131,9 @@ public class GameController {
     }
 
     public void updateOrSearchTable(Boolean update){
-        //samen bekijke. 
 
         listgames.clear();
         tblGames.getItems().clear();
-        var gameApi = new GameApi(dbConnection);
 
         if(update){
             listgames = (ArrayList<Game>) gameApi.getGames();
@@ -119,10 +141,10 @@ public class GameController {
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
+                listgames = (ArrayList<Game>) gameApi.searchGamesByFilters(autoCompleteText);
             }
             else{
-                listgames = (ArrayList<Game>) gameApi.getGames();
+                listgames = (ArrayList<Game>) gameApi.searchGamesByFilters(null);
             }
         }
         
@@ -130,7 +152,8 @@ public class GameController {
     }
 
     public void initTable() {
-        var gameApi = new GameApi(dbConnection);
+        var winkelApi = new WinkelApi(dbConnection);
+        var genreApi = new GenreApi(dbConnection);
 
         listgames = (ArrayList<Game>) gameApi.getGames();
 
@@ -206,6 +229,11 @@ public class GameController {
                 buyGameSchermController.setparentController(this);
                 buyGameSchermController.setUser(user);
             }
+            else if(controller.getClass() == FilterSchermController.class){
+                FilterSchermController filterSchermController = (FilterSchermController) controller;
+                filterSchermController.setParentController(this);
+                filterSchermController.setUpFilters(dbConnection, gameApi);
+            }
 
             var scene = new Scene((Parent) root);
             stage.setScene(scene);
@@ -221,6 +249,7 @@ public class GameController {
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
+        gameApi = new GameApi(dbConnection);
         initTable();
     }
 
@@ -234,6 +263,77 @@ public class GameController {
             gamesAddBtn.setDisable(true);
             deleteBtn.setDisable(true);
         }
+    }
+
+    public void setUpFilters(){
+        var winkelApi = new WinkelApi(dbConnection);
+        var genreApi = new GenreApi(dbConnection);
+
+        for(Console console: Console.values()){
+            var menuItem = new MenuItem(console.name());
+            menuItem.setOnAction(e ->{
+                gameApi.creatSearchQuerry((console));
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(console);
+            });
+            consoleMenu.getItems().add(menuItem);
+        }   
+
+        for(Winkel winkel: winkelApi.getWinkels()){
+            var menuItem = new MenuItem(winkel.getFullAdressWithID());
+            menuItem.setOnAction(e -> {
+                gameApi.creatSearchQuerry(winkel);
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(winkel);
+            });
+            winkelMenu.getItems().add(menuItem);
+        }
+
+        for(Genre genre: genreApi.getGenres()){
+            var menuItem = new MenuItem(genre.getNaam());
+            menuItem.setOnAction(e -> {
+                gameApi.creatSearchQuerry(genre);
+                gameApi.searchGamesByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(genre);
+            });
+            genreMenu.getItems().add(menuItem);
+        }
+    }
+
+    private <T> void addFilterToPane(T filter){
+        if(gameApi.getSearchConsole() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+        else if(gameApi.getSearchGenre() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+        else if(gameApi.getSearchWinkel() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+
+        var visualFilter = new VisualFilter<>(filter);
+        var visualFilterHbox = visualFilter.getVisualFilter(gameApi, this);
+
+        visualFilters.add(visualFilter);
+
+        scrlPaneFilters.getChildren().add(visualFilterHbox);   
+    }
+
+    public <T> void searchAndDeleteVisualFilterByType(T filter){
+        for(VisualFilter visualFilter: visualFilters){
+            if(visualFilter.getUsedFilter().getClass() == filter.getClass()){
+                scrlPaneFilters.getChildren().remove(visualFilter.getVisualFilterHbox());
+                visualFilters.remove(visualFilter);
+                break;
+            }
+        }
+    }
+
+    public HBox getScrlPaneFilters(){
+        return this.scrlPaneFilters;
     }
 
 }

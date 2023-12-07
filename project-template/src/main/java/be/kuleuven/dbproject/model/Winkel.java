@@ -12,7 +12,7 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Winkel {
 
-    @Column(name = "bezoekers") //TODO: doen we echt saus mee???
+    @Column(name = "bezoekers") //TODO: doen we echt saus mee??? => niet echt nodig
     private int bezoekers;
 
     @Column(name = "winkelID")
@@ -63,6 +63,12 @@ public class Winkel {
 
     public String getFullAdressWithID(){
         String adress = adres+"/"+stad+"/"+provincie+"/"+postcode+"/"+land+"/id: "+winkelID;
+
+        return adress;
+    }
+
+    public String getSmallAdress(){
+        String adress = stad+"/"+provincie+"/"+postcode+"/"+land;
 
         return adress;
     }
