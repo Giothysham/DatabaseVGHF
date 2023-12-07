@@ -48,9 +48,6 @@ public class UitgeleendeGameController {
     private TableColumn<Game,Console> consoleColumn;
 
     @FXML
-    private TableColumn<Winkel,String> locatieColumn;
-
-    @FXML
     private TableView<Game> tblUitgeleendeGames;
 
     private ArrayList<String> autoCompleteWords;
@@ -72,7 +69,6 @@ public class UitgeleendeGameController {
         listgames = new ArrayList<Game>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
-        //locatieColumn.setCellValueFactory(new PropertyValueFactory<Game,Winkel>("stad"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
         //name is deprecated => inittabel is meer => zien hoe optimalizeren

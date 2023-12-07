@@ -48,9 +48,6 @@ public class ExtraController {
     private TableColumn<Extra,String> typeColumn;
 
     @FXML
-    private TableColumn<Extra,Uitgever> uitgeverColumn;
-
-    @FXML
     private TableView<Extra> tblExtras;
 
     private ArrayList<String> wantToBuyList;
@@ -85,7 +82,6 @@ public class ExtraController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<Extra,Double>("kostprijs"));
         avaibleColumn.setCellValueFactory(new PropertyValueFactory<Extra,Integer>("stock"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Extra,String>("type"));
-        //uitgeverColumn.setCellValueFactory(new PropertyValueFactory<Extra, Uitgever>("uitgever"));
     }
 
     private void removeSelectedExtras() {
@@ -145,7 +141,7 @@ public class ExtraController {
 
         tblExtras.setOnMouseClicked(mouseEvent -> {onClickGame(mouseEvent);});
 
-        tblExtras.getSelectionModel().setSelectionMode(SelectionMo de.MULTIPLE);
+        tblExtras.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tblExtras.getItems().addAll(listExtra);
 

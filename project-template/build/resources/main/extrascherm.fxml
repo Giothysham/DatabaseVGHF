@@ -37,7 +37,6 @@
                         <TableColumn text="price" fx:id="priceColumn" />
                         <TableColumn text="avaible" fx:id="avaibleColumn" />
                         <TableColumn text="type" fx:id="typeColumn" />
-                        <TableColumn text="uitgever" fx:id="uitgeverColumn" />
                     </columns>
                 </TableView>
                 <HBox spacing="5" alignment="CENTER">
