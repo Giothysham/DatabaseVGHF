@@ -145,7 +145,7 @@ public class ExtraController {
 
         tblExtras.setOnMouseClicked(mouseEvent -> {onClickGame(mouseEvent);});
 
-        tblExtras.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tblExtras.getSelectionModel().setSelectionMode(SelectionMo de.MULTIPLE);
 
         tblExtras.getItems().addAll(listExtra);
 
