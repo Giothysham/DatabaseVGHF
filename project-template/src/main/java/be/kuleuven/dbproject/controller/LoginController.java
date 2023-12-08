@@ -101,7 +101,7 @@ public class LoginController {
 
         if(controller.getClass() == ProjectMainController.class){
             var projectMainController = (ProjectMainController) controller;
-            projectMainController.setdbConnection(this.dbConnection);
+            projectMainController.setDbConnection(this.dbConnection);
             projectMainController.setUser(user);
         }
         else if(controller.getClass() == CreatAccountController.class){
