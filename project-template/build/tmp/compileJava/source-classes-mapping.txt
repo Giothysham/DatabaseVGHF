@@ -1,15 +1,15 @@
-be/kuleuven/dbproject/ProjectMain.java
- be.kuleuven.dbproject.ProjectMain
+be/kuleuven/dbproject/controller/MoreInfoGameController.java
+ be.kuleuven.dbproject.controller.MoreInfoGameController
 be/kuleuven/dbproject/model/Extra.java
  be.kuleuven.dbproject.model.Extra
-be/kuleuven/dbproject/model/api/ExtraApi.java
- be.kuleuven.dbproject.model.api.ExtraApi
+be/kuleuven/dbproject/controller/BuyGameSchermController.java
+ be.kuleuven.dbproject.controller.BuyGameSchermController
 be/kuleuven/dbproject/model/Uitgever.java
  be.kuleuven.dbproject.model.Uitgever
 be/kuleuven/dbproject/model/api/DbConnection.java
  be.kuleuven.dbproject.model.api.DbConnection
-be/kuleuven/dbproject/controller/ProjectMainController.java
- be.kuleuven.dbproject.controller.ProjectMainController
+be/kuleuven/dbproject/controller/UitgeleendeGameController.java
+ be.kuleuven.dbproject.controller.UitgeleendeGameController
 be/kuleuven/dbproject/model/api/GameApi.java
  be.kuleuven.dbproject.model.api.GameApi
 be/kuleuven/dbproject/model/api/UitgeverApi.java
@@ -40,8 +40,8 @@ be/kuleuven/dbproject/controller/AdminController.java
  be.kuleuven.dbproject.controller.AdminController
 be/kuleuven/dbproject/model/Winkel.java
  be.kuleuven.dbproject.model.Winkel
-be/kuleuven/dbproject/controller/BuyExtraSchermController.java
- be.kuleuven.dbproject.controller.BuyExtraSchermController
+be/kuleuven/dbproject/controller/GameAddController.java
+ be.kuleuven.dbproject.controller.GameAddController
 be/kuleuven/dbproject/model/User.java
  be.kuleuven.dbproject.model.User
 be/kuleuven/dbproject/model/api/WinkelApi.java
@@ -52,27 +52,27 @@ be/kuleuven/dbproject/controller/MoreInfoController.java
  be.kuleuven.dbproject.controller.MoreInfoController
 be/kuleuven/dbproject/model/api/GenreApi.java
  be.kuleuven.dbproject.model.api.GenreApi
-be/kuleuven/dbproject/controller/ExtraAddController.java
- be.kuleuven.dbproject.controller.ExtraAddController
-be/kuleuven/dbproject/controller/LoginController.java
- be.kuleuven.dbproject.controller.LoginController
-be/kuleuven/dbproject/controller/MoreInfoGameController.java
- be.kuleuven.dbproject.controller.MoreInfoGameController
-be/kuleuven/dbproject/controller/CreatAccountController.java
- be.kuleuven.dbproject.controller.CreatAccountController
-be/kuleuven/dbproject/controller/UitgeleendeGameController.java
- be.kuleuven.dbproject.controller.UitgeleendeGameController
-be/kuleuven/dbproject/controller/BuyGameSchermController.java
- be.kuleuven.dbproject.controller.BuyGameSchermController
-be/kuleuven/dbproject/controller/FilterSchermController.java
- be.kuleuven.dbproject.controller.FilterSchermController
 be/kuleuven/dbproject/controller/PaneHolderController.java
  be.kuleuven.dbproject.controller.PaneHolderController
-be/kuleuven/dbproject/controller/GameAddController.java
- be.kuleuven.dbproject.controller.GameAddController
+be/kuleuven/dbproject/model/api/ExtraApi.java
+ be.kuleuven.dbproject.model.api.ExtraApi
+be/kuleuven/dbproject/controller/CreatAccountController.java
+ be.kuleuven.dbproject.controller.CreatAccountController
+be/kuleuven/dbproject/controller/FilterSchermController.java
+ be.kuleuven.dbproject.controller.FilterSchermController
+be/kuleuven/dbproject/controller/BuyExtraSchermController.java
+ be.kuleuven.dbproject.controller.BuyExtraSchermController
 be/kuleuven/dbproject/controller/GameController.java
  be.kuleuven.dbproject.controller.GameController
+be/kuleuven/dbproject/controller/LoginController.java
+ be.kuleuven.dbproject.controller.LoginController
 be/kuleuven/dbproject/controller/ExtraController.java
  be.kuleuven.dbproject.controller.ExtraController
+be/kuleuven/dbproject/controller/ProjectMainController.java
+ be.kuleuven.dbproject.controller.ProjectMainController
 be/kuleuven/dbproject/VisualFilter.java
  be.kuleuven.dbproject.VisualFilter
+be/kuleuven/dbproject/ProjectMain.java
+ be.kuleuven.dbproject.ProjectMain
+be/kuleuven/dbproject/controller/ExtraAddController.java
+ be.kuleuven.dbproject.controller.ExtraAddController

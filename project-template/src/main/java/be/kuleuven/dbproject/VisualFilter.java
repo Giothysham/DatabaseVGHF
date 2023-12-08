@@ -1,7 +1,5 @@
 package be.kuleuven.dbproject;
 
-import java.awt.Color;
-
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
