@@ -80,10 +80,6 @@ public class GameController implements BuyScreenInterface{
     private GameApi gameApi;
 
     public void initialize(){
-        //______________________________________________________
-        //implimenteer remove game (Done)
-        //TODO => Mauro zoek uit voor filteren op winkel of console of andere. 
-        //______________________________________________________
         wantToRentList = new ArrayList<>();
 
         gamesAddBtn.setOnAction(e -> openNewWindow("gameaddscherm",null));

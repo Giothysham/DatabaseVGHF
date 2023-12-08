@@ -44,7 +44,7 @@ public class GenreAddController {
             genre.setBeschrijving(beschrijving);
         }
         else{
-            Genre genre = new Genre(0, name, beschrijving);
+            Genre genre = new Genre(name, beschrijving);
 
             var genreApi = new GenreApi(dbConnection);
             genreApi.postGenre(genre);

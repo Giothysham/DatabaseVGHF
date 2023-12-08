@@ -12,6 +12,7 @@ import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
@@ -59,6 +60,8 @@ public class UitgeleendeGameController {
 
     public void initialize(){
 
+        //TODO wordt nooit ge commit => sluiten app zorgt ervoor dat data weg gaat.
+
         gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
 
         returnBtn.setOnAction(e -> returnGame());
@@ -74,28 +77,28 @@ public class UitgeleendeGameController {
         //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
     }
 
-        private void returnGame() {
-            var tempList = tblUitgeleendeGames.getSelectionModel().getSelectedItems();
-            var userApi = new UserApi(dbConnection);
+    private void returnGame() {
+        var tempList = tblUitgeleendeGames.getSelectionModel().getSelectedItems();
+        var userApi = new UserApi(dbConnection);
 
-            if(tempList.size() > 0){
-                var uitgeleendeGames = user.getUitgeleendeGames();
+        if(tempList.size() > 0){
+            var uitgeleendeGames = user.getUitgeleendeGames();
 
-                for (int i = 0; i<tempList.size(); i++) {
-                    //vragen of dit hard code cava is. 
-                    var gameID = ((Game) tempList.get(i)).getGameID();
-                    for(Game game: uitgeleendeGames){
-                        if(gameID == game.getGameID()){
-                            game.setStock(game.getStock() + 1);
-                            uitgeleendeGames.remove(game);
-                            break;
-                        }
+            for (int i = 0; i<tempList.size(); i++) {
+                //vragen of dit hard code cava is. 
+                var gameID = ((Game) tempList.get(i)).getGameID();
+                for(Game game: uitgeleendeGames){
+                    if(gameID == game.getGameID()){
+                        game.setStock(game.getStock() + 1);
+                        uitgeleendeGames.remove(game);
+                        break;
                     }
                 }
-                userApi.updateUser(user);
-            } 
-            updateOrSearchTable(false);
-        }
+            }
+            userApi.updateUser(user);
+        } 
+        updateOrSearchTable(false);
+    }
 
     public void updateOrSearchTable(Boolean update){
         tblUitgeleendeGames.getItems().clear();
@@ -106,9 +109,9 @@ public class UitgeleendeGameController {
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-            //     listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
+                //listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
             }
-            // TODO: aan wouter fix vragen
+            // TODO: aan wouter fix vragen => nog een bekijken wat dit is
             else{
                 listgames = user.getUitgeleendeGames();
             }
@@ -150,7 +153,7 @@ public class UitgeleendeGameController {
 
             var stage = new Stage();
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
-            var root = (GridPane) loader.load();
+            var root = loader.load();
             var controller = loader.getController();
 
             if(controller.getClass() == MoreInfoGameController.class){
@@ -159,7 +162,7 @@ public class UitgeleendeGameController {
                 moreInfoGameController.setGame(gameSelected);
             }
 
-            var scene = new Scene(root);
+            var scene = new Scene((Parent) root);
             stage.setScene(scene);
             stage.setTitle("budo/"+ id);
             stage.initOwner(ProjectMain.getRootStage());
