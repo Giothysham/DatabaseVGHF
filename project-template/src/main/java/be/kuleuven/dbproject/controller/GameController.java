@@ -296,6 +296,8 @@ public class GameController implements BuyScreenInterface{
     }
 
     private <T> void addFilterToPane(T filter){
+
+        //TODO mauro optimize
         if(gameApi.getSearchConsole() != null){
             searchAndDeleteVisualFilterByType(filter);
         }

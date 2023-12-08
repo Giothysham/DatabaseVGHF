@@ -1,5 +1,7 @@
 package be.kuleuven.dbproject;
 
+import java.awt.Color;
+
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
@@ -11,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 public class VisualFilter<T> {
@@ -46,28 +49,27 @@ public class VisualFilter<T> {
             text.setText(((Genre) usedFilter).getNaam());
         }
 
+        text.setFill(Paint.valueOf("#000000"));
+
         button.setOnAction(e -> {
             gameApi.removeFilterByClass(usedFilter);
             parentController.getScrlPaneFilters().getChildren().remove(visualFilterHbox);
             parentController.updateOrSearchTable(false);
-            gameApi.removeFilterByClass(usedFilter);
         });
 
         vbox.getChildren().add(text);
+        visualFilterHbox.setStyle("-fx-background-color: #DBDAE5;  -fx-border-radius: 5 5 0 5; -fx-background-radius: 5 5 0 5;");
 
-        button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white;");
+        button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white; -fx-font-weight: bold; ");
 
         visualFilterHbox.getChildren().addAll(vbox, button);
-
-        //nog bekijken geeft null
-
-        System.out.println("_________________________________________"+visualFilterHbox);
 
         return visualFilterHbox;
     }
 
-        public HBox getVisualFilter(ExtraApi extraApi,BuyScreenInterface parentController){
+    public HBox getVisualFilter(ExtraApi extraApi,BuyScreenInterface parentController){
 
+        //TODO: fix in een ding => edmond
         visualFilterHbox = new HBox();
         visualFilterHbox.setSpacing(5.0);
 
@@ -78,6 +80,8 @@ public class VisualFilter<T> {
         vbox.setAlignment(Pos.CENTER);
 
         var text = new Text();
+
+        text.setFill(Paint.valueOf("#000000"));
 
         if(usedFilter.getClass() == Winkel.class){
             text.setText(((Winkel) usedFilter).getSmallAdress());
@@ -90,18 +94,16 @@ public class VisualFilter<T> {
             extraApi.removeFilterByClass(usedFilter);
             parentController.getScrlPaneFilters().getChildren().remove(visualFilterHbox);
             parentController.updateOrSearchTable(false);
-            extraApi.removeFilterByClass(usedFilter);
         });
 
         vbox.getChildren().add(text);
+        visualFilterHbox.setStyle("-fx-background-color: #DBDAE5;  -fx-border-radius: 5 5 0 5; -fx-background-radius: 5 5 0 5;");
+
+        button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white; -fx-font-weight: bold; ");
 
         button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white;");
 
         visualFilterHbox.getChildren().addAll(vbox, button);
-
-        //nog bekijken geeft null
-
-        System.out.println("_________________________________________"+visualFilterHbox);
 
         return visualFilterHbox;
     }

@@ -102,7 +102,7 @@ public class ProjectMainController {
     public void changeButtonStyle(ArrayList<Button> buttonList,ActionEvent mouseAction){
         for(Button button: buttonList){
             if(mouseAction.getSource().equals(button)){
-                button.setStyle("-fx-background-color: #F8F7F3; -fx-text-fill: #4f46e5;");
+                button.setStyle("-fx-background-color: #F4F4F4; -fx-text-fill: #4f46e5;");
             }else{
                 button.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white;");
             }
@@ -126,7 +126,7 @@ public class ProjectMainController {
         stage.show();
     }
 
-    public void setdbConnection(DbConnection dbConnection){
+    public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
     }
 

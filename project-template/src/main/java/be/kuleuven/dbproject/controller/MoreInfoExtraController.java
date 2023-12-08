@@ -42,7 +42,7 @@ MoreInfoExtraController {
         locatieTxt.setText(extra.getWinkel().getFullAdressWithID());
     }
     
-        public void setDbConnection(DbConnection dbConnection) {
+    public void setDbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
 }
