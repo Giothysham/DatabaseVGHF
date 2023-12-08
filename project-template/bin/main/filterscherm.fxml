@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.FilterSchermController" prefWidth="200" prefHeight="200">
+    <children>
+        <VBox style="-fx-padding: 0 5 0 5;" spacing="10">
+            <!-- <HBox fx:id="hboxConsoleMenu" spacing="10">
+                <MenuButton fx:id="consoleMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="Console" textFill="WHITE"/>
+            </HBox>
+
+            <HBox fx:id="hboxWinkelMenu" spacing="10">
+                <MenuButton fx:id="winkelMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="Winkel" textFill="WHITE"/>
+            </HBox>
+
+            <HBox fx:id="hboxGenreMenu" spacing="10">
+                <MenuButton fx:id="genreMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="Genre" textFill="WHITE"/>
+            </HBox> -->
+            
+            <MenuButton style="-fx-background-color: #4f46e5;" textFill="WHITE" mnemonicParsing="false" text="File">
+                <items>
+                    <Menu fx:id="openRecentTab" mnemonicParsing="false" text="Open Recent"/>
+                    <Menu fx:id="consoleMenu" mnemonicParsing="false" text="Console"/>
+                    <Menu fx:id="winkelMenu" mnemonicParsing="false" text="Winkel"/>
+                    <Menu fx:id="genreMenu" mnemonicParsing="false" text="Genre"/>
+                </items>
+            </MenuButton>
+
+            <Button fx:id="returnBtn" text="return" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+        </VBox>
+    </children>
+</AnchorPane>

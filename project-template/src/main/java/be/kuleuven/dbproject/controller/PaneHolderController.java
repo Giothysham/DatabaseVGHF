@@ -61,6 +61,7 @@ public class PaneHolderController {
             var extraController = (ExtraController) childController;
             extraController.setDbConnection(dbConnection);
             extraController.setUser(user);
+            extraController.setUpFilters();
         }
 
         rootLoader.autosize();

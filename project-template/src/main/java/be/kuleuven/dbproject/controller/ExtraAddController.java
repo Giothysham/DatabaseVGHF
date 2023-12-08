@@ -3,6 +3,7 @@ package be.kuleuven.dbproject.controller;
 
 import java.util.List;
 
+import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
@@ -14,16 +15,20 @@ import be.kuleuven.dbproject.model.enums.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ExtraAddController {
 
     @FXML
-    private Button submitExtraBtn;
+    private Button submitExtraBtn, viewExtraPageBtn;
 
     @FXML
     private ComboBox<Type> typeDropDown;
@@ -60,7 +65,36 @@ public class ExtraAddController {
             }
         );
 
+        viewExtraPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfoextra"));
+
+        viewExtraPageBtn.setDisable(update);
+
         // beschrijving.setWrapText(true);
+    }
+
+    
+    public void changeWindowToMoreInfo(String id){
+        try{
+            var resourceName = id+".fxml";
+
+            var stage = new Stage();
+            var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
+            var root = loader.load();
+            var controller = (MoreInfoExtraController) loader.getController();
+
+            controller.setDbConnection(dbConnection);
+            controller.setExtra(extra);
+
+            var scene = new Scene((Parent) root);
+            stage.setScene(scene);
+            stage.setTitle("budo/"+ id);
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setupDropDown(DbConnection dbConnection){

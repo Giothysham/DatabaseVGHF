@@ -7,7 +7,6 @@ import org.controlsfx.control.textfield.TextFields;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
-import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.enums.Console;
@@ -48,9 +47,6 @@ public class UitgeleendeGameController {
     private TableColumn<Game,Console> consoleColumn;
 
     @FXML
-    private TableColumn<Winkel,String> locatieColumn;
-
-    @FXML
     private TableView<Game> tblUitgeleendeGames;
 
     private ArrayList<String> autoCompleteWords;
@@ -72,7 +68,6 @@ public class UitgeleendeGameController {
         listgames = new ArrayList<Game>();
 
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
-        //locatieColumn.setCellValueFactory(new PropertyValueFactory<Game,Winkel>("stad"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
         //name is deprecated => inittabel is meer => zien hoe optimalizeren

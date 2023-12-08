@@ -8,16 +8,16 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.textfield.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.MoreInfoGameController">
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.MoreInfoExtraController">
     <children>
         <VBox spacing="10" style="-fx-padding: 0 10 10 10;">
             <HBox alignment="CENTER">
-                <Label fx:id="gameNameTxt" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
+                <Label fx:id="extraNameTxt" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
             </HBox>
             <HBox>
                 <HBox spacing="10">
-                    <Text text="console: " style="-fx-font-size: 14;"/>
-                    <Text fx:id="consoleTxt" style="-fx-font-size: 14;"/>
+                    <Text text="type: " style="-fx-font-size: 14;"/>
+                    <Text fx:id="typeTxt" style="-fx-font-size: 14;"/>
                 </HBox>
                 <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">

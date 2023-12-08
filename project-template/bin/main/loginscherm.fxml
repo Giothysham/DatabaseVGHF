@@ -17,7 +17,11 @@
             <TextField fx:id="emailTxtField"/>
             
             <Label text="wachtwoord:"/>
-            <TextField fx:id="wachtwoordTxtField"/>
+
+            <HBox spacing="5">
+                <PasswordField fx:id="wachtwoordTxtField"/>
+                <Button fx:id="showPasswordButton" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="S"/>
+            </HBox>
 
             <HBox alignment="CENTER" spacing="5">
                 <Button fx:id="loginBtn" text="login" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
