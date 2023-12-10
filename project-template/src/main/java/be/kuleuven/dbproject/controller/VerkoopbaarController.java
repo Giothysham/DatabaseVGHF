@@ -216,12 +216,13 @@ public class VerkoopbaarController implements BuyScreenInterface{
                 verkoopbaarMoreInfoController.setdbConnection(dbConnection);
                 verkoopbaarMoreInfoController.setGame(verkoopbaarSelected);
             }
-            else if(controller.getClass() == BuyGameSchermController.class){
-                BuyGameSchermController buyGameSchermController = (BuyGameSchermController) controller;
-                buyGameSchermController.setdbConnection(dbConnection);
-                buyGameSchermController.setWantToRent(checkoutList);
-                buyGameSchermController.setparentController(this);
-                buyGameSchermController.setUser(user);
+            else if(controller.getClass() == VerkoopbaarBuySchermController.class){
+                VerkoopbaarBuySchermController verkoopbaarBuySchermController = (VerkoopbaarBuySchermController) controller;
+                verkoopbaarBuySchermController.setProduct(product);
+                verkoopbaarBuySchermController.setdbConnection(dbConnection);
+                verkoopbaarBuySchermController.setWantToRent(checkoutList);
+                verkoopbaarBuySchermController.setparentController(this);
+                verkoopbaarBuySchermController.setUser(user);
             }
             else if(controller.getClass() == FilterSchermController.class){
                 FilterSchermController filterSchermController = (FilterSchermController) controller;

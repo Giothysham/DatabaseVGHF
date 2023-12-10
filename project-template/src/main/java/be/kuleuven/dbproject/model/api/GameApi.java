@@ -60,7 +60,7 @@ public class GameApi implements VerkoopbaarApiInterface {
         return verkoopbaarList;
     }
     
-    public Game getGameById(String ID) throws Exception{
+    public VerkoopbaarInterface getVerkoopbaarById(String ID) throws Exception{
         System.out.println(ID);
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
@@ -71,7 +71,7 @@ public class GameApi implements VerkoopbaarApiInterface {
         var result = entityManager.createQuery(query).getResultList();
         
         if(result.size() > 0){
-            return result.get(0);
+            return (VerkoopbaarInterface) result.get(0);
         }
         else{
             throw new Exception("no game found with id: "+ ID);

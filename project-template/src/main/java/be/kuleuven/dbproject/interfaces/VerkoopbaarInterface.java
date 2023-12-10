@@ -26,4 +26,8 @@ public interface VerkoopbaarInterface {
     void setStock(int stock);
 
     void setUitgever(Uitgever uitgever);
+
+    void setTempStock(Integer tempStock);
+
+    void setTempToStock();
 }

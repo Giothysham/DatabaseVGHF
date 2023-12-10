@@ -17,5 +17,7 @@ public interface VerkoopbaarApiInterface {
     List<VerkoopbaarInterface> getVerkoopbaar();
 
     List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam);
+
+    VerkoopbaarInterface getVerkoopbaarById(String ID) throws Exception;
     
 }

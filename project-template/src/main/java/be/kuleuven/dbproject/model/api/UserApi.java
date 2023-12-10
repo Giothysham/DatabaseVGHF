@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
@@ -16,6 +17,8 @@ public class UserApi {
     private EntityManagerFactory sessionFactory;
 
     private EntityManager entityManager;
+
+    private Factuur factuur;
 
     public UserApi(DbConnection dbConnection){
         sessionFactory = dbConnection.getsessionFactory();
@@ -43,16 +46,16 @@ public class UserApi {
         }
     }
 
-    public void createFactuurForGame(List<Game> gameList, User user) throws Exception{
+    public void createFactuurForVerkoopbaar(List<VerkoopbaarInterface> gameList, User user) throws Exception{ //TODO: verder aanpassen
 
         if(!gameList.isEmpty()){
 
-            var rentedgames = new ArrayList<Game>();
+            var rentedgames = new ArrayList<VerkoopbaarInterface>();
             entityManager.getTransaction().begin();
 
             var stock = 0;
 
-            for(Game game: gameList){
+            for(VerkoopbaarInterface game: gameList){
                 if(!rentedgames.contains(game)){
                     rentedgames.add(game);
                     stock = game.getStock();
@@ -63,8 +66,14 @@ public class UserApi {
                     game.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user,game.getKostPrijs(),game,null, game.getWinkel());
-                    
+                    if(game.getClass().isAssignableFrom(Game.class)){
+                        factuur = new Factuur(0,user,game.getKostPrijs(),(Game)game,null, game.getWinkel());
+                    } 
+
+                    else if(game.getClass().isAssignableFrom(Extra.class)){
+                        factuur = new Factuur(0,user ,game.getKostPrijs(), null,(Extra) game, game.getWinkel());
+                    }
+                       
                     //entityManager.persist(user);
                     entityManager.persist(factuur);
                 }
@@ -76,7 +85,7 @@ public class UserApi {
                 }
             }
             
-            for(Game game: rentedgames){
+            for(VerkoopbaarInterface game: rentedgames){
                 game.setTempToStock();
             }
 
@@ -87,50 +96,50 @@ public class UserApi {
         }
     }
 
-    public void createFactuurForExtra(List<Extra> extraList, User user) throws Exception{
+    // public void createFactuurForExtra(List<Extra> extraList, User user) throws Exception{
 
-        if(!extraList.isEmpty()){
+    //     if(!extraList.isEmpty()){
 
-            var boughtExtra = new ArrayList<Extra>();
-            entityManager.getTransaction().begin();
+    //         var boughtExtra = new ArrayList<Extra>();
+    //         entityManager.getTransaction().begin();
 
-            var stock = 0;
+    //         var stock = 0;
 
-            for(Extra extra: extraList){
-                if(!boughtExtra.contains(extra)){
-                    boughtExtra.add(extra);
-                    stock = extra.getStock();
-                }
+    //         for(Extra extra: extraList){
+    //             if(!boughtExtra.contains(extra)){
+    //                 boughtExtra.add(extra);
+    //                 stock = extra.getStock();
+    //             }
 
-                if(stock > 0){
-                    //fix => vragen aan wouter
-                    extra.setTempStock(stock-1);
-                    stock = stock - 1;
+    //             if(stock > 0){
+    //                 //fix => vragen aan wouter
+    //                 extra.setTempStock(stock-1);
+    //                 stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user ,extra.getKostPrijs(), null,extra, extra.getWinkel());
+    //                 var factuur = new Factuur(0,user ,extra.getKostPrijs(), null,extra, extra.getWinkel());
                     
-                    entityManager.persist(user);
-                    entityManager.persist(factuur);
-                }
-                else{
-                    //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
-                    //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
-                    entityManager.getTransaction().rollback();
-                    throw new Exception("more items selected than avaible");
-                }
-            }
+    //                 entityManager.persist(user);
+    //                 entityManager.persist(factuur);
+    //             }
+    //             else{
+    //                 //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
+    //                 //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
+    //                 entityManager.getTransaction().rollback();
+    //                 throw new Exception("more items selected than avaible");
+    //             }
+    //         }
             
-            for(Extra extra: boughtExtra){
-                extra.setTempToStock();
-                //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
-            }
+    //         for(Extra extra: boughtExtra){
+    //             extra.setTempToStock();
+    //             //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
+    //         }
 
-            entityManager.getTransaction().commit();
-        }
-        else{
-            throw new Exception("no items selected");
-        }
-    }
+    //         entityManager.getTransaction().commit();
+    //     }
+    //     else{
+    //         throw new Exception("no items selected");
+    //     }
+    // }
 
     public void creatUser(User user){
         entityManager.getTransaction().begin();

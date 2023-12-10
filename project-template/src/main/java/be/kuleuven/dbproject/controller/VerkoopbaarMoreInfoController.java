@@ -78,7 +78,7 @@ VerkoopbaarMoreInfoController {
         moreInfoTxt.setWrapText(true);
 
         if(game.getClass().isAssignableFrom(Game.class)){
-            moreInfoTxt.setText(((Game)game).getBeschrijving()); //TODO: uitlijning fixen
+            moreInfoTxt.setText(((Game)game).getBeschrijving()); //TODO: uitlijning
 
             consoleTxt.setText(((Game)game).getConsole().toString());
 
