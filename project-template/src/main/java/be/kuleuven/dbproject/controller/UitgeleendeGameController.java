@@ -162,10 +162,10 @@ public class UitgeleendeGameController {
             var root = loader.load();
             var controller = loader.getController();
 
-            if(controller.getClass() == MoreInfoGameController.class){
-                MoreInfoGameController moreInfoGameController = (MoreInfoGameController) controller;
-                moreInfoGameController.setdbConnection(dbConnection);
-                moreInfoGameController.setGame(gameSelected);
+            if(controller.getClass() == VerkoopbaarMoreInfoController.class){
+                VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
+                verkoopbaarMoreInfoController.setdbConnection(dbConnection);
+                verkoopbaarMoreInfoController.setGame(gameSelected);
             }
 
             var scene = new Scene((Parent) root);

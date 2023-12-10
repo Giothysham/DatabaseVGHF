@@ -2,6 +2,7 @@ package be.kuleuven.dbproject.controller;
 
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
+import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import javafx.fxml.FXML;
@@ -16,12 +17,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class 
-MoreInfoGameController {
+VerkoopbaarMoreInfoController {
 
     private DbConnection dbConnection;
 
     @FXML
-    private Text consoleTxt, stockTxt, uitgeverTxt, locatieTxt, genreTxt;
+    private Text consoleTxt, stockTxt, uitgeverTxt, locatieTxt, genreTxt, typeTxt;
 
     @FXML
     private Label gameNameTxt; 
@@ -66,20 +67,32 @@ MoreInfoGameController {
     public void setGame(VerkoopbaarInterface game){
         gameNameTxt.setText(game.getNaam());
 
-        moreInfoTxt.setText(((Game)game).getBeschrijving());
-        moreInfoTxt.setEditable(false);
-        moreInfoTxt.setWrapText(true);
-
         var uitgever = game.getUitgever();
         uitgeverTxt.setText(uitgever.getNaam());
 
         stockTxt.setText(Integer.toString(game.getStock()));
 
-        consoleTxt.setText(((Game)game).getConsole().toString());
-
         locatieTxt.setText(game.getWinkel().getSmallAdress());
 
-        genreTxt.setText(((Game)game).getGenre().getNaam());
+        moreInfoTxt.setEditable(false);
+        moreInfoTxt.setWrapText(true);
+
+        if(game.getClass().isAssignableFrom(Game.class)){
+            moreInfoTxt.setText(((Game)game).getBeschrijving()); //TODO: uitlijning fixen
+
+            consoleTxt.setText(((Game)game).getConsole().toString());
+
+            genreTxt.setText(((Game)game).getGenre().getNaam());
+
+            typeTxt.setVisible(false);
+        } 
+
+        else if(game.getClass().isAssignableFrom(Extra.class)){
+            typeTxt.setText(((Extra)game).getType().toString());
+
+            consoleTxt.setVisible(false);
+            genreTxt.setVisible(false);
+        }
 
         uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", game.getUitgever()));
 

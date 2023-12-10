@@ -39,9 +39,9 @@
         <TextArea fx:id="beschrijving"  GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
         <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="10">
-            <Button fx:id="viewGamePageBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="view game page" />
+            <Button fx:id="viewVerkoopbaarPageBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="view verkoopvaar page" />
             <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="submitGameBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="submit game"/>
+            <Button fx:id="submitVerkoopbaarBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="submit verkoopbaar"/>
         </HBox>
     </children>
 </GridPane>

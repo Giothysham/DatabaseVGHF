@@ -83,6 +83,8 @@ public class VerkoopbaarAddController {
         viewVerkoopbaarPageBtn.setDisable(update);
 
         beschrijving.setWrapText(true); 
+
+        //TODO: disable unseteble parrameters
     }
 
     public void changeWindowToMoreInfo(String id){
@@ -93,15 +95,10 @@ public class VerkoopbaarAddController {
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
             var root = loader.load();
 
-            if(product == "Game"){ //TODO: fixen naar verkoopbaarmoreinfo
-                var controller = (MoreInfoGameController) loader.getController();
-                controller.setdbConnection(dbConnection);
-                controller.setGame(verkoopbaar);
-            } else if (product == "Extra"){
-                var controller = (MoreInfoExtraController) loader.getController();
-                controller.setDbConnection(dbConnection);
-                controller.setExtra((Extra) verkoopbaar);
-            }
+             var controller = (VerkoopbaarMoreInfoController) loader.getController();
+            controller.setdbConnection(dbConnection);
+            controller.setGame(verkoopbaar); //TODO: naamgeving
+                        System.out.println("gothere --------------------------------------");
 
             var scene = new Scene((Parent) root);
             stage.setScene(scene);
