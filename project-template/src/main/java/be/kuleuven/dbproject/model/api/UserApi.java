@@ -96,51 +96,6 @@ public class UserApi {
         }
     }
 
-    // public void createFactuurForExtra(List<Extra> extraList, User user) throws Exception{
-
-    //     if(!extraList.isEmpty()){
-
-    //         var boughtExtra = new ArrayList<Extra>();
-    //         entityManager.getTransaction().begin();
-
-    //         var stock = 0;
-
-    //         for(Extra extra: extraList){
-    //             if(!boughtExtra.contains(extra)){
-    //                 boughtExtra.add(extra);
-    //                 stock = extra.getStock();
-    //             }
-
-    //             if(stock > 0){
-    //                 //fix => vragen aan wouter
-    //                 extra.setTempStock(stock-1);
-    //                 stock = stock - 1;
-                    
-    //                 var factuur = new Factuur(0,user ,extra.getKostPrijs(), null,extra, extra.getWinkel());
-                    
-    //                 entityManager.persist(user);
-    //                 entityManager.persist(factuur);
-    //             }
-    //             else{
-    //                 //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
-    //                 //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
-    //                 entityManager.getTransaction().rollback();
-    //                 throw new Exception("more items selected than avaible");
-    //             }
-    //         }
-            
-    //         for(Extra extra: boughtExtra){
-    //             extra.setTempToStock();
-    //             //TODO: mauro voeg extra chek bij voor te zien of data recent verander is. 
-    //         }
-
-    //         entityManager.getTransaction().commit();
-    //     }
-    //     else{
-    //         throw new Exception("no items selected");
-    //     }
-    // }
-
     public void creatUser(User user){
         entityManager.getTransaction().begin();
         entityManager.persist(user);

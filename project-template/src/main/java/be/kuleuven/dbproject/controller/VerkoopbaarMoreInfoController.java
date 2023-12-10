@@ -25,7 +25,7 @@ VerkoopbaarMoreInfoController {
     private Text consoleTxt, stockTxt, uitgeverTxt, locatieTxt, genreTxt, typeTxt;
 
     @FXML
-    private Label gameNameTxt; 
+    private Label verkoopbaarNameTxt; 
 
     @FXML
     private TextArea moreInfoTxt;
@@ -64,39 +64,39 @@ VerkoopbaarMoreInfoController {
         }
     }
 
-    public void setGame(VerkoopbaarInterface game){
-        gameNameTxt.setText(game.getNaam());
+    public void setVerkoopbaar(VerkoopbaarInterface Verkoopbaar){
+        verkoopbaarNameTxt.setText(Verkoopbaar.getNaam());
 
-        var uitgever = game.getUitgever();
+        var uitgever = Verkoopbaar.getUitgever();
         uitgeverTxt.setText(uitgever.getNaam());
 
-        stockTxt.setText(Integer.toString(game.getStock()));
+        stockTxt.setText(Integer.toString(Verkoopbaar.getStock()));
 
-        locatieTxt.setText(game.getWinkel().getSmallAdress());
+        locatieTxt.setText(Verkoopbaar.getWinkel().getSmallAdress());
 
         moreInfoTxt.setEditable(false);
         moreInfoTxt.setWrapText(true);
 
-        if(game.getClass().isAssignableFrom(Game.class)){
-            moreInfoTxt.setText(((Game)game).getBeschrijving()); //TODO: uitlijning
+        if(Verkoopbaar.getClass().isAssignableFrom(Game.class)){
+            moreInfoTxt.setText(((Game)Verkoopbaar).getBeschrijving()); //TODO: uitlijning
 
-            consoleTxt.setText(((Game)game).getConsole().toString());
+            consoleTxt.setText(((Game)Verkoopbaar).getConsole().toString());
 
-            genreTxt.setText(((Game)game).getGenre().getNaam());
+            genreTxt.setText(((Game)Verkoopbaar).getGenre().getNaam());
 
             typeTxt.setVisible(false);
         } 
 
-        else if(game.getClass().isAssignableFrom(Extra.class)){
-            typeTxt.setText(((Extra)game).getType().toString());
+        else if(Verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+            typeTxt.setText(((Extra)Verkoopbaar).getType().toString());
 
             consoleTxt.setVisible(false);
             genreTxt.setVisible(false);
         }
 
-        uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", game.getUitgever()));
+        uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", Verkoopbaar.getUitgever()));
 
-        genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)game).getGenre()));
+        genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)Verkoopbaar).getGenre()));
     }
     
 }

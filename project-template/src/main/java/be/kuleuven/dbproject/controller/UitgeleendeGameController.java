@@ -149,7 +149,7 @@ public class UitgeleendeGameController {
     public void onClickVerkoopbaar(MouseEvent event) {
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
-            openNewWindow("moreinfogame",gameSelected);
+            openNewWindow("moreinfoverkoopbaar",gameSelected);
         }
     }
 
@@ -165,7 +165,7 @@ public class UitgeleendeGameController {
             if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
                 verkoopbaarMoreInfoController.setdbConnection(dbConnection);
-                verkoopbaarMoreInfoController.setGame(gameSelected);
+                verkoopbaarMoreInfoController.setVerkoopbaar(gameSelected);
             }
 
             var scene = new Scene((Parent) root);

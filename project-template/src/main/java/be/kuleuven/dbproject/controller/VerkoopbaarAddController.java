@@ -78,7 +78,7 @@ public class VerkoopbaarAddController {
             }
         );
 
-        viewVerkoopbaarPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfogame"));
+        viewVerkoopbaarPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfoverkoopbaar"));
 
         viewVerkoopbaarPageBtn.setDisable(update);
 
@@ -97,7 +97,7 @@ public class VerkoopbaarAddController {
 
              var controller = (VerkoopbaarMoreInfoController) loader.getController();
             controller.setdbConnection(dbConnection);
-            controller.setGame(verkoopbaar); //TODO: naamgeving
+            controller.setVerkoopbaar(verkoopbaar);
                         System.out.println("gothere --------------------------------------");
 
             var scene = new Scene((Parent) root);

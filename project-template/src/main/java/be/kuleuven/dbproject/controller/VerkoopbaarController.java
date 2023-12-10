@@ -85,7 +85,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
     public void initialize(){
         checkoutList = new ArrayList<>();
 
-        VerkoopbaarAddBtn.setOnAction(e -> openNewWindow("gameaddscherm",null)); //TODO: naar veranderen
+        VerkoopbaarAddBtn.setOnAction(e -> openNewWindow("verkoopbaaraddscherm",null)); //TODO: naar veranderen
         addToCartBtn.setOnAction(e -> addToVerkoobareLijst());
         deleteBtn.setOnAction(e -> removeSelectedVerkoopbaar());
         searchBtn.setOnAction(e -> updateOrSearchTable(false));
@@ -95,7 +95,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         //filterBtn.setMaxWidth(Double.MAX_VALUE);
 
         //alles met ty/catch in een deel?
-        buyBtn.setOnAction(e -> {openNewWindow("buygamescherm",null);});
+        buyBtn.setOnAction(e -> {openNewWindow("buyverkoopbaarscherm",null);});
 
         verkoobareLijst = new ArrayList<VerkoopbaarInterface>();
 
@@ -172,12 +172,12 @@ public class VerkoopbaarController implements BuyScreenInterface{
             VerkoopbaarInterface verkoopbaarSelected = tblVerkoopbaar.getSelectionModel().getSelectedItem();
             switch(user.getBevoegdheid()){
                 case 1:
-                    openNewWindow("gameaddscherm", verkoopbaarSelected);
+                    openNewWindow("verkoopbaaraddscherm", verkoopbaarSelected);
                     
                 break;
 
                 case 0:
-                    openNewWindow("moreinfogame", verkoopbaarSelected);
+                    openNewWindow("moreinfoverkoopbaar", verkoopbaarSelected);
                 break;
             }
         }
@@ -203,7 +203,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
                 verkoopbaarAddController.setDbConnection(dbConnection);
                 verkoopbaarAddController.setParentController(this);
                 
-                //iets beter maken game != null is geen goede opl
+                //TODO: iets beter maken verkoopbaar != null is geen goede opl
                 if(user.getBevoegdheid() == 1 && verkoopbaarSelected != null){
                     verkoopbaarAddController.setUpdate(true);
                     verkoopbaarAddController.initializeUpdate(verkoopbaarSelected);
@@ -214,7 +214,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
             else if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
                 verkoopbaarMoreInfoController.setdbConnection(dbConnection);
-                verkoopbaarMoreInfoController.setGame(verkoopbaarSelected);
+                verkoopbaarMoreInfoController.setVerkoopbaar(verkoopbaarSelected);
             }
             else if(controller.getClass() == VerkoopbaarBuySchermController.class){
                 VerkoopbaarBuySchermController verkoopbaarBuySchermController = (VerkoopbaarBuySchermController) controller;

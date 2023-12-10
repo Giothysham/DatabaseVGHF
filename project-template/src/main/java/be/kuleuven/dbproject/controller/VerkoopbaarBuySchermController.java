@@ -5,7 +5,6 @@ import java.util.List;
 
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
-import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
@@ -36,7 +35,7 @@ public class VerkoopbaarBuySchermController {
     private Button removeBtn, buyBtn;
 
     @FXML 
-    private TableView<VerkoopbaarInterface> tblGames;
+    private TableView<VerkoopbaarInterface> tblVerkoopbaar;
 
     @FXML 
     private TableColumn<VerkoopbaarInterface, String> naamColumn;
@@ -52,9 +51,9 @@ public class VerkoopbaarBuySchermController {
 
     private VerkoopbaarController parentController;
 
-    private ArrayList<String> wantToRentListID;
+    private ArrayList<String> checkoutListID;
 
-    private ArrayList<VerkoopbaarInterface> wantToRentListGame;
+    private ArrayList<VerkoopbaarInterface> checkoutListVerkoopbaar;
 
     private UserApi userApi;
 
@@ -68,27 +67,27 @@ public class VerkoopbaarBuySchermController {
         naamColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,String>("naam"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Double>("kostPrijs"));
         
-        removeBtn.setOnAction(e -> deleteGame());
-        buyBtn.setOnAction(e -> buyGames(this.wantToRentListGame, this.user));
+        removeBtn.setOnAction(e -> deleteVerkoopbaar());
+        buyBtn.setOnAction(e -> buyVerkoopbaar(this.checkoutListVerkoopbaar, this.user));
     }
 
     public void setdbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
         this.userApi = new UserApi(dbConnection);
-        wantToRentListID = new ArrayList<>();
-        wantToRentListGame = new ArrayList<>();
+        checkoutListID = new ArrayList<>();
+        checkoutListVerkoopbaar = new ArrayList<>();
     }
 
-    public void deleteGame(){
-        VerkoopbaarInterface game = tblGames.getSelectionModel().getSelectedItem();
-        wantToRentListID.remove(Integer.toString(game.getID()));
-        wantToRentListGame.remove(game);
-        parentController.setCheckoutList(wantToRentListID);
-        tblGames.getItems().setAll(wantToRentListGame);
+    public void deleteVerkoopbaar(){
+        VerkoopbaarInterface Verkoopbaar = tblVerkoopbaar.getSelectionModel().getSelectedItem();
+        checkoutListID.remove(Integer.toString(Verkoopbaar.getID()));
+        checkoutListVerkoopbaar.remove(Verkoopbaar);
+        parentController.setCheckoutList(checkoutListID);
+        tblVerkoopbaar.getItems().setAll(checkoutListVerkoopbaar);
 
         var price = 0.0;
-        for(VerkoopbaarInterface tempGame: wantToRentListGame){
-            price =+ tempGame.getKostPrijs();
+        for(VerkoopbaarInterface tempVerkoopbaar: checkoutListVerkoopbaar){
+            price =+ tempVerkoopbaar.getKostPrijs();
         }
         amountTxt.setText( " " + price + "$");
     }
@@ -99,9 +98,9 @@ public class VerkoopbaarBuySchermController {
 
     public void setWantToRent(ArrayList<String> wantToRentList) {
         Double price = 0.0;
-        this.wantToRentListID = wantToRentList;
+        this.checkoutListID = wantToRentList;
 
-        for(String id: wantToRentListID){
+        for(String id: checkoutListID){
             try{
                 if(product == "Game"){
                     verkoopbaarApi = new GameApi(dbConnection);
@@ -111,9 +110,9 @@ public class VerkoopbaarBuySchermController {
                     verkoopbaarApi = new ExtraApi(dbConnection);
                 }
                 
-                var tempGame = verkoopbaarApi.getVerkoopbaarById(id);
-                this.wantToRentListGame.add(tempGame);
-                price += tempGame.getKostPrijs();
+                var tempVerkoopbaar = verkoopbaarApi.getVerkoopbaarById(id);
+                this.checkoutListVerkoopbaar.add(tempVerkoopbaar);
+                price += tempVerkoopbaar.getKostPrijs();
             }
             catch(Exception e){
                 System.out.println(e);
@@ -122,13 +121,12 @@ public class VerkoopbaarBuySchermController {
         
         amountTxt.setText( " "+price + "$");
 
-        tblGames.getItems().setAll(this.wantToRentListGame);
+        tblVerkoopbaar.getItems().setAll(this.checkoutListVerkoopbaar);
     }
 
-    public void buyGames(List<VerkoopbaarInterface> wantToRentList, User user){
+    public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){
         try {
             if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
-                
                 var tempList = new ArrayList<Game>();
 
                 for(VerkoopbaarInterface verkoopbaar: wantToRentList){
@@ -137,12 +135,15 @@ public class VerkoopbaarBuySchermController {
 
                 user.addToListGames(tempList);
             }
+
             userApi.createFactuurForVerkoopbaar(wantToRentList, user);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
             window.close();
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
             a.show();
@@ -160,12 +161,12 @@ public class VerkoopbaarBuySchermController {
         if(product == "Game"){
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));
-            tblGames.getColumns().add(consoleColumn);
+            tblVerkoopbaar.getColumns().add(consoleColumn);
         } 
         else if(product == "Extra"){
             TableColumn<VerkoopbaarInterface,Type> typeColumn = new TableColumn<>("type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Type>("type"));
-            tblGames.getColumns().add(typeColumn);
+            tblVerkoopbaar.getColumns().add(typeColumn);
         }
     }
 }

@@ -29,22 +29,19 @@ public class FilterSchermController {
     @FXML
     private Button returnBtn;
 
-    private VerkoopbaarController gameParentController;
-
-    private VerkoopbaarController extraParentController;
+    private VerkoopbaarController verkoopbaarParentController;
 
     //TODO => niet nodig. het wordt niet meer gebruikt. (alles in commentaar mag weg?)
     public void initialize(){
         returnBtn.setOnAction(e ->{ 
-            gameParentController.updateOrSearchTable(false);
-            extraParentController.updateOrSearchTable(false);
+            verkoopbaarParentController.updateOrSearchTable(false);
             var stage = (Stage) returnBtn.getScene().getWindow();
             stage.close();
         });
     }
 
     public void setParentController(VerkoopbaarController parenController){
-        gameParentController = parenController;
+        verkoopbaarParentController = parenController; //TODO: game filter te zien bij extra's
     }
 
     public void setUpFilters(DbConnection dbConnection, VerkoopbaarApiInterface filterbaar){
