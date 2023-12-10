@@ -32,7 +32,7 @@ public class FilterSchermController {
 
     private ExtraController extraParentController;
 
-    //TODO => vragen aan wouter of dit een beetje oke is => ook hoe auto resize.
+    //TODO => niet nodig. het wordt niet meer gebruikt. 
     public void initialize(){
         returnBtn.setOnAction(e ->{ 
             gameParentController.updateOrSearchTable(false);

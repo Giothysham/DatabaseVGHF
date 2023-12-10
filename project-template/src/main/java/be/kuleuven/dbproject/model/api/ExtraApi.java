@@ -9,7 +9,6 @@ import javax.persistence.criteria.Predicate;
 
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Winkel;
-import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
 
 public class ExtraApi {

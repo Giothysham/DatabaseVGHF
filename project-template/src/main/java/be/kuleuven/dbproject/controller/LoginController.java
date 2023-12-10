@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -21,10 +23,16 @@ import javafx.stage.StageStyle;
 public class LoginController {
 
     @FXML
-    private Button loginBtn, crtAccountBtn, showPasswordButton;
+    private Button loginBtn, crtAccountBtn;
+
+    @FXML
+    private ImageView eyeImageView;
 
     @FXML
     private TextField emailTxtField;
+
+    @FXML
+    private Text visableWachtwoordTxt;
 
     @FXML
     private PasswordField wachtwoordTxtField;
@@ -35,7 +43,7 @@ public class LoginController {
 
     private User user;
 
-    private boolean togleSchowWw;
+    private boolean showPassword;
     
     public void initialize(){
         loginBtn.setOnAction(e -> checkLoginCredentials());
@@ -51,15 +59,19 @@ public class LoginController {
             }
         });
 
-        togleSchowWw = false;
+        showPassword = false;
 
-        showPasswordButton.setOnAction(e -> togleWw());
+        eyeImageView.setOnMousePressed(e -> togleWw());
+
+        wachtwoordTxtField.setOnKeyPressed(e -> visableWachtwoordTxt.setText(wachtwoordTxtField.getText()));
     }
 
     private void togleWw(){
-        //implement show password
-        togleSchowWw = !togleSchowWw;
-        wachtwoordTxtField.setVisible(togleSchowWw);
+        showPassword = !showPassword;
+        if(showPassword){
+            visableWachtwoordTxt.setText(wachtwoordTxtField.getText());
+        }
+        visableWachtwoordTxt.setVisible(showPassword);
     }
 
     private void checkLoginCredentials(){
@@ -89,7 +101,7 @@ public class LoginController {
 
         if(controller.getClass() == ProjectMainController.class){
             var projectMainController = (ProjectMainController) controller;
-            projectMainController.setdbConnection(this.dbConnection);
+            projectMainController.setDbConnection(this.dbConnection);
             projectMainController.setUser(user);
         }
         else if(controller.getClass() == CreatAccountController.class){
