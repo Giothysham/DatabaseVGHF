@@ -59,8 +59,6 @@ public class UitgeleendeGameController {
 
     public void initialize(){
 
-        //TODO wordt nooit ge commit => sluiten app zorgt ervoor dat data weg gaat.
-
         searchBtn.setOnAction(e -> updateOrSearchTable(false));
 
         returnBtn.setOnAction(e -> returnGame());

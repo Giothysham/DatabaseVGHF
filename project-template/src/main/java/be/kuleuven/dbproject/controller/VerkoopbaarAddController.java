@@ -37,16 +37,16 @@ public class VerkoopbaarAddController {
     private Button submitVerkoopbaarBtn, viewVerkoopbaarPageBtn;
 
     @FXML
-    private ComboBox<Console> consoleDropDown; //Todo: maken in functie
+    private ComboBox<Console> consoleDropDown;
 
     @FXML
     private ComboBox<Type> typeDropDown;
     
     @FXML
-    private ComboBox<String> winkelDropDown, uitgeverIDDropDown, genreIDDropDown; //Todo: genre weg halen
+    private ComboBox<String> winkelDropDown, uitgeverIDDropDown, genreIDDropDown; //Todo: genre weg halen (wrm?)
 
     @FXML
-    private TextField aantalStock, aantalUitgeleend, ID, naam, kostPijs; //TODO: wtf doet ID hier
+    private TextField aantalStock, aantalUitgeleend, naam, kostPijs; 
 
     @FXML
     private TextArea beschrijving;
@@ -67,6 +67,8 @@ public class VerkoopbaarAddController {
 
     private VerkoopbaarInterface tempVerkoopbaar;
 
+    private List<Genre> genres;
+
     public void initialize(){        
         submitVerkoopbaarBtn.setOnAction(e -> {
                 if(update){
@@ -75,16 +77,16 @@ public class VerkoopbaarAddController {
                     submitVerkoopbaar();
                 }
                 
-            }
-        );
+            });
+
+        aantalUitgeleend.setDisable(true);
+        winkelDropDown.setDisable(true);
 
         viewVerkoopbaarPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfoverkoopbaar"));
 
         viewVerkoopbaarPageBtn.setDisable(update);
 
         beschrijving.setWrapText(true); 
-
-        //TODO: disable unseteble parrameters
     }
 
     public void changeWindowToMoreInfo(String id){
@@ -118,12 +120,13 @@ public class VerkoopbaarAddController {
         var uitgeverApi = new UitgeverApi(dbConnection);
 
         winkels = winkelApi.getWinkels();
-        var genres = genreApi.getGenres(); //TODO: globale parameter van maken?
+        genres = genreApi.getGenres();
         uitgevers = uitgeverApi.getUitgevers();
 
+        
 
         ObservableList<String> listGenreNames = FXCollections.observableArrayList();
-        ObservableList<String> listWinkelNames = FXCollections.observableArrayList(); //TODO: loopt miss mis als null is bij erxtra
+        ObservableList<String> listWinkelNames = FXCollections.observableArrayList();
         ObservableList<String> listUitgeverNames = FXCollections.observableArrayList(); 
 
         for(Uitgever uitgever: uitgevers){
@@ -179,12 +182,12 @@ public class VerkoopbaarAddController {
         }
 
         uitgeverIDDropDown.setValue(verkoopbaar.getUitgever().getNaam());
-        this.verkoopbaar = verkoopbaar; //TODO: might give error, was (Game) typecast
+        this.verkoopbaar = verkoopbaar; 
     }
 
-    private void updateVerkoopbaar(){ //TODO: aantal verkocht is niet het enige dat niet aangepast kan worden (vb winkel), checken, implementeren of verwijderen
+    private void updateVerkoopbaar(){
         if(product == "Game"){
-            ((Game)verkoopbaar).setBeschrijving(this.beschrijving.getText()); //TODO: misschien uit halen
+            ((Game)verkoopbaar).setBeschrijving(this.beschrijving.getText()); 
             ((Game)verkoopbaar).setConsole((Console) consoleDropDown.getValue());
            
             var genre = (String) genreIDDropDown.getValue();
@@ -203,7 +206,7 @@ public class VerkoopbaarAddController {
         var uitgeverApi = new UitgeverApi(dbConnection);
         verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
 
-        verkoopbaarController.updateOrSearchTable(false); //TODO: huh
+        verkoopbaarController.updateOrSearchTable(false);
 
         var window = (Stage) beschrijving.getScene().getWindow();
         window.close();
@@ -246,7 +249,7 @@ public class VerkoopbaarAddController {
 
             verkoopbaarApi.postVerkoopbaar(tempVerkoopbaar);
 
-            verkoopbaarController.updateOrSearchTable(true); //TODO: huh
+            verkoopbaarController.updateOrSearchTable(true);
 
             var stage = (Stage) submitVerkoopbaarBtn.getScene().getWindow();
             stage.close();

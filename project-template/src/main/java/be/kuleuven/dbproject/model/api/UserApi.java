@@ -46,32 +46,32 @@ public class UserApi {
         }
     }
 
-    public void createFactuurForVerkoopbaar(List<VerkoopbaarInterface> gameList, User user) throws Exception{ //TODO: verder aanpassen
+    public void createFactuurForVerkoopbaar(List<VerkoopbaarInterface> verkoopbaarLijst, User user) throws Exception{
 
-        if(!gameList.isEmpty()){
+        if(!verkoopbaarLijst.isEmpty()){
 
-            var rentedgames = new ArrayList<VerkoopbaarInterface>();
+            var verkochteVerkoopbaar = new ArrayList<VerkoopbaarInterface>();
             entityManager.getTransaction().begin();
 
             var stock = 0;
 
-            for(VerkoopbaarInterface game: gameList){
-                if(!rentedgames.contains(game)){
-                    rentedgames.add(game);
-                    stock = game.getStock();
+            for(VerkoopbaarInterface verkoopbaar: verkoopbaarLijst){
+                if(!verkochteVerkoopbaar.contains(verkoopbaar)){
+                    verkochteVerkoopbaar.add(verkoopbaar);
+                    stock = verkoopbaar.getStock();
                 }
 
                 if(stock > 0){
                     //fix => vragen aan wouter
-                    game.setTempStock(stock-1);
+                    verkoopbaar.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    if(game.getClass().isAssignableFrom(Game.class)){
-                        factuur = new Factuur(0,user,game.getKostPrijs(),(Game)game,null, game.getWinkel());
+                    if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                        factuur = new Factuur(0,user,verkoopbaar.getKostPrijs(),(Game)verkoopbaar,null, verkoopbaar.getWinkel());
                     } 
 
-                    else if(game.getClass().isAssignableFrom(Extra.class)){
-                        factuur = new Factuur(0,user ,game.getKostPrijs(), null,(Extra) game, game.getWinkel());
+                    else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+                        factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
                     //entityManager.persist(user);
@@ -85,8 +85,8 @@ public class UserApi {
                 }
             }
             
-            for(VerkoopbaarInterface game: rentedgames){
-                game.setTempToStock();
+            for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
+                verkoopbaar.setTempToStock();
             }
 
             entityManager.getTransaction().commit();

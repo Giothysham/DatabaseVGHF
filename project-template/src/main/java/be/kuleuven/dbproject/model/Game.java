@@ -140,10 +140,6 @@ public class Game implements VerkoopbaarInterface{
         this.gameID = gameID;
     }
 
-    public void setWinkelID(Winkel winkel) {
-        this.winkel = winkel;
-    }
-
     public void setKostPrijs(double kostPrijs) {
         this.kostPrijs = kostPrijs;
     }

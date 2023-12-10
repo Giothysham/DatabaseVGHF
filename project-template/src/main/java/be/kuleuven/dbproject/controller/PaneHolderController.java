@@ -16,9 +16,6 @@ public class PaneHolderController {
     @FXML
     private AnchorPane tmpPane;
 
-    @FXML
-    private VerkoopbaarController verkoopbaarController; //TODO: wat doet deze kut hier?
-
     private User user;
 
     private String product;

@@ -98,7 +98,7 @@ public class ExtraApi implements VerkoopbaarApiInterface{
         try{ 
             if(extras.size() > 0){
                 entityManager.getTransaction().begin();
-                for(VerkoopbaarInterface extra: extras){ //TODO: naageminging misschine fixen, zie ook GameApi
+                for(VerkoopbaarInterface extra: extras){
                     var delete = entityManager.find(Extra.class, extra.getID());
                     entityManager.remove(delete);
                     entityManager.getTransaction().commit();

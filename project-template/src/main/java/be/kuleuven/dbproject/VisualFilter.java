@@ -65,47 +65,6 @@ public class VisualFilter<T> {
         return visualFilterHbox;
     }
 
-    public HBox getVisualFilter(ExtraApi extraApi,BuyScreenInterface parentController){
-
-        //TODO: fix in een ding => edmond
-        visualFilterHbox = new HBox();
-        visualFilterHbox.setSpacing(5.0);
-
-        var button = new Button();
-        button.setText("X");
-
-        var vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-
-        var text = new Text();
-
-        text.setFill(Paint.valueOf("#000000"));
-
-        if(usedFilter.getClass() == Winkel.class){
-            text.setText(((Winkel) usedFilter).getSmallAdress());
-        }
-        else if(usedFilter.getClass() == Type.class){
-            text.setText(((Type) usedFilter).toString());
-        }
-
-        button.setOnAction(e -> {
-            extraApi.removeFilterByClass(usedFilter);
-            parentController.getScrlPaneFilters().getChildren().remove(visualFilterHbox);
-            parentController.updateOrSearchTable(false);
-        });
-
-        vbox.getChildren().add(text);
-        visualFilterHbox.setStyle("-fx-background-color: #DBDAE5;  -fx-border-radius: 5 5 0 5; -fx-background-radius: 5 5 0 5;");
-
-        button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white; -fx-font-weight: bold; ");
-
-        button.setStyle("-fx-background-color: #FA0000; -fx-text-fill: white;");
-
-        visualFilterHbox.getChildren().addAll(vbox, button);
-
-        return visualFilterHbox;
-    }
-
     public HBox getVisualFilterHbox(){
         return this.visualFilterHbox;
     }

@@ -44,9 +44,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
     private Menu consoleMenu, winkelMenu, genreMenu, typeMenu;
 
     @FXML
-    private MenuButton filterMenu; //TODO: giet
-
-    @FXML
     private Button VerkoopbaarAddBtn, deleteBtn, buyBtn, searchBtn, addToCartBtn; //filterBtn;
 
     @FXML
@@ -89,7 +86,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
     public void initialize(){
         checkoutList = new ArrayList<>();
 
-        VerkoopbaarAddBtn.setOnAction(e -> openNewWindow("verkoopbaaraddscherm",null)); //TODO: naar veranderen
+        VerkoopbaarAddBtn.setOnAction(e -> openNewWindow("verkoopbaaraddscherm",null));
         addToCartBtn.setOnAction(e -> addToVerkoobareLijst());
         deleteBtn.setOnAction(e -> removeSelectedVerkoopbaar());
         searchBtn.setOnAction(e -> updateOrSearchTable(false));
@@ -191,7 +188,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         this.checkoutList = checkoutList;
     }
 
-    public void openNewWindow(String id,VerkoopbaarInterface verkoopbaarSelected){
+    public void openNewWindow(String id, VerkoopbaarInterface verkoopbaarSelected){
         var resourceName = id + ".fxml";
         try {
 

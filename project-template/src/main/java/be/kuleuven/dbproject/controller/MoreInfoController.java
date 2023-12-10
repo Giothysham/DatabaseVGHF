@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-public class MoreInfoController { //TODO: wtf is uw nut hier
+public class MoreInfoController { 
 
     @FXML
     private Label topNameTxt ;

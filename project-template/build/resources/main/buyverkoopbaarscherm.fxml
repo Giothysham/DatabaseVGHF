@@ -14,7 +14,7 @@
 <GridPane style="-fx-padding: 0 5 10 5;" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarBuySchermController">
     <children>
         <VBox spacing="10" layoutX="14.0" alignment="TOP_CENTER">
-            <TableView fx:id="tblGames" prefHeight="246.0" prefWidth="567.0">
+            <TableView fx:id="tblVerkoopbaar" prefHeight="246.0" prefWidth="567.0">
                 <columns>
                     <TableColumn text="naam" fx:id="naamColumn" />
                     <TableColumn text="price" fx:id="priceColumn" />
