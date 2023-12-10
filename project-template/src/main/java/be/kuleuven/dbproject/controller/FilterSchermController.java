@@ -41,30 +41,46 @@ public class FilterSchermController {
     }
 
     public void setParentController(VerkoopbaarController parenController){
-        verkoopbaarParentController = parenController; //TODO: game filter te zien bij extra's
+        verkoopbaarParentController = parenController;
     }
 
     public void setUpFilters(DbConnection dbConnection, VerkoopbaarApiInterface filterbaar){
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
 
-        if(filterbaar.getClass() == GameApi.class){
+        if(filterbaar.getClass().isAssignableFrom(GameApi.class)){
             var searchconsole = ((GameApi) filterbaar).getSearchConsole();
-            
             if(searchconsole != null){
                 consoleMenu.setText(searchconsole.name());
                 //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(searchconsole, consoleMenu,"Console", gameApi,hboxConsoleMenu));
             }
 
             for(Console console: Console.values()){
-            var menuItem = new MenuItem(console.name());
-            menuItem.setOnAction(e ->{
-                ((GameApi) filterbaar).creatSearchQuerry((console));
-                consoleMenu.setText(console.name());
-                //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(console, consoleMenu,"Console", gameApi,hboxConsoleMenu));
-            });
-            consoleMenu.getItems().add(menuItem);
-        }   
+                var menuItem = new MenuItem(console.name());
+                menuItem.setOnAction(e ->{
+                    ((GameApi) filterbaar).creatSearchQuerry((console));
+                    consoleMenu.setText(console.name());
+                    //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(console, consoleMenu,"Console", gameApi,hboxConsoleMenu));
+                });
+                consoleMenu.getItems().add(menuItem);
+            }   
+
+            var searchGenre = ((GameApi) filterbaar).getSearchGenre();
+
+            if(searchGenre != null){
+                genreMenu.setText(searchGenre.getNaam());
+                //hboxGenreMenu.getChildren().add(setRemoveFilterButton(searchGenre, genreMenu,"Genre", gameApi,hboxGenreMenu));
+            }
+
+            for(Genre genre: genreApi.getGenres()){
+                var menuItem = new MenuItem(genre.getNaam());
+                menuItem.setOnAction(e -> {
+                    ((GameApi) filterbaar).creatSearchQuerry(genre);
+                    genreMenu.setText(genre.getNaam());
+                    //hboxGenreMenu.getChildren().add(setRemoveFilterButton(genre, genreMenu,"Genre", gameApi, hboxGenreMenu));
+                });
+                genreMenu.getItems().add(menuItem);
+            }
         }
 
         var searchWinkel = filterbaar.getSearchWinkel();
@@ -84,26 +100,8 @@ public class FilterSchermController {
             winkelMenu.getItems().add(menuItem);
         }
 
-        if(filterbaar.getClass() == GameApi.class){
-            var searchGenre = ((GameApi) filterbaar).getSearchGenre();
 
-            if(searchGenre != null){
-                genreMenu.setText(searchGenre.getNaam());
-                //hboxGenreMenu.getChildren().add(setRemoveFilterButton(searchGenre, genreMenu,"Genre", gameApi,hboxGenreMenu));
-            }
-
-            for(Genre genre: genreApi.getGenres()){
-                var menuItem = new MenuItem(genre.getNaam());
-                menuItem.setOnAction(e -> {
-                    ((GameApi) filterbaar).creatSearchQuerry(genre);
-                    genreMenu.setText(genre.getNaam());
-                    //hboxGenreMenu.getChildren().add(setRemoveFilterButton(genre, genreMenu,"Genre", gameApi, hboxGenreMenu));
-                });
-                genreMenu.getItems().add(menuItem);
-            }
-        }
-
-         if(filterbaar.getClass().isAssignableFrom(ExtraApi.class)){
+        if(filterbaar.getClass().isAssignableFrom(ExtraApi.class)){
 
             var searchtype = ((ExtraApi) filterbaar).getSearchType();
 

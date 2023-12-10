@@ -40,6 +40,7 @@
                             <Menu fx:id="consoleMenu" mnemonicParsing="false" text="Console"/>
                             <Menu fx:id="winkelMenu" mnemonicParsing="false" text="Winkel"/>
                             <Menu fx:id="genreMenu" mnemonicParsing="false" text="Genre"/>
+                            <Menu fx:id="typeMenu" mnemonicParsing="false" text="type"/>
                         </items>
                     </MenuButton>
                     <Button fx:id="searchBtn" text="search"  HBox.hgrow="ALWAYS" prefHeight="27.0" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>

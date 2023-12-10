@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -40,7 +41,10 @@ import javafx.stage.Stage;
 public class VerkoopbaarController implements BuyScreenInterface{
 
     @FXML
-    private Menu consoleMenu, winkelMenu, genreMenu;
+    private Menu consoleMenu, winkelMenu, genreMenu, typeMenu;
+
+    @FXML
+    private MenuButton filterMenu; //TODO: giet
 
     @FXML
     private Button VerkoopbaarAddBtn, deleteBtn, buyBtn, searchBtn, addToCartBtn; //filterBtn;
@@ -245,10 +249,10 @@ public class VerkoopbaarController implements BuyScreenInterface{
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
         if(product == "Game"){
-            verkoopbaarApi = new GameApi(dbConnection); ;
+            verkoopbaarApi = new GameApi(dbConnection);
         }
         else if(product == "Extra"){
-            verkoopbaarApi = new ExtraApi(dbConnection); 
+            verkoopbaarApi = new ExtraApi(dbConnection);
         }
         initTable();
     }
@@ -269,16 +273,45 @@ public class VerkoopbaarController implements BuyScreenInterface{
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
 
-        for(Console console: Console.values()){
-            var menuItem = new MenuItem(console.name());
-            menuItem.setOnAction(e ->{
-                verkoopbaarApi.creatSearchQuerry((console));
-                verkoopbaarApi.searchVerkoopbaarByFilters(null);
-                this.updateOrSearchTable(false);
-                addFilterToPane(console);
-            });
-            consoleMenu.getItems().add(menuItem);
-        }   
+        if(product == "Game"){
+            for(Console console: Console.values()){
+                var menuItem = new MenuItem(console.name());
+                menuItem.setOnAction(e ->{
+                    verkoopbaarApi.creatSearchQuerry((console));
+                    verkoopbaarApi.searchVerkoopbaarByFilters(null);
+                    this.updateOrSearchTable(false);
+                    addFilterToPane(console);
+                });
+                consoleMenu.getItems().add(menuItem);
+            }  
+            
+            for(Genre genre: genreApi.getGenres()){
+                var menuItem = new MenuItem(genre.getNaam());
+                menuItem.setOnAction(e -> {
+                    verkoopbaarApi.creatSearchQuerry(genre);
+                    verkoopbaarApi.searchVerkoopbaarByFilters(null);
+                    this.updateOrSearchTable(false);
+                    addFilterToPane(genre);
+                });
+                genreMenu.getItems().add(menuItem);
+            }
+        }
+
+        if(product == "Extra"){
+            for(Type type: Type.values()){
+                var menuItem = new MenuItem(type.name());
+                menuItem.setOnAction(e ->{
+                    verkoopbaarApi.creatSearchQuerry((type));
+                    verkoopbaarApi.searchVerkoopbaarByFilters(null);
+                    this.updateOrSearchTable(false);
+                    addFilterToPane(type);
+                });
+            typeMenu.getItems().add(menuItem);
+        }
+        }
+        
+
+        
 
         for(Winkel winkel: winkelApi.getWinkels()){
             var menuItem = new MenuItem(winkel.getFullAdressWithID());
@@ -290,31 +323,31 @@ public class VerkoopbaarController implements BuyScreenInterface{
             });
             winkelMenu.getItems().add(menuItem);
         }
-
-        for(Genre genre: genreApi.getGenres()){
-            var menuItem = new MenuItem(genre.getNaam());
-            menuItem.setOnAction(e -> {
-                verkoopbaarApi.creatSearchQuerry(genre);
-                verkoopbaarApi.searchVerkoopbaarByFilters(null);
-                this.updateOrSearchTable(false);
-                addFilterToPane(genre);
-            });
-            genreMenu.getItems().add(menuItem);
-        }
     }
 
     private <T> void addFilterToPane(T filter){
 
         //TODO mauro optimize
-        if(((GameApi)verkoopbaarApi).getSearchConsole() != null){
+        
+        if(verkoopbaarApi.getSearchWinkel() != null){
             searchAndDeleteVisualFilterByType(filter);
         }
-        else if(((GameApi)verkoopbaarApi).getSearchGenre() != null){
-            searchAndDeleteVisualFilterByType(filter);
+
+        if(verkoopbaarApi.getClass().isAssignableFrom(GameApi.class)){
+            if(((GameApi)verkoopbaarApi).getSearchConsole() != null){
+                searchAndDeleteVisualFilterByType(filter);
+            }
+            else if(((GameApi)verkoopbaarApi).getSearchGenre() != null){
+                searchAndDeleteVisualFilterByType(filter);
+            }
+        } 
+
+        else if(verkoopbaarApi.getClass().isAssignableFrom(ExtraApi.class)){
+            if(((ExtraApi)verkoopbaarApi).getSearchType() != null){
+                searchAndDeleteVisualFilterByType(filter);
+            }
         }
-        else if(verkoopbaarApi.getSearchWinkel() != null){
-            searchAndDeleteVisualFilterByType(filter);
-        }
+
 
         var visualFilter = new VisualFilter<>(filter);
         var visualFilterHbox = visualFilter.getVisualFilter(verkoopbaarApi, this);
@@ -345,11 +378,17 @@ public class VerkoopbaarController implements BuyScreenInterface{
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));
             tblVerkoopbaar.getColumns().add(consoleColumn);
+
+            typeMenu.setVisible(false);
+            
         } 
         else if(product == "Extra"){
             TableColumn<VerkoopbaarInterface,Type> typeColumn = new TableColumn<>("type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Type>("type"));
             tblVerkoopbaar.getColumns().add(typeColumn);
+
+            consoleMenu.setVisible(false);
+            genreMenu.setVisible(false);
         }
 
         

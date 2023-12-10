@@ -20,14 +20,14 @@
             <HBox fx:id="hboxGenreMenu" spacing="10">
                 <MenuButton fx:id="genreMenu" mnemonicParsing="false" style="-fx-background-color: #4f46e5;" text="Genre" textFill="WHITE"/>
             </HBox> -->
-            
+            <!-- TODO: Word deez zelfs gebruikt? -->
             <MenuButton style="-fx-background-color: #4f46e5;" textFill="WHITE" mnemonicParsing="false" text="File">
                 <items>
                     <Menu fx:id="openRecentTab" mnemonicParsing="false" text="Open Recent"/>
-                    <Menu fx:id="consoleMenu" mnemonicParsing="false" text="Console"/>
+                    <!-- <Menu fx:id="consoleMenu" mnemonicParsing="false" text="Console"/> -->
                     <Menu fx:id="winkelMenu" mnemonicParsing="false" text="Winkel"/>
-                    <Menu fx:id="genreMenu" mnemonicParsing="false" text="Genre"/>
-                    <Menu fx:id="typeMenu" mnemonicParsing="false" text="Type"/>
+                    <!-- <Menu fx:id="genreMenu" mnemonicParsing="false" text="Genre"/> -->
+                    <!-- <Menu fx:id="typeMenu" mnemonicParsing="false" text="Type"/> -->
                 </items>
             </MenuButton>
 

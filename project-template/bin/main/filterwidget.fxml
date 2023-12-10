@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<!-- TODO: Word deez zelfs gebruikt? -->
 <Pane>
     <Text fx:id="">
 </Pane>
