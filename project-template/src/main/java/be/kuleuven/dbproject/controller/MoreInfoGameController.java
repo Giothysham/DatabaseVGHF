@@ -1,6 +1,7 @@
 package be.kuleuven.dbproject.controller;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import javafx.fxml.FXML;
@@ -62,10 +63,10 @@ MoreInfoGameController {
         }
     }
 
-    public void setGame(Game game){
+    public void setGame(VerkoopbaarInterface game){
         gameNameTxt.setText(game.getNaam());
 
-        moreInfoTxt.setText(game.getBeschrijving());
+        moreInfoTxt.setText(((Game)game).getBeschrijving());
         moreInfoTxt.setEditable(false);
         moreInfoTxt.setWrapText(true);
 
@@ -74,15 +75,15 @@ MoreInfoGameController {
 
         stockTxt.setText(Integer.toString(game.getStock()));
 
-        consoleTxt.setText(game.getConsole().toString());
+        consoleTxt.setText(((Game)game).getConsole().toString());
 
         locatieTxt.setText(game.getWinkel().getSmallAdress());
 
-        genreTxt.setText(game.getGenre().getNaam());
+        genreTxt.setText(((Game)game).getGenre().getNaam());
 
         uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", game.getUitgever()));
 
-        genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", game.getGenre()));
+        genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)game).getGenre()));
     }
     
 }

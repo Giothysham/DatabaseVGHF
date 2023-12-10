@@ -16,10 +16,11 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.enums.Console;
 
 @Entity
-public class Game {
+public class Game implements VerkoopbaarInterface{
 
     @Column(name = "aantal_in_stock", updatable = true)
     private int stock;
@@ -99,7 +100,7 @@ public class Game {
         return this.console;
     }
 
-    public int getGameID() {
+    public int getID() {
         return this.gameID;
     }
 

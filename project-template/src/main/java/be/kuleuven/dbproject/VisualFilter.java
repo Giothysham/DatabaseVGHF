@@ -1,10 +1,10 @@
 package be.kuleuven.dbproject;
 
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.ExtraApi;
-import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
 import javafx.geometry.Pos;
@@ -24,7 +24,7 @@ public class VisualFilter<T> {
         this.usedFilter = filter;
     }
     
-    public HBox getVisualFilter(GameApi gameApi,BuyScreenInterface parentController){
+    public HBox getVisualFilter(VerkoopbaarApiInterface verkoopbaarApi,BuyScreenInterface parentController){
 
         visualFilterHbox = new HBox();
         visualFilterHbox.setSpacing(5.0);
@@ -50,7 +50,7 @@ public class VisualFilter<T> {
         text.setFill(Paint.valueOf("#000000"));
 
         button.setOnAction(e -> {
-            gameApi.removeFilterByClass(usedFilter);
+            verkoopbaarApi.removeFilterByClass(usedFilter);
             parentController.getScrlPaneFilters().getChildren().remove(visualFilterHbox);
             parentController.updateOrSearchTable(false);
         });

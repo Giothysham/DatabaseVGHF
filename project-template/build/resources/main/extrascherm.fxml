@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.ExtraController" fx:id="extra">
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarController" fx:id="extra">
     <children>
         <HBox alignment="CENTER" layoutX="14.0">
             <VBox spacing="5" layoutX="14.0" alignment="CENTER">
@@ -38,21 +38,21 @@
                     <MenuButton style="-fx-background-color: #4f46e5;" textFill="WHITE" mnemonicParsing="false" text="Filter">
                         <items>
                             <Menu fx:id="winkelMenu" mnemonicParsing="false" text="Winkel"/>
-                            <Menu fx:id="typeMenu" mnemonicParsing="false" text="Type"/>
+                            <!-- <Menu fx:id="typeMenu" mnemonicParsing="false" text="Type"/> -->
                         </items>
                     </MenuButton>
-                    <Button fx:id="extraSearchBtn" text="search"  HBox.hgrow="ALWAYS" prefHeight="27.0" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    <Button fx:id="searchBtn" text="search"  HBox.hgrow="ALWAYS" prefHeight="27.0" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                 </HBox>
-                <TableView fx:id="tblExtras" prefHeight="246.0" prefWidth="567.0" onMouseClicked="#onClickGame">
+                <TableView fx:id="tblGames" prefHeight="246.0" prefWidth="567.0" onMouseClicked="#onClickVerkoopbaar">
                     <columns>
                         <TableColumn text="naam" fx:id="naamColumn" />
                         <TableColumn text="price" fx:id="priceColumn" />
                         <TableColumn text="avaible" fx:id="avaibleColumn" />
-                        <TableColumn text="type" fx:id="typeColumn" />
+                        <!-- <TableColumn text="type" fx:id="typeColumn" /> -->
                     </columns>
                 </TableView>
                 <HBox spacing="5" alignment="CENTER">
-                    <Button fx:id="extraAddBtn" text="+" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
+                    <Button fx:id="gameAddBtn" text="+" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     <Button fx:id="addToCartBtn" text="Add  to cart" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                     <Button fx:id="deleteBtn" text="-" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"/>
                 </HBox>

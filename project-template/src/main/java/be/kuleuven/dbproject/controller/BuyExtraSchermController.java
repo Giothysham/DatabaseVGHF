@@ -41,7 +41,7 @@ public class BuyExtraSchermController {
     @FXML 
     private TableColumn<Extra, Double> priceColumn;
 
-    private ExtraController parentController;
+    private VerkoopbaarController parentController;
 
     private ArrayList<String> wantToBuyListID;
 
@@ -68,19 +68,19 @@ public class BuyExtraSchermController {
 
     public void deleteExtra(){
         Extra extra = tblExtras.getSelectionModel().getSelectedItem();
-        wantToBuyListID.remove(Integer.toString(extra.getExtraID()));
+        wantToBuyListID.remove(Integer.toString(extra.getID()));
         wantToBuyListExtra.remove(extra);
-        parentController.setwantToRentList(wantToBuyListID);
+        parentController.setCheckoutList(wantToBuyListID);
         tblExtras.getItems().setAll(wantToBuyListExtra);
 
         var price = 0.0;
         for(Extra tempExtra: wantToBuyListExtra){
-            price =+ tempExtra.getKostprijs();
+            price =+ tempExtra.getKostPrijs();
         }
         amountTxt.setText("" + price + "$");
     }
 
-    public void setparentController(ExtraController controller){
+    public void setparentController(VerkoopbaarController controller){
         this.parentController = controller;
     }
 
@@ -94,7 +94,7 @@ public class BuyExtraSchermController {
             
                 var tempExtra = (Extra) extraApi.getExtraById(id);
                 this.wantToBuyListExtra.add(tempExtra);
-                price += tempExtra.getKostprijs();
+                price += tempExtra.getKostPrijs();
             }
             catch(Exception e){
                 System.out.println(e);
@@ -111,7 +111,7 @@ public class BuyExtraSchermController {
             userApi.createFactuurForExtra(wantToBuyList, user);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
-            parentController.setwantToRentList(new ArrayList<>());
+            parentController.setCheckoutList(new ArrayList<>());
             window.close();
         } catch (Exception e) {
             Alert a = new Alert(AlertType.ERROR);

@@ -16,10 +16,11 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.enums.Type;
 
 @Entity
-public class Extra {
+public class Extra implements VerkoopbaarInterface {
 
     @Column(name = "aantal_in_stock")
     private int stock;
@@ -29,7 +30,7 @@ public class Extra {
 
     @Column(name = "extraID")
     @GeneratedValue(generator="sqlite")
-    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="sqliteGameIdTable")
+    @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="sqliteGameIdTable") //TOD9: game?
     @Id
     private int extraID;
 
@@ -90,7 +91,7 @@ public class Extra {
         return this.verkocht;
     }
 
-    public int getExtraID() {
+    public int getID() {
         return this.extraID;
     }
 
@@ -102,7 +103,7 @@ public class Extra {
         return this.uitgever;
     }
 
-    public double getKostprijs() {
+    public double getKostPrijs() {
         return this.kostprijs;
     }
 
@@ -146,5 +147,10 @@ public class Extra {
 
     public void setUitgever(Uitgever uitgever) {
         this.uitgever = uitgever;
+    }
+
+    @Override
+    public void setKostPrijs(double kostPrijs) {
+        this.kostprijs = kostPrijs;
     }
 }

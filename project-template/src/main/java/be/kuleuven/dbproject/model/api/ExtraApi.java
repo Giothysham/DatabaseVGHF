@@ -7,11 +7,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.Predicate;
 
+import be.kuleuven.dbproject.controller.VerkoopbaarController;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Extra;
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Type;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 
-public class ExtraApi {
+public class ExtraApi implements VerkoopbaarApiInterface{
 
     private EntityManagerFactory sessionFactory;
 
@@ -34,14 +38,21 @@ public class ExtraApi {
         return this.searchWinkel;
     }
     
-    public List<Extra> getExtras(){
+    public List<VerkoopbaarInterface> getVerkoopbaar(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Extra.class);
         var root = query.from(Extra.class);
         var select = query.select(root);
+
+        List<Extra> extraList = entityManager.createQuery(select).getResultList();
+        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+     
+        for(Extra extra : extraList){
+            verkoopbaarList.add((VerkoopbaarInterface) extra);
+        }
         
-        return entityManager.createQuery(select).getResultList();
+        return verkoopbaarList;
     }
     
     public Extra getExtraById(String ID) throws Exception{
@@ -77,18 +88,18 @@ public class ExtraApi {
         return result;
     }
     
-    public void postExtra(Extra extra){
+    public void postVerkoopbaar(VerkoopbaarInterface extra){
         entityManager.getTransaction().begin();
         entityManager.persist(extra);
         entityManager.getTransaction().commit();
     }
 
-    public void deleteExtra(List<Extra> extras){ //try rond gooien om mislopende transactie te rollbacken4
+    public void deleteVerkoopbaar (List<VerkoopbaarInterface> extras){ //try rond gooien om mislopende transactie te rollbacken4
         try{ 
             if(extras.size() > 0){
                 entityManager.getTransaction().begin();
-                for(Extra extra: extras){
-                    var delete = entityManager.find(Extra.class, extra.getExtraID());
+                for(VerkoopbaarInterface extra: extras){ //TODO: naageminging misschine fixen, zie ook GameApi
+                    var delete = entityManager.find(Extra.class, extra.getID());
                     entityManager.remove(delete);
                     entityManager.getTransaction().commit();
                 }
@@ -110,7 +121,7 @@ public class ExtraApi {
         }
     }
 
-    public List<Extra> searchExtraByFilters(String naam){
+    public List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam){
 
         List<Predicate> querryFilterList = new ArrayList<Predicate>();
 
@@ -139,7 +150,13 @@ public class ExtraApi {
 
         System.out.println(result);
 
-        return result;
+        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+     
+        for(Extra extra : result){
+            verkoopbaarList.add((VerkoopbaarInterface) extra);
+        }
+
+        return verkoopbaarList;
     }
     
     public <T> void removeFilterByClass(T filterValue) {

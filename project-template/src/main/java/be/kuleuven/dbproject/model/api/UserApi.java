@@ -107,7 +107,7 @@ public class UserApi {
                     extra.setTempStock(stock-1);
                     stock = stock - 1;
                     
-                    var factuur = new Factuur(0,user ,extra.getKostprijs(), null,extra, extra.getWinkel());
+                    var factuur = new Factuur(0,user ,extra.getKostPrijs(), null,extra, extra.getWinkel());
                     
                     entityManager.persist(user);
                     entityManager.persist(factuur);

@@ -42,7 +42,7 @@ public class BuyGameSchermController {
     @FXML 
     private TableColumn<Game, Double>priceColumn;
 
-    private GameController parentController;
+    private VerkoopbaarController parentController;
 
     private ArrayList<String> wantToRentListID;
 
@@ -69,9 +69,9 @@ public class BuyGameSchermController {
 
     public void deleteGame(){
         Game game = tblGames.getSelectionModel().getSelectedItem();
-        wantToRentListID.remove(Integer.toString(game.getGameID()));
+        wantToRentListID.remove(Integer.toString(game.getID()));
         wantToRentListGame.remove(game);
-        parentController.setwantToRentList(wantToRentListID);
+        parentController.setCheckoutList(wantToRentListID);
         tblGames.getItems().setAll(wantToRentListGame);
 
         var price = 0.0;
@@ -81,7 +81,7 @@ public class BuyGameSchermController {
         amountTxt.setText( " " + price + "$");
     }
 
-    public void setparentController(GameController controller){
+    public void setparentController(VerkoopbaarController controller){
         this.parentController = controller;
     }
 
@@ -109,11 +109,11 @@ public class BuyGameSchermController {
 
     public void buyGames(List<Game> wantToRentList, User user){
         try {
-            userApi.createFactuurForGame(wantToRentList, user);
             user.addToListGames(wantToRentList);
+            userApi.createFactuurForGame(wantToRentList, user);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
-            parentController.setwantToRentList(new ArrayList<>());
+            parentController.setCheckoutList(new ArrayList<>());
             window.close();
         } catch (Exception e) {
             Alert a = new Alert(AlertType.ERROR);

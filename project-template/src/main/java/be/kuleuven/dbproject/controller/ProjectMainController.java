@@ -63,6 +63,7 @@ public class ProjectMainController {
         btnGames.setOnAction(e -> {
             try {
                 changeButtonStyle(listOfButtons, e);
+                paneHolderController.setProduct("Game");
                 paneHolderController.changeChildTo("gamescherm",dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -91,7 +92,8 @@ public class ProjectMainController {
         btnExtras.setOnAction(e -> {
             changeButtonStyle(listOfButtons, e);
             try {
-                paneHolderController.changeChildTo("extrascherm", dbConnection);
+                paneHolderController.setProduct("Extra");
+                paneHolderController.changeChildTo("gamescherm", dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

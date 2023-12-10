@@ -27,6 +27,7 @@
                     <Menu fx:id="consoleMenu" mnemonicParsing="false" text="Console"/>
                     <Menu fx:id="winkelMenu" mnemonicParsing="false" text="Winkel"/>
                     <Menu fx:id="genreMenu" mnemonicParsing="false" text="Genre"/>
+                    <Menu fx:id="typeMenu" mnemonicParsing="false" text="Type"/>
                 </items>
             </MenuButton>
 
