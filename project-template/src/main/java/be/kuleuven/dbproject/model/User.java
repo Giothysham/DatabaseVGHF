@@ -1,9 +1,23 @@
 package be.kuleuven.dbproject.model;
 
- //later fixen specifieke imports
+ import java.security.CryptoPrimitive;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+//later fixen specifieke imports
 
 import java.util.List;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +27,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 
 
@@ -60,12 +75,24 @@ public class User {
 
     @ManyToMany(targetEntity = Game.class, cascade = { CascadeType.ALL })
 	@JoinTable(name = "game_user",
-				joinColumns = { @JoinColumn(name = "userID") }, 
-				inverseJoinColumns = { @JoinColumn(name = "gameID") })
+    joinColumns = { @JoinColumn(name = "userID") }, 
+    inverseJoinColumns = { @JoinColumn(name = "gameID") })
 	private List<Game> uitgeleendeGame;
 
     @OneToMany(mappedBy = "user")
     private List<Factuur> factuur;
+
+    @Transient
+    private SecretKey key;
+
+    @Transient
+    private IvParameterSpec iv;
+
+    @Transient
+    private String algorithm;
+
+    @Transient
+    private KeyGenerator keygen;
 
     public User() {
     }
@@ -82,9 +109,30 @@ public class User {
         this.land = land;
         this.userId = userId;
         this.email = email;
-        this.wachtwoord = wachtwoord;
+
+        try {
+            keygen = KeyGenerator.getInstance("AES");
+            key = keygen.generateKey();
+            iv = new IvParameterSpec(key.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("wachtwoord encryptie mislukt");
+        }
+        algorithm = "AES/CBC/PKCS5Padding";
+        this.wachtwoord = encryptePassWord(wachtwoord);
         this.bevoegdheid = bevoegdheid;
         this.uitgeleendeGame = uitgeleendeGame;
+    }
+
+    private String encryptePassWord(String password){
+        try {
+            Cipher cipher = Cipher.getInstance(algorithm);
+            cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+            byte[] encText = cipher.doFinal(password.getBytes());
+            return Base64.getEncoder().encodeToString(encText);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException("wachtwoord encryptie mislukt");
+        }
     }
 
     public void addToListGames(List<Game> game){
@@ -136,7 +184,15 @@ public class User {
     }
 
     public String getWachtwoord() {
-        return this.wachtwoord;
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance(algorithm);
+            cipher.init(Cipher.DECRYPT_MODE, key, iv);
+            byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
+            return new String(wachtwoordByte);
+        } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
+            throw new RuntimeException("wachtwoord decryptie mislukt");
+        }
     }
 
     public Integer getBevoegdheid() {
