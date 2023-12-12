@@ -54,25 +54,25 @@ be/kuleuven/dbproject/model/api/GenreApi.java
  be.kuleuven.dbproject.model.api.GenreApi
 be/kuleuven/dbproject/controller/PaneHolderController.java
  be.kuleuven.dbproject.controller.PaneHolderController
-be/kuleuven/dbproject/model/api/ExtraApi.java
- be.kuleuven.dbproject.model.api.ExtraApi
+be/kuleuven/dbproject/controller/LoginController.java
+ be.kuleuven.dbproject.controller.LoginController
 be/kuleuven/dbproject/controller/CreatAccountController.java
  be.kuleuven.dbproject.controller.CreatAccountController
+be/kuleuven/dbproject/ProjectMain.java
+ be.kuleuven.dbproject.ProjectMain
+be/kuleuven/dbproject/controller/ProjectMainController.java
+ be.kuleuven.dbproject.controller.ProjectMainController
+be/kuleuven/dbproject/controller/GameController.java
+ be.kuleuven.dbproject.controller.GameController
+be/kuleuven/dbproject/model/api/ExtraApi.java
+ be.kuleuven.dbproject.model.api.ExtraApi
 be/kuleuven/dbproject/controller/FilterSchermController.java
  be.kuleuven.dbproject.controller.FilterSchermController
 be/kuleuven/dbproject/controller/BuyExtraSchermController.java
  be.kuleuven.dbproject.controller.BuyExtraSchermController
-be/kuleuven/dbproject/controller/GameController.java
- be.kuleuven.dbproject.controller.GameController
-be/kuleuven/dbproject/controller/LoginController.java
- be.kuleuven.dbproject.controller.LoginController
 be/kuleuven/dbproject/controller/ExtraController.java
  be.kuleuven.dbproject.controller.ExtraController
-be/kuleuven/dbproject/controller/ProjectMainController.java
- be.kuleuven.dbproject.controller.ProjectMainController
 be/kuleuven/dbproject/VisualFilter.java
  be.kuleuven.dbproject.VisualFilter
-be/kuleuven/dbproject/ProjectMain.java
- be.kuleuven.dbproject.ProjectMain
 be/kuleuven/dbproject/controller/ExtraAddController.java
  be.kuleuven.dbproject.controller.ExtraAddController

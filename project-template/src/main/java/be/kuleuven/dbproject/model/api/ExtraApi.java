@@ -60,21 +60,6 @@ public class ExtraApi {
         else{
             throw new Exception("no extra found with id: "+ ID);
         }
-    
-    }
-    
-    public List<Extra> SearchExtraByName(String naam){
-
-        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
-
-        var query = criteriaBuilder.createQuery(Extra.class);
-        var root = query.from(Extra.class);
-
-        query.where(criteriaBuilder.equal(root.get("naam"), naam));
-
-        var result = entityManager.createQuery(query).getResultList();
-
-        return result;
     }
     
     public void postExtra(Extra extra){
@@ -102,11 +87,9 @@ public class ExtraApi {
     public <T> void creatSearchQuerry(T filterValue){
         if(filterValue.getClass() == Type.class){
             searchType = (Type) filterValue;
-            System.out.println(searchType.name());
         }
         else if(filterValue.getClass() == Winkel.class){
             searchWinkel = (Winkel) filterValue;
-            System.out.println(((Winkel) filterValue).getSmallAdress());
         }
     }
 
@@ -119,27 +102,27 @@ public class ExtraApi {
         var root = query.from(Extra.class);
 
         if(searchType != null){
-            System.out.println("searching for console: "+searchType);
            querryFilterList.add(criteriaBuilder.equal(root.get("type"), searchType));
         }
         
         if(searchWinkel != null){
-            System.out.println("searching for winkel: "+searchWinkel);
             querryFilterList.add(criteriaBuilder.equal(root.get("winkel"), searchWinkel));
         }
 
         if(naam != null){
-            System.out.println("searching for name: "+naam);
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
 
         Predicate predicate = criteriaBuilder.and(querryFilterList.toArray(new Predicate[querryFilterList.size()]));
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
+        if(result.size() > 0){
+            return result;
+        }
+        else{
+            throw new IllegalArgumentException("no extra found with filters and name: "+ naam);
+        }
 
-        System.out.println(result);
-
-        return result;
     }
     
     public <T> void removeFilterByClass(T filterValue) {

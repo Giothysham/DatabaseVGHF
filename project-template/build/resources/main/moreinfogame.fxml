@@ -10,7 +10,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.MoreInfoGameController">
     <children>
-        <VBox spacing="10" style="-fx-padding: 0 10 10 10;">
+        <VBox spacing="10" style="-fx-padding: 0 10 10 10;" alignment="CENTER">
             <HBox alignment="CENTER">
                 <Label fx:id="gameNameTxt" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
             </HBox>
@@ -40,7 +40,7 @@
                 <Text fx:id="locatieTxt" style="-fx-font-size: 14;"/>
             </HBox>
             <HBox alignment="CENTER">
-                <TextArea fx:id="moreInfoTxt" prefHeight="400.0" prefWidth="600.0"/>
+                <TextArea fx:id="moreInfoTxt" prefHeight="200.0" prefWidth="600.0"/>
             </HBox>
         </VBox>
     </children>

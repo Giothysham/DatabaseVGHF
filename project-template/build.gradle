@@ -28,6 +28,8 @@ dependencies {
     implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
     // https://mvnrepository.com/artifact/org.controlsfx/controlsfx
     implementation group: 'org.controlsfx', name: 'controlsfx', version: '8.0.5'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
 
 
 
