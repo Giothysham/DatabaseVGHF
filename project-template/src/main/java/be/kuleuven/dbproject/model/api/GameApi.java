@@ -7,12 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.Predicate;
 
+import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Console;
 
-public class GameApi {
+public class GameApi implements VerkoopbaarApiInterface {
 
     private EntityManagerFactory sessionFactory;
 
@@ -41,17 +43,24 @@ public class GameApi {
         return this.searchGenre;
     }
     
-    public List<Game> getGames(){
+    public List<VerkoopbaarInterface> getVerkoopbaar(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Game.class);
         var root = query.from(Game.class);
         var select = query.select(root);
         
-        return entityManager.createQuery(select).getResultList();
+        List<Game> gameList = entityManager.createQuery(select).getResultList();
+        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+     
+        for(Game game : gameList){
+            verkoopbaarList.add((VerkoopbaarInterface) game);
+        }
+
+        return verkoopbaarList;
     }
     
-    public Game getGameById(String ID) throws Exception{
+    public VerkoopbaarInterface getVerkoopbaarById(String ID) throws Exception{
         System.out.println(ID);
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
@@ -62,7 +71,7 @@ public class GameApi {
         var result = entityManager.createQuery(query).getResultList();
         
         if(result.size() > 0){
-            return result.get(0);
+            return (VerkoopbaarInterface) result.get(0);
         }
         else{
             throw new Exception("no game found with id: "+ ID);
@@ -85,7 +94,7 @@ public class GameApi {
         }
     }
     
-    public List<Game> searchGamesByFilters(String naam){
+    public List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam){
 
         List<Predicate> querryFilterList = new ArrayList<Predicate>();
 
@@ -119,21 +128,27 @@ public class GameApi {
 
         System.out.println(result);
 
-        return result;
+        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+     
+        for(Game game : result){
+            verkoopbaarList.add((VerkoopbaarInterface) game);
+        }
+
+        return verkoopbaarList;
     }
     
-    public void postGame(Game game){
+    public void postVerkoopbaar(VerkoopbaarInterface game){
         entityManager.getTransaction().begin();
         entityManager.persist(game);
         entityManager.getTransaction().commit();
     }
 
-    public void deleteGame(List<Game> games){ //try rond gooien om mislopende transactie te rollbacken4
+    public void deleteVerkoopbaar(List<VerkoopbaarInterface> games){ //try rond gooien om mislopende transactie te rollbacken4
         try{ 
             if(games.size() > 0){
                 entityManager.getTransaction().begin();
-                for(Game game: games){
-                    var delete = entityManager.find(Game.class, game.getGameID());
+                for(VerkoopbaarInterface game: games){
+                    var delete = entityManager.find(Game.class, game.getID());
                     entityManager.remove(delete);
                     entityManager.getTransaction().commit();
                 }

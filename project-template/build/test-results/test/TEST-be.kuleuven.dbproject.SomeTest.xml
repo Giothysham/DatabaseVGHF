@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testsuite name="be.kuleuven.dbproject.SomeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-08T16:11:43" hostname="3RR0R" time="0.002">
   <properties/>
   <testcase name="changeMe()" classname="be.kuleuven.dbproject.SomeTest" time="0.002"/>
+=======
+<testsuite name="be.kuleuven.dbproject.SomeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-09T15:19:22" hostname="EDMOND" time="0.017">
+  <properties/>
+  <testcase name="changeMe()" classname="be.kuleuven.dbproject.SomeTest" time="0.017"/>
+>>>>>>> 0503d5008e93cb19cd17b94e0eb91d02f0afd4e0
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

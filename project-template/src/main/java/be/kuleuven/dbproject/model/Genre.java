@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 @Entity
-public class Genre {
+public class Genre{
 
     @Column(name = "genreID")
     @GeneratedValue(generator="sqlite")

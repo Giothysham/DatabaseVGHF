@@ -12,13 +12,12 @@ import javax.persistence.TableGenerator;
 @Entity
 public class Winkel {
 
-    @Column(name = "bezoekers") //TODO: doen we echt saus mee??? => niet echt nodig
+    @Column(name = "bezoekers")
     private int bezoekers;
 
     @Column(name = "winkelID")
     @GeneratedValue(generator="sqlite")
 
-    //TODO: fix => vragen wouter waarom negatieve ?????
     @TableGenerator(name="sqlite", table="sqlite_sequence",pkColumnName="name", valueColumnName="seq",pkColumnValue="winkel")
     @Id
     private int winkelID;

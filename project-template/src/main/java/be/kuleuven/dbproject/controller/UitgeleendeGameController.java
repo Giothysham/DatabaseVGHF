@@ -21,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,7 +29,7 @@ import java.util.List;
 public class UitgeleendeGameController {
 
     @FXML
-    private Button gameSearchBtn, returnBtn;
+    private Button searchBtn, returnBtn;
 
     @FXML
     private TextField autoCompleteSearch;
@@ -60,9 +59,7 @@ public class UitgeleendeGameController {
 
     public void initialize(){
 
-        //TODO wordt nooit ge commit => sluiten app zorgt ervoor dat data weg gaat.
-
-        gameSearchBtn.setOnAction(e -> updateOrSearchTable(false));
+        searchBtn.setOnAction(e -> updateOrSearchTable(false));
 
         returnBtn.setOnAction(e -> returnGame());
 
@@ -86,9 +83,9 @@ public class UitgeleendeGameController {
 
             for (int i = 0; i<tempList.size(); i++) {
                 //vragen of dit hard code cava is. 
-                var gameID = ((Game) tempList.get(i)).getGameID();
+                var gameID = ((Game) tempList.get(i)).getID();
                 for(Game game: uitgeleendeGames){
-                    if(gameID == game.getGameID()){
+                    if(gameID == game.getID()){
                         game.setStock(game.getStock() + 1);
                         uitgeleendeGames.remove(game);
                         break;
@@ -109,7 +106,14 @@ public class UitgeleendeGameController {
         else{
             var autoCompleteText = autoCompleteSearch.getText();
             if(autoCompleteText.length() != 0){
-                //listgames = (ArrayList<Game>) gameApi.SearchGamesByName(autoCompleteText);
+                // var templist = user.getUitgeleendeGames();
+                // for(Game uit: templist){
+                //     System.out.println("gothere 1--------------------------------------------");
+                //     if(uit.getNaam().contains(autoCompleteText)){
+                //         System.out.println("gothere 2--------------------------------------------");
+                //         listgames.add(uit);
+                //     }
+                // } WAYO?
             }
             // TODO: aan wouter fix vragen => nog een bekijken wat dit is
             else{
@@ -131,7 +135,7 @@ public class UitgeleendeGameController {
 
         TextFields.bindAutoCompletion(autoCompleteSearch, autoCompleteWords);
 
-        tblUitgeleendeGames.setOnMouseClicked(mouseEvent -> {onClickGame(mouseEvent);});
+        tblUitgeleendeGames.setOnMouseClicked(mouseEvent -> {onClickVerkoopbaar(mouseEvent);});
 
         tblUitgeleendeGames.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -140,10 +144,10 @@ public class UitgeleendeGameController {
     }
 
     @FXML
-    public void onClickGame(MouseEvent event) {
+    public void onClickVerkoopbaar(MouseEvent event) {
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
-            openNewWindow("moreinfogame",gameSelected);
+            openNewWindow("moreinfoverkoopbaar",gameSelected);
         }
     }
 
@@ -156,10 +160,10 @@ public class UitgeleendeGameController {
             var root = loader.load();
             var controller = loader.getController();
 
-            if(controller.getClass() == MoreInfoGameController.class){
-                MoreInfoGameController moreInfoGameController = (MoreInfoGameController) controller;
-                moreInfoGameController.setdbConnection(dbConnection);
-                moreInfoGameController.setGame(gameSelected);
+            if(controller.getClass() == VerkoopbaarMoreInfoController.class){
+                VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
+                verkoopbaarMoreInfoController.setdbConnection(dbConnection);
+                verkoopbaarMoreInfoController.setVerkoopbaar(gameSelected);
             }
 
             var scene = new Scene((Parent) root);

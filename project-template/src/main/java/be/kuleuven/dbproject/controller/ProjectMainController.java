@@ -28,15 +28,13 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private Button logOutBtn,adminBtn,btnUitgeleendeGames,btnExtras;
+    private Button logOutBtn,adminBtn,btnUitgeleendeGames,btnExtras, btnGames;
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
     private VBox childerenBox;
     @FXML
     private BorderPane borderPaneMain;
-    @FXML
-    private Button btnGames;
 
     @FXML
     private Label naamTxt,achternaamTxt;
@@ -63,7 +61,8 @@ public class ProjectMainController {
         btnGames.setOnAction(e -> {
             try {
                 changeButtonStyle(listOfButtons, e);
-                paneHolderController.changeChildTo("gamescherm",dbConnection);
+                paneHolderController.setProduct("Game");
+                paneHolderController.changeChildTo("verkoopbaarscherm",dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -91,7 +90,8 @@ public class ProjectMainController {
         btnExtras.setOnAction(e -> {
             changeButtonStyle(listOfButtons, e);
             try {
-                paneHolderController.changeChildTo("extrascherm", dbConnection);
+                paneHolderController.setProduct("Extra");
+                paneHolderController.changeChildTo("verkoopbaarscherm", dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

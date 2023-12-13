@@ -16,10 +16,9 @@ public class PaneHolderController {
     @FXML
     private AnchorPane tmpPane;
 
-    @FXML
-    private GameController gameController;
-
     private User user;
+
+    private String product;
 
     public void initialize() {
         
@@ -35,11 +34,12 @@ public class PaneHolderController {
         var rootLoader = (AnchorPane) pane.load();
         var childController = pane.getController();
 
-        if(childController.getClass() == GameController.class){
-            var gameController = (GameController) childController;
-            gameController.setDbConnection(dbConnection);
-            gameController.setUser(user);
-            gameController.setUpFilters();
+        if(childController.getClass() == VerkoopbaarController.class){
+            var verkoopbaarController = (VerkoopbaarController) childController;
+            verkoopbaarController.setProduct(product);
+            verkoopbaarController.setDbConnection(dbConnection);
+            verkoopbaarController.setUser(user);
+            verkoopbaarController.setUpFilters();
         }
         
         else if(childController.getClass() == UitgeleendeGameController.class){
@@ -57,15 +57,13 @@ public class PaneHolderController {
             AdminController.setUser();
         }
 
-        else if(childController.getClass() == ExtraController.class){
-            var extraController = (ExtraController) childController;
-            extraController.setDbConnection(dbConnection);
-            extraController.setUser(user);
-            extraController.setUpFilters();
-        }
-
         rootLoader.autosize();
         tmpPane.getChildren().setAll(rootLoader);
     }
+
+    public void setProduct(String product){
+        this.product = product;
+    }
+
 
 }
