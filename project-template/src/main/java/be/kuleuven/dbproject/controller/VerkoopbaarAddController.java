@@ -80,7 +80,6 @@ public class VerkoopbaarAddController {
             });
 
         aantalUitgeleend.setDisable(true);
-        winkelDropDown.setDisable(true);
 
         viewVerkoopbaarPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfoverkoopbaar"));
 
@@ -100,7 +99,6 @@ public class VerkoopbaarAddController {
              var controller = (VerkoopbaarMoreInfoController) loader.getController();
             controller.setdbConnection(dbConnection);
             controller.setVerkoopbaar(verkoopbaar);
-                        System.out.println("gothere --------------------------------------");
 
             var scene = new Scene((Parent) root);
             stage.setScene(scene);
@@ -206,6 +204,15 @@ public class VerkoopbaarAddController {
         var uitgeverApi = new UitgeverApi(dbConnection);
         verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
 
+        String nameWinkel = (String) winkelDropDown.getValue();
+
+        for (Winkel testwinkel : winkels) {
+            if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
+                verkoopbaar.setWinkel(testwinkel);
+                break;
+            }
+        } 
+
         verkoopbaarController.updateOrSearchTable(false);
 
         var window = (Stage) beschrijving.getScene().getWindow();
@@ -222,7 +229,7 @@ public class VerkoopbaarAddController {
         Uitgever uitgever = null;
         String nameWinkel = (String) winkelDropDown.getValue();
         String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
-
+        //System.out.println("setting up--------------------------------------------_---__--__-");
         for (Winkel testwinkel : winkels) {
             if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
                 winkel = testwinkel;
@@ -242,7 +249,7 @@ public class VerkoopbaarAddController {
             var genreNaam = (String) genreIDDropDown.getValue();
             var genreApi = new GenreApi(dbConnection);
             var genre = genreApi.getGenreByName(genreNaam);
-            tempVerkoopbaar = new Game(aantalStock, 0, console, 0,winkel, kostPrijs, genre, naam, beschrijving, uitgever);
+            tempVerkoopbaar = new Game(aantalStock, 0, console, 0, winkel, kostPrijs, genre, naam, beschrijving, uitgever);
 
             try {
             var verkoopbaarApi = new GameApi(dbConnection);
@@ -260,7 +267,9 @@ public class VerkoopbaarAddController {
                 System.out.println(e);
                 return false;
             }
-        } else if(product == "Extra"){
+        } 
+        
+        else if(product == "Extra"){
             Type type = (Type) typeDropDown.getValue();
             tempVerkoopbaar= new Extra(aantalStock, 0, 0, winkel, uitgever, kostPrijs, type, naam);
 

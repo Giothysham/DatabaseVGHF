@@ -126,21 +126,17 @@ public class ExtraApi implements VerkoopbaarApiInterface {
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
         if(result.size() > 0){
-            return result;
+            List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+     
+            for(Extra extra : result){
+                verkoopbaarList.add((VerkoopbaarInterface) extra);
+            }
+            return verkoopbaarList;
         }
         else{
             throw new IllegalArgumentException("no extra found with filters and name: "+ naam);
         }
 
-        System.out.println(result);
-
-        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
-     
-        for(Extra extra : result){
-            verkoopbaarList.add((VerkoopbaarInterface) extra);
-        }
-
-        return verkoopbaarList;
     }
     
     public <T> void removeFilterByClass(T filterValue) {

@@ -92,6 +92,10 @@ public class Game implements VerkoopbaarInterface{
         return this.stock;
     }
 
+    public void setWinkel(Winkel winkel){
+        this.winkel = winkel;
+    }
+
     public int getVerkocht() {
         return this.verkocht;
     }

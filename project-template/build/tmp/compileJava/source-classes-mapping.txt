@@ -2,6 +2,8 @@ be/kuleuven/dbproject/controller/MoreInfoController.java
  be.kuleuven.dbproject.controller.MoreInfoController
 be/kuleuven/dbproject/controller/VerkoopbaarAddController.java
  be.kuleuven.dbproject.controller.VerkoopbaarAddController
+be/kuleuven/dbproject/model/api/ExtraApi.java
+ be.kuleuven.dbproject.model.api.ExtraApi
 be/kuleuven/dbproject/model/Uitgever.java
  be.kuleuven.dbproject.model.Uitgever
 be/kuleuven/dbproject/controller/VerkoopbaarMoreInfoController.java
@@ -32,10 +34,14 @@ be/kuleuven/dbproject/model/enums/Type.java
  be.kuleuven.dbproject.model.enums.Type
 be/kuleuven/dbproject/controller/ProjectMainController.java
  be.kuleuven.dbproject.controller.ProjectMainController
+be/kuleuven/dbproject/ProjectMain.java
+ be.kuleuven.dbproject.ProjectMain
 be/kuleuven/dbproject/model/Winkel.java
  be.kuleuven.dbproject.model.Winkel
 be/kuleuven/dbproject/controller/VerkoopbaarController.java
  be.kuleuven.dbproject.controller.VerkoopbaarController
+be/kuleuven/dbproject/model/api/GenreApi.java
+ be.kuleuven.dbproject.model.api.GenreApi
 be/kuleuven/dbproject/model/Game.java
  be.kuleuven.dbproject.model.Game
 be/kuleuven/dbproject/model/api/WinkelApi.java
@@ -48,6 +54,8 @@ be/kuleuven/dbproject/model/User.java
  be.kuleuven.dbproject.model.User
 be/kuleuven/dbproject/model/Extra.java
  be.kuleuven.dbproject.model.Extra
+be/kuleuven/dbproject/model/api/GameApi.java
+ be.kuleuven.dbproject.model.api.GameApi
 be/kuleuven/dbproject/model/Factuur.java
  be.kuleuven.dbproject.model.Factuur
 be/kuleuven/dbproject/controller/GenreAddController.java

@@ -126,6 +126,8 @@ public class VerkoopbaarBuySchermController {
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){
         try {
+            userApi.createFactuurForVerkoopbaar(wantToRentList, user);
+
             if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
                 var tempList = new ArrayList<Game>();
 
@@ -136,7 +138,6 @@ public class VerkoopbaarBuySchermController {
                 user.addToListGames(tempList);
             }
 
-            userApi.createFactuurForVerkoopbaar(wantToRentList, user);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
