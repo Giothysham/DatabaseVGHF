@@ -7,15 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.Predicate;
 
-import be.kuleuven.dbproject.controller.VerkoopbaarController;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Extra;
-import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Type;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 
-public class ExtraApi implements VerkoopbaarApiInterface{
+public class ExtraApi implements VerkoopbaarApiInterface {
 
     private EntityManagerFactory sessionFactory;
 

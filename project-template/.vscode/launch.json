@@ -12,9 +12,6 @@
             "stopOnEntry": true,
             "stopAtBreakpoints": true,
             "openViews": [
-                "Robot",
-                "LED Matrix",
-                "Seven Segment Board"
             ],
             "ledMatrixSize": {
                 "x": 10,
