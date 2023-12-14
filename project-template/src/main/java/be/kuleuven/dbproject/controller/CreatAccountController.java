@@ -60,20 +60,7 @@ public class CreatAccountController {
         var harhaalWachtwoord = wachtwoordHerhaalTxtField.getText();
         var uitgeleendeGame =  new ArrayList<Game>();
 
-        if(wachtwoord.equals(harhaalWachtwoord) && wachtwoord != ""){
-
-            user = new User(achternaam,voorNaam,tel,straatNaam,stad,postcode,provincie,land,0,email,wachtwoord,0,uitgeleendeGame);
-
-            try{
-                userApi.creatUser(user);
-                openWindow("main.fxml");
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-            }
-
-        }
-        else if(tel.length()  != 10){
+        if(tel.length()  != 10){
             wachtwoordText.setFill(Color.BLACK);
             wachtwoordHerhaalText.setFill(Color.BLACK);
             emailTxt.setFill(Color.BLACK);
@@ -89,13 +76,24 @@ public class CreatAccountController {
             foutMeldingTxt.setText("fout in de mail");
             foutMeldingTxt.setFill(Color.RED);
         }
-        else{
+        else if(!wachtwoord.equals(harhaalWachtwoord) || wachtwoord == ""){
             telText.setFill(Color.BLACK);
             wachtwoordText.setFill(Color.RED);
             wachtwoordHerhaalText.setFill(Color.RED);
             emailTxt.setFill(Color.BLACK);
             foutMeldingTxt.setText("wachtwoorden komen niet overeen");
             foutMeldingTxt.setFill(Color.RED);
+        }
+        else{
+            user = new User(achternaam,voorNaam,tel,straatNaam,stad,postcode,provincie,land,0,email,wachtwoord,0,uitgeleendeGame);
+
+            try{
+                userApi.creatUser(user);
+                openWindow("main.fxml");
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }   
         }
     }
 
