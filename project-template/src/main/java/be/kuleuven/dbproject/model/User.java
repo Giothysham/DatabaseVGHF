@@ -1,9 +1,7 @@
 package be.kuleuven.dbproject.model;
 
- import java.security.CryptoPrimitive;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
@@ -21,6 +19,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -73,7 +72,7 @@ public class User {
     @Column(name = "bevoegdheid")
     private Integer bevoegdheid;
 
-    @ManyToMany(targetEntity = Game.class, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER,targetEntity = Game.class, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "game_user",
     joinColumns = { @JoinColumn(name = "userID") }, 
     inverseJoinColumns = { @JoinColumn(name = "gameID") })

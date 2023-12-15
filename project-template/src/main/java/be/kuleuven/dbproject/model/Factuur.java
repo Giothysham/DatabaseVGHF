@@ -19,22 +19,22 @@ public class Factuur {
     @Id
     private int factuurID;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "userID")
     private User user;
 
     @Column(name = "kostprijs")
     private double kostPrijs;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "gameID")
     private Game game;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "extraID")
     private Extra extra;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "winkelID")
     private Winkel winkel;
 

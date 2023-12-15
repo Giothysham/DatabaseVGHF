@@ -62,9 +62,10 @@ public class UserApi {
                 }
 
                 if(stock > 0){
-                    //fix => vragen aan wouter
                     verkoopbaar.setTempStock(stock-1);
                     stock = stock - 1;
+
+                    System.out.println("hier");
                     
                     if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                         factuur = new Factuur(0,user,verkoopbaar.getKostPrijs(),(Game)verkoopbaar,null, verkoopbaar.getWinkel());
@@ -74,18 +75,17 @@ public class UserApi {
                         factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
-                    //entityManager.persist(user);
+                    entityManager.merge(user);
                     entityManager.persist(factuur);
                 }
                 else{
-                    //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
-                    //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
                     entityManager.getTransaction().rollback();
                     throw new Exception("more items selected than avaible");
                 }
             }
             
             for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
+                System.out.println("hier2");
                 verkoopbaar.setTempToStock();
             }
 

@@ -103,11 +103,11 @@ public class VerkoopbaarBuySchermController {
         for(String id: checkoutListID){
             try{
                 if(product == "Game"){
-                    verkoopbaarApi = new GameApi(dbConnection);
+                    verkoopbaarApi = new GameApi(dbConnection, user);
                 }
 
                 else if (product == "Extra"){
-                    verkoopbaarApi = new ExtraApi(dbConnection);
+                    verkoopbaarApi = new ExtraApi(dbConnection, user);
                 }
                 
                 var tempVerkoopbaar = verkoopbaarApi.getVerkoopbaarById(id);
@@ -126,24 +126,27 @@ public class VerkoopbaarBuySchermController {
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){
         try {
+
+            userApi.createFactuurForVerkoopbaar(wantToRentList, user);
+
             if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
                 var tempList = new ArrayList<Game>();
 
                 for(VerkoopbaarInterface verkoopbaar: wantToRentList){
                     tempList.add((Game) verkoopbaar);
                 }
-
+                
                 user.addToListGames(tempList);
             }
 
-            userApi.createFactuurForVerkoopbaar(wantToRentList, user);
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
             window.close();
         } 
-        
         catch (Exception e) {
+            var window = (Stage) removeBtn.getScene().getWindow();
+            window.close();
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
             a.show();
@@ -157,7 +160,7 @@ public class VerkoopbaarBuySchermController {
 
     public void setProduct(String product) {
         this.product = product;
-
+        //TODO: verander string
         if(product == "Game"){
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));

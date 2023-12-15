@@ -37,8 +37,8 @@ public class PaneHolderController {
         if(childController.getClass() == VerkoopbaarController.class){
             var verkoopbaarController = (VerkoopbaarController) childController;
             verkoopbaarController.setProduct(product);
-            verkoopbaarController.setDbConnection(dbConnection);
             verkoopbaarController.setUser(user);
+            verkoopbaarController.setDbConnection(dbConnection);
             verkoopbaarController.setUpFilters();
         }
         

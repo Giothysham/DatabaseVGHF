@@ -1,6 +1,9 @@
 package be.kuleuven.dbproject.controller;
 
 import java.io.IOException;
+import java.security.Key;
+
+import javax.swing.plaf.synth.SynthStyle;
 
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
@@ -12,6 +15,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -32,14 +38,19 @@ public class LoginController {
     private TextField emailTxtField;
 
     @FXML
-    private Text visableWachtwoordTxt;
+    private TextField wachtwoordTxtFieldVissible;
 
     @FXML
-    private PasswordField wachtwoordTxtField;
+    private PasswordField wachtwoordTxtFieldInvissible;
+
+    @FXML
+    private HBox wachtwoordHbox;
 
     private UserApi userApi;
 
     private DbConnection dbConnection;
+
+    private String wachtwoord;
 
     private User user;
 
@@ -48,8 +59,11 @@ public class LoginController {
     public void initialize(){
         loginBtn.setOnAction(e -> checkLoginCredentials());
 
+        showPassword = false;
+
         emailTxtField.setText("tsampanis.edmond@student.uhasselt.be");
-        wachtwoordTxtField.setText("test");
+
+        wachtwoord = "test";
 
         crtAccountBtn.setOnAction(e -> {
             try {
@@ -59,24 +73,36 @@ public class LoginController {
             }
         });
 
-        showPassword = false;
+        eyeImageView.setOnMousePressed(e -> togglePassword());
 
-        eyeImageView.setOnMousePressed(e -> togleWw());
+        wachtwoordTxtFieldInvissible = new PasswordField();
+        wachtwoordTxtFieldVissible = new TextField();
 
-        wachtwoordTxtField.setOnKeyPressed(e -> visableWachtwoordTxt.setText(wachtwoordTxtField.getText()));
+        showPassword = true;
+
+        togglePassword();
     }
 
-    private void togleWw(){
-        showPassword = !showPassword;
+    private void togglePassword(){
+        showPassword =! showPassword;
         if(showPassword){
-            visableWachtwoordTxt.setText(wachtwoordTxtField.getText());
+            wachtwoord = wachtwoordTxtFieldInvissible.getText();
+            wachtwoordHbox.getChildren().remove(wachtwoordTxtFieldInvissible);
+            wachtwoordHbox.getChildren().add(wachtwoordTxtFieldVissible);
+            wachtwoordTxtFieldVissible.setText(wachtwoord);
+            wachtwoordTxtFieldVissible.textProperty().addListener((ods, oldText, newText) -> wachtwoord = newText);
         }
-        visableWachtwoordTxt.setVisible(showPassword);
+        else{
+            wachtwoord = wachtwoordTxtFieldVissible.getText();
+            wachtwoordHbox.getChildren().remove(wachtwoordTxtFieldVissible);
+            wachtwoordHbox.getChildren().add(wachtwoordTxtFieldInvissible);
+            wachtwoordTxtFieldInvissible.setText(wachtwoord);
+            wachtwoordTxtFieldInvissible.textProperty().addListener((ods, oldText, newText) -> wachtwoord = newText);
+        }
     }
 
     private void checkLoginCredentials(){
         var email = emailTxtField.getText();
-        var wachtwoord = wachtwoordTxtField.getText();
         try {
             this.user = userApi.chekUserAndWachtwoord(email, wachtwoord);
             changeWindow("main.fxml");

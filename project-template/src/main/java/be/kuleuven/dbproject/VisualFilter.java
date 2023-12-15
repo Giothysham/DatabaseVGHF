@@ -46,6 +46,9 @@ public class VisualFilter<T> {
         else if(usedFilter.getClass() == Genre.class){
             text.setText(((Genre) usedFilter).getNaam());
         }
+        else if(usedFilter.getClass() == Type.class){
+            text.setText(((Type) usedFilter).toString());
+        }
 
         text.setFill(Paint.valueOf("#000000"));
 

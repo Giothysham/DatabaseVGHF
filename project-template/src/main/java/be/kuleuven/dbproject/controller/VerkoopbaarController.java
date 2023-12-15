@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.VisualFilter;
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
+import be.kuleuven.dbproject.model.Extra;
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
@@ -25,7 +27,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -83,6 +84,10 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private String product;
 
+    private VerkoopbaarInterface placeHolderProduct;
+
+    //TODO: werken met een place holder ?
+
     public void initialize(){
         checkoutList = new ArrayList<>();
 
@@ -133,7 +138,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         tblVerkoopbaar.getItems().clear();
 
         if(update){
-            verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaar();
+            verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaarVoorUser();
         }
         else{
             var autoCompleteText = autoCompleteSearch.getText();
@@ -149,7 +154,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
     }
 
     public void initTable() {
-        verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaar();
+        verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaarVoorUser();
 
         for(VerkoopbaarInterface verkoopbaar: verkoobareLijst){
             if(!autoCompleteWords.contains(verkoopbaar.getNaam())){
@@ -199,18 +204,20 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
             if(controller.getClass() == VerkoopbaarAddController.class){
                 VerkoopbaarAddController verkoopbaarAddController = (VerkoopbaarAddController) controller;
-                verkoopbaarAddController.setProduct(product);
+                
+                if(user.getBevoegdheid() == 1 && verkoopbaarSelected != null){
+                    verkoopbaarAddController.setProductAndUser(verkoopbaarSelected, user);
+                    verkoopbaarAddController.setUpdate(true);
+                    verkoopbaarAddController.initializeUpdate();
+                }else{
+                    //geen verkoopbaar aangemaakt dus wil niet openen;
+                    verkoopbaarAddController.setProductAndUser(placeHolderProduct, user);
+                    verkoopbaarAddController.setUpdate(false);
+                }
+
                 verkoopbaarAddController.setupDropDown(dbConnection);
                 verkoopbaarAddController.setDbConnection(dbConnection);
                 verkoopbaarAddController.setParentController(this);
-                
-                //TODO: iets beter maken verkoopbaar != null is geen goede opl
-                if(user.getBevoegdheid() == 1 && verkoopbaarSelected != null){
-                    verkoopbaarAddController.setUpdate(true);
-                    verkoopbaarAddController.initializeUpdate(verkoopbaarSelected);
-                }else{
-                    verkoopbaarAddController.setUpdate(false);
-                }
             }
             else if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
@@ -246,10 +253,10 @@ public class VerkoopbaarController implements BuyScreenInterface{
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
         if(product == "Game"){
-            verkoopbaarApi = new GameApi(dbConnection);
+            verkoopbaarApi = new GameApi(dbConnection, user);
         }
         else if(product == "Extra"){
-            verkoopbaarApi = new ExtraApi(dbConnection);
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
         }
         initTable();
     }
@@ -372,6 +379,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         this.product = product;
 
         if(product == "Game"){
+            placeHolderProduct = new Game();
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));
             tblVerkoopbaar.getColumns().add(consoleColumn);
@@ -380,6 +388,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
             
         } 
         else if(product == "Extra"){
+            placeHolderProduct = new Extra();
             TableColumn<VerkoopbaarInterface,Type> typeColumn = new TableColumn<>("type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Type>("type"));
             tblVerkoopbaar.getColumns().add(typeColumn);

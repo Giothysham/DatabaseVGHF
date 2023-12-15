@@ -11,6 +11,7 @@ import be.kuleuven.dbproject.controller.VerkoopbaarController;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
+import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Type;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
@@ -24,10 +25,13 @@ public class ExtraApi implements VerkoopbaarApiInterface{
     private Type searchType;
 
     private Winkel searchWinkel;
+
+    private User user;
     
-    public ExtraApi(DbConnection dbConnection){
+    public ExtraApi(DbConnection dbConnection,User user){
         sessionFactory = dbConnection.getsessionFactory();
         entityManager = dbConnection.getEntityManager();
+        this.user = user;
     }
 
     public Type getSearchType() {
@@ -38,14 +42,22 @@ public class ExtraApi implements VerkoopbaarApiInterface{
         return this.searchWinkel;
     }
     
-    public List<VerkoopbaarInterface> getVerkoopbaar(){
+    public List<VerkoopbaarInterface> getVerkoopbaarVoorUser(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Extra.class);
         var root = query.from(Extra.class);
-        var select = query.select(root);
+        List<Extra> extraList = new ArrayList<>();
 
-        List<Extra> extraList = entityManager.createQuery(select).getResultList();
+        if(user.getBevoegdheid() == 1){
+            var select = query.select(root); 
+            extraList = entityManager.createQuery(select).getResultList();
+        }
+        else{    
+            query.where(criteriaBuilder.greaterThan(root.get("stock"), 0));
+            extraList = entityManager.createQuery(query).getResultList();
+        }
+
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
      
         for(Extra extra : extraList){
@@ -124,18 +136,14 @@ public class ExtraApi implements VerkoopbaarApiInterface{
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
 
+        if(user.getBevoegdheid() == 0){
+            querryFilterList.add(criteriaBuilder.greaterThan(root.get("stock"), 0));
+        }
+        
         Predicate predicate = criteriaBuilder.and(querryFilterList.toArray(new Predicate[querryFilterList.size()]));
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
-        if(result.size() > 0){
-            return result;
-        }
-        else{
-            throw new IllegalArgumentException("no extra found with filters and name: "+ naam);
-        }
 
-<<<<<<< HEAD
-=======
         System.out.println(result);
 
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
@@ -145,7 +153,6 @@ public class ExtraApi implements VerkoopbaarApiInterface{
         }
 
         return verkoopbaarList;
->>>>>>> 0503d5008e93cb19cd17b94e0eb91d02f0afd4e0
     }
     
     public <T> void removeFilterByClass(T filterValue) {

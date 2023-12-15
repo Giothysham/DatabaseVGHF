@@ -1,0 +1,2 @@
+be/kuleuven/dbproject/SomeTest.java
+ be.kuleuven.dbproject.SomeTest
