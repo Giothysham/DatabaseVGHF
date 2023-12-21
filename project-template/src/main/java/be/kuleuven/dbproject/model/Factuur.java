@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 @Entity
 public class Factuur {
@@ -38,6 +39,12 @@ public class Factuur {
     @JoinColumn(name = "winkelID")
     private Winkel winkel;
 
+    @Transient
+    private String gameName;
+
+    @Transient
+    private Double gamePrice;
+
     public Factuur(){
 
     }
@@ -50,6 +57,15 @@ public class Factuur {
         this.game = game;
         this.extra = extra;
         this.winkel = winkel;
+        System.out.println("------------------hier------------------");
+        if(game != null) {
+            this.gameName = game.getNaam();
+            this.gamePrice = game.getKostPrijs();
+        }
+        else {
+            this.gameName = extra.getNaam();
+            this.gamePrice = extra.getKostPrijs();
+        }
     }
 
 
@@ -75,6 +91,25 @@ public class Factuur {
 
     public Winkel getWinkel() {
         return this.winkel;
+    }
+
+    public String getGameName() {
+        return this.gameName;
+    }
+
+    public Double getGamePrice() {
+        return this.gamePrice;
+    }
+
+    public void updateFactuur() {
+        if(game != null) {
+            this.gameName = game.getNaam();
+            this.gamePrice = game.getKostPrijs();
+        }
+        else if(extra != null){
+            this.gameName = extra.getNaam();
+            this.gamePrice = extra.getKostPrijs();
+        }
     }
 
 }

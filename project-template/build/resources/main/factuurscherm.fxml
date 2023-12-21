@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="be.kuleuven.dbproject.controller.FactuurController">
+    <VBox spacing="5" style="-fx-padding: 14 14 14 14;" alignment="CENTER">
+        <TableView fx:id="tblFactuur" prefHeight="350.0" prefWidth="567.0">
+            <columns>
+                <TableColumn text="id" fx:id="factuurIDColumn" prefWidth="80.0"/>
+                <TableColumn text="name" fx:id="nameColumn" prefWidth="407"/>
+                <TableColumn text="price" fx:id="priceColumn" prefWidth="80.0"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

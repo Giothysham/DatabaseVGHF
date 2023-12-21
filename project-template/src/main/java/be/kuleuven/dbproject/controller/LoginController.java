@@ -61,9 +61,9 @@ public class LoginController {
 
         showPassword = false;
 
-        emailTxtField.setText("tsampanis.edmond@student.uhasselt.be");
+        emailTxtField.setText("vranckx.mauro@student.uhasselt.be");
 
-        wachtwoord = "test";
+        wachtwoord = "";
 
         crtAccountBtn.setOnAction(e -> {
             try {

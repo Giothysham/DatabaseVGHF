@@ -122,4 +122,15 @@ public class UserApi {
             entityManager.getTransaction().rollback();
         }
     }
+
+    public List<Factuur> getFactuurForUser(User user){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Factuur.class);
+        var root = query.from(Factuur.class);
+
+        var predicateUser = criteriaBuilder.equal(root.get("user"), user);
+        var result = entityManager.createQuery(query.where(predicateUser)).getResultList();
+        return result;
+    }
 }

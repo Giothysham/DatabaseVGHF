@@ -11,7 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,7 +33,10 @@ VerkoopbaarMoreInfoController {
     private TextArea moreInfoTxt;
 
     @FXML
-    private HBox uitgeverHbox, genreHBox;
+    private HBox uitgeverHbox, genreHBox, typeHbox, consoleHbox;
+
+    @FXML
+    private VBox mainVbox;
 
     public void initialize(){
         //TODO => zorg dat plek waar het aanwezig is te zien is. 
@@ -84,11 +89,21 @@ VerkoopbaarMoreInfoController {
 
             genreTxt.setText(((Game)Verkoopbaar).getGenre().getNaam());
 
+            typeHbox.getChildren().clear();
+
+            mainVbox.getChildren().remove(typeHbox);
+
             typeTxt.setVisible(false);
         } 
 
         else if(Verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             typeTxt.setText(((Extra)Verkoopbaar).getType().toString());
+
+            consoleHbox.getChildren().clear();
+            genreHBox.getChildren().clear();            
+
+            mainVbox.getChildren().remove(consoleHbox);
+            mainVbox.getChildren().remove(genreHBox);
 
             consoleTxt.setVisible(false);
             genreTxt.setVisible(false);
