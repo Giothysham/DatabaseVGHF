@@ -1,9 +1,7 @@
 package be.kuleuven.dbproject.model;
 
- import java.security.CryptoPrimitive;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
