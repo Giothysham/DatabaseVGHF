@@ -129,6 +129,7 @@ public class User {
             return Base64.getEncoder().encodeToString(encText);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
             throw new RuntimeException("wachtwoord encryptie mislukt");
         }
     }

@@ -163,7 +163,8 @@ public class GameApi implements VerkoopbaarApiInterface {
                 entityManager.getTransaction().begin();
                 for(VerkoopbaarInterface game: games){
                     var delete = entityManager.find(Game.class, game.getID());
-                    entityManager.remove(delete);
+                    delete.setStock(0);
+                    entityManager.merge(delete);
                     entityManager.getTransaction().commit();
                 }
             }

@@ -150,6 +150,8 @@ public class VerkoopbaarBuySchermController {
             a.setContentText(e.getMessage());
             a.show();
             e.printStackTrace();
+            var window =  (Stage) removeBtn.getScene().getWindow();
+            window.close();
         }
     }
 

@@ -93,7 +93,8 @@ public class ExtraApi implements VerkoopbaarApiInterface {
                 entityManager.getTransaction().begin();
                 for(VerkoopbaarInterface extra: extras){
                     var delete = entityManager.find(Extra.class, extra.getID());
-                    entityManager.remove(delete);
+                    delete.setStock(0);
+                    entityManager.merge(delete);
                     entityManager.getTransaction().commit();
                 }
             }
