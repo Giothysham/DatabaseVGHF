@@ -1,21 +1,17 @@
 package be.kuleuven.dbproject.controller;
 
-import org.controlsfx.control.textfield.TextFields;
-
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UserApi;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import java.util.ArrayList;
 
 public class FactuurController {
     
+    //TODO: wanneer game weg gaat dan wat met factuur ?
     @FXML
     private TableColumn<Factuur,Integer> factuurIDColumn;
 

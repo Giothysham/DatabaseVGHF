@@ -4,7 +4,6 @@ import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
-import be.kuleuven.dbproject.model.api.ExtraApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
 import javafx.geometry.Pos;
