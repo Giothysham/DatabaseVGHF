@@ -4,6 +4,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 
@@ -18,7 +19,7 @@ public class PaneHolderController {
 
     private User user;
 
-    private String product;
+    private VerkoopbaarInterface product;
 
     public void initialize() {
         
@@ -37,15 +38,16 @@ public class PaneHolderController {
         if(childController.getClass() == VerkoopbaarController.class){
             var verkoopbaarController = (VerkoopbaarController) childController;
             verkoopbaarController.setProduct(product);
-            verkoopbaarController.setDbConnection(dbConnection);
             verkoopbaarController.setUser(user);
+            verkoopbaarController.setDbConnection(dbConnection);
             verkoopbaarController.setUpFilters();
         }
         
         else if(childController.getClass() == UitgeleendeGameController.class){
             var uitgeleendeGameController = (UitgeleendeGameController) childController;
-            uitgeleendeGameController.setDbConnection(dbConnection);
             uitgeleendeGameController.setUser(user);
+            uitgeleendeGameController.setDbConnection(dbConnection);
+            
         }
 
         else if(childController.getClass() == AdminController.class){
@@ -61,7 +63,7 @@ public class PaneHolderController {
         tmpPane.getChildren().setAll(rootLoader);
     }
 
-    public void setProduct(String product){
+    public void setProduct(VerkoopbaarInterface product){
         this.product = product;
     }
 

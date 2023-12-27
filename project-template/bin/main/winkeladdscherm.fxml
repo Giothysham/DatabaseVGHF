@@ -26,7 +26,7 @@
         <TextField fx:id="landTxt"  GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
         <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
-            <Button fx:id="submitWinkelButton" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"  alignment="CENTER" text="submit genre" />
+            <Button fx:id="submitWinkelButton" style="-fx-background-color: #4f46e5; -fx-text-fill: white;"  alignment="CENTER" text="submit" />
         </HBox>
     </children>
 </GridPane>

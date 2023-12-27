@@ -113,7 +113,7 @@ public class UitgeleendeGameController {
                 //         System.out.println("gothere 2--------------------------------------------");
                 //         listgames.add(uit);
                 //     }
-                // } WAYO?
+                // } 
             }
             // TODO: aan wouter fix vragen => nog een bekijken wat dit is
             else{

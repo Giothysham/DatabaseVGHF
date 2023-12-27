@@ -5,6 +5,7 @@ import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Console;
+import be.kuleuven.dbproject.model.enums.Type;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -43,6 +44,9 @@ public class VisualFilter<T> {
         }
         else if(usedFilter.getClass() == Genre.class){
             text.setText(((Genre) usedFilter).getNaam());
+        }
+        else if(usedFilter.getClass() == Type.class){
+            text.setText(((Type) usedFilter).toString());
         }
 
         text.setFill(Paint.valueOf("#000000"));

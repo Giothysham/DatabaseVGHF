@@ -74,7 +74,7 @@ public class UserApi {
                         factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
-                    //entityManager.persist(user);
+                    //entityManager.merge(user);
                     entityManager.persist(factuur);
                 }
                 else{

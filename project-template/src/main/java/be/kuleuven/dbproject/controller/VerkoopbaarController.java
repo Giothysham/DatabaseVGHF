@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.VisualFilter;
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
+import be.kuleuven.dbproject.model.Extra;
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
@@ -80,7 +82,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private VerkoopbaarApiInterface verkoopbaarApi;
 
-    private String product;
+    private VerkoopbaarInterface verkoopbaar;
 
     public void initialize(){
         checkoutList = new ArrayList<>();
@@ -198,7 +200,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
             if(controller.getClass() == VerkoopbaarAddController.class){
                 VerkoopbaarAddController verkoopbaarAddController = (VerkoopbaarAddController) controller;
-                verkoopbaarAddController.setProduct(product);
+                verkoopbaarAddController.setProduct(verkoopbaar);
                 verkoopbaarAddController.setupDropDown(dbConnection);
                 verkoopbaarAddController.setDbConnection(dbConnection);
                 verkoopbaarAddController.setParentController(this);
@@ -218,7 +220,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
             }
             else if(controller.getClass() == VerkoopbaarBuySchermController.class){
                 VerkoopbaarBuySchermController verkoopbaarBuySchermController = (VerkoopbaarBuySchermController) controller;
-                verkoopbaarBuySchermController.setProduct(product);
+                verkoopbaarBuySchermController.setProduct(verkoopbaar);
                 verkoopbaarBuySchermController.setdbConnection(dbConnection);
                 verkoopbaarBuySchermController.setWantToRent(checkoutList);
                 verkoopbaarBuySchermController.setparentController(this);
@@ -244,11 +246,11 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
-        if(product == "Game"){
-            verkoopbaarApi = new GameApi(dbConnection);
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+            verkoopbaarApi = new GameApi(dbConnection, user);
         }
-        else if(product == "Extra"){
-            verkoopbaarApi = new ExtraApi(dbConnection);
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
         }
         initTable();
     }
@@ -269,7 +271,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             for(Console console: Console.values()){
                 var menuItem = new MenuItem(console.name());
                 menuItem.setOnAction(e ->{
@@ -293,7 +295,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
             }
         }
 
-        if(product == "Extra"){
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             for(Type type: Type.values()){
                 var menuItem = new MenuItem(type.name());
                 menuItem.setOnAction(e ->{
@@ -367,10 +369,10 @@ public class VerkoopbaarController implements BuyScreenInterface{
         return this.scrlPaneFilters;
     }
 
-    public void setProduct(String product){
-        this.product = product;
+    public void setProduct(VerkoopbaarInterface product){
+        verkoopbaar = product;
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));
             tblVerkoopbaar.getColumns().add(consoleColumn);
@@ -378,7 +380,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
             typeMenu.setVisible(false);
             
         } 
-        else if(product == "Extra"){
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             TableColumn<VerkoopbaarInterface,Type> typeColumn = new TableColumn<>("type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Type>("type"));
             tblVerkoopbaar.getColumns().add(typeColumn);

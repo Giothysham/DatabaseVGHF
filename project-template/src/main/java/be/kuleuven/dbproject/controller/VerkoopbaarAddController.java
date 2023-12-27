@@ -63,8 +63,6 @@ public class VerkoopbaarAddController {
 
     private List<Uitgever> uitgevers;
 
-    private String product;
-
     private VerkoopbaarInterface tempVerkoopbaar;
 
     private List<Genre> genres;
@@ -139,7 +137,7 @@ public class VerkoopbaarAddController {
             listWinkelNames.add(winkel.getFullAdressWithID());
         }
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             ObservableList<Console> listInstance = FXCollections.observableArrayList();
             listInstance.addAll(Console.values());
             consoleDropDown.setItems(listInstance);
@@ -147,7 +145,7 @@ public class VerkoopbaarAddController {
             typeDropDown.setVisible(false);
         } 
         
-        else if(product == "Extra"){
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             ObservableList<Type> listInstance = FXCollections.observableArrayList(); 
             listInstance.addAll(Type.values()); 
             typeDropDown.setItems(listInstance); 
@@ -171,11 +169,11 @@ public class VerkoopbaarAddController {
 
         winkelDropDown.setValue(verkoopbaar.getWinkel().getFullAdressWithID());
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             consoleDropDown.setValue(((Game)verkoopbaar).getConsole());
             genreIDDropDown.setValue(((Game)verkoopbaar).getGenre().getNaam());
             beschrijving.setText(((Game)verkoopbaar).getBeschrijving());
-        } else if(product == "Extra"){
+        } else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             typeDropDown.setValue(((Extra)verkoopbaar).getType()); 
         }
 
@@ -184,7 +182,7 @@ public class VerkoopbaarAddController {
     }
 
     private void updateVerkoopbaar(){
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             ((Game)verkoopbaar).setBeschrijving(this.beschrijving.getText()); 
             ((Game)verkoopbaar).setConsole((Console) consoleDropDown.getValue());
            
@@ -192,7 +190,7 @@ public class VerkoopbaarAddController {
             var genreApi = new GenreApi(dbConnection);
             ((Game)verkoopbaar).setGenre(genreApi.getGenreByName(genre));
 
-        } else if(product == "Extra"){
+        } else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             ((Extra)verkoopbaar).setType((Type) typeDropDown.getValue());
         }
 
@@ -229,7 +227,6 @@ public class VerkoopbaarAddController {
         Uitgever uitgever = null;
         String nameWinkel = (String) winkelDropDown.getValue();
         String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
-        //System.out.println("setting up--------------------------------------------_---__--__-");
         for (Winkel testwinkel : winkels) {
             if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
                 winkel = testwinkel;
@@ -244,7 +241,7 @@ public class VerkoopbaarAddController {
             }
         }
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             Console console = (Console) consoleDropDown.getValue();
             var genreNaam = (String) genreIDDropDown.getValue();
             var genreApi = new GenreApi(dbConnection);
@@ -252,7 +249,7 @@ public class VerkoopbaarAddController {
             tempVerkoopbaar = new Game(aantalStock, 0, console, 0, winkel, kostPrijs, genre, naam, beschrijving, uitgever);
 
             try {
-            var verkoopbaarApi = new GameApi(dbConnection);
+            var verkoopbaarApi = new GameApi(dbConnection, null);
 
             verkoopbaarApi.postVerkoopbaar(tempVerkoopbaar);
 
@@ -269,12 +266,12 @@ public class VerkoopbaarAddController {
             }
         } 
         
-        else if(product == "Extra"){
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             Type type = (Type) typeDropDown.getValue();
             tempVerkoopbaar= new Extra(aantalStock, 0, 0, winkel, uitgever, kostPrijs, type, naam);
 
             try {
-            var verkoopbaarApi = new ExtraApi(dbConnection);
+            var verkoopbaarApi = new ExtraApi(dbConnection, null);
 
             verkoopbaarApi.postVerkoopbaar(tempVerkoopbaar);
 
@@ -307,7 +304,7 @@ public class VerkoopbaarAddController {
         this.update = update;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProduct(VerkoopbaarInterface product){
+        verkoopbaar = product;
     }
 }
