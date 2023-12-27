@@ -61,7 +61,7 @@ public class LoginController {
 
         crtAccountBtn.setOnAction(e -> {
             try {
-                changeWindow("createaccountscherm.fxml");
+                changeWindow("createaccountschermbegin.fxml");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -124,8 +124,8 @@ public class LoginController {
             projectMainController.setDbConnection(this.dbConnection);
             projectMainController.setUser(user);
         }
-        else if(controller.getClass() == CreatAccountController.class){
-            var CreatAccountController = (CreatAccountController) controller;
+        else if(controller.getClass() == CreatAccountBeginController.class){
+            var CreatAccountController = (CreatAccountBeginController) controller;
             CreatAccountController.setDbConnection(dbConnection);
             CreatAccountController.setUpOnClose(stage);
         }

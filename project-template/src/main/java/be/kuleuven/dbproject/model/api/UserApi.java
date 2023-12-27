@@ -112,6 +112,21 @@ public class UserApi {
         return entityManager.createQuery(select).getResultList();
     }
 
+    public void checkIfUserExistWithEmail(String email) throws Exception{
+        var criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(User.class);
+        var root = query.from(User.class);
+
+        var predicateEmail = criteriaBuilder.equal(root.get("email"), email);
+
+        var result = entityManager.createQuery(query.where(predicateEmail)).getResultList();
+
+        if(!result.isEmpty()){
+            throw new Exception("user already exist");
+        }
+    }
+
     public void updateUser(User user){
         try{
             entityManager.getTransaction().begin();

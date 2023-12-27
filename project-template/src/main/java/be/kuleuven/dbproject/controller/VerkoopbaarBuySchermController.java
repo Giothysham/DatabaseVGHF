@@ -81,15 +81,10 @@ public class VerkoopbaarBuySchermController {
     public void deleteVerkoopbaar(){
         VerkoopbaarInterface Verkoopbaar = tblVerkoopbaar.getSelectionModel().getSelectedItem();
         checkoutListID.remove(Integer.toString(Verkoopbaar.getID()));
-        checkoutListVerkoopbaar.remove(Verkoopbaar);
         parentController.setCheckoutList(checkoutListID);
+        checkoutListVerkoopbaar.clear();
+        populateListAndSetPrice(checkoutListID);
         tblVerkoopbaar.getItems().setAll(checkoutListVerkoopbaar);
-
-        var price = 0.0;
-        for(VerkoopbaarInterface tempVerkoopbaar: checkoutListVerkoopbaar){
-            price =+ tempVerkoopbaar.getKostPrijs();
-        }
-        amountTxt.setText( " " + price + "$");
     }
 
     public void setparentController(VerkoopbaarController controller){
@@ -97,19 +92,26 @@ public class VerkoopbaarBuySchermController {
     }
 
     public void setWantToRent(ArrayList<String> wantToRentList) {
-        Double price = 0.0;
         this.checkoutListID = wantToRentList;
+
+        if(product == "Game"){
+            verkoopbaarApi = new GameApi(dbConnection, user);
+        }
+
+        else if (product == "Extra"){
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
+        }
+
+        populateListAndSetPrice(wantToRentList);
+
+        tblVerkoopbaar.getItems().setAll(this.checkoutListVerkoopbaar);
+    }
+    
+    private void populateListAndSetPrice(ArrayList<String> wantToRentList){
+        Double price = 0.0;
 
         for(String id: checkoutListID){
             try{
-                if(product == "Game"){
-                    verkoopbaarApi = new GameApi(dbConnection, user);
-                }
-
-                else if (product == "Extra"){
-                    verkoopbaarApi = new ExtraApi(dbConnection, user);
-                }
-                
                 var tempVerkoopbaar = verkoopbaarApi.getVerkoopbaarById(id);
                 this.checkoutListVerkoopbaar.add(tempVerkoopbaar);
                 price += tempVerkoopbaar.getKostPrijs();
@@ -118,10 +120,8 @@ public class VerkoopbaarBuySchermController {
                 System.out.println(e);
             }
         }
-        
-        amountTxt.setText( " "+price + "$");
 
-        tblVerkoopbaar.getItems().setAll(this.checkoutListVerkoopbaar);
+        amountTxt.setText( " "+price + "$");
     }
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){

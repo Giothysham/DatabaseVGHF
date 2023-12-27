@@ -207,4 +207,36 @@ public class User {
         }
     }
 
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
+    }
+
+    public void setTelefoonnummer(String telefoonnummer) {
+        this.telefoonnummer = telefoonnummer;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public void setStad(String stad) {
+        this.stad = stad;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setProvincie(String provincie) {
+        this.provincie = provincie;
+    }
+
+    public void setLand(String land) {
+        this.land = land;
+    }
+
 }
