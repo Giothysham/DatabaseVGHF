@@ -179,7 +179,13 @@ public class VerkoopbaarController implements BuyScreenInterface{
                 break;
 
                 case 0:
-                    openNewWindow("moreinfoverkoopbaar", verkoopbaarSelected);
+                    if(verkoopbaarSelected.getClass().isAssignableFrom(Game.class)){
+                        openNewWindow("moreinfogame", verkoopbaarSelected);
+                    }
+                    else if(verkoopbaarSelected.getClass().isAssignableFrom(Extra.class)){
+                        openNewWindow("moreinfoextra", verkoopbaarSelected);
+                    }
+                        
                 break;
             }
         }

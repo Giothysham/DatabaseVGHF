@@ -129,15 +129,15 @@ public class VerkoopbaarBuySchermController {
         try {
             userApi.createFactuurForVerkoopbaar(wantToRentList, user);
 
-            if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
-                var tempList = new ArrayList<Game>();
+            // if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
+            //     var tempList = new ArrayList<Game>();
 
-                for(VerkoopbaarInterface verkoopbaar: wantToRentList){
-                    tempList.add((Game) verkoopbaar);
-                }
+            //     for(VerkoopbaarInterface verkoopbaar: wantToRentList){
+            //         tempList.add((Game) verkoopbaar);
+            //     }
 
-                user.addToListGames(tempList);
-            }
+            //     user.addToListGames(tempList);
+            // } TODO: gebeurt nu in factuur functie hierboven, hopelijk is dit niet erg (anders wordt het nooit gecommit, zie inner join)
 
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);

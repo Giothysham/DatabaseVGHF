@@ -78,25 +78,19 @@ VerkoopbaarMoreInfoController {
         moreInfoTxt.setWrapText(true);
 
         if(Verkoopbaar.getClass().isAssignableFrom(Game.class)){
-            moreInfoTxt.setText(((Game)Verkoopbaar).getBeschrijving()); //TODO: uitlijning
+            moreInfoTxt.setText(((Game)Verkoopbaar).getBeschrijving());
 
             consoleTxt.setText(((Game)Verkoopbaar).getConsole().toString());
 
             genreTxt.setText(((Game)Verkoopbaar).getGenre().getNaam());
-
-            typeTxt.setVisible(false);
+            genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)Verkoopbaar).getGenre()));
         } 
 
         else if(Verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             typeTxt.setText(((Extra)Verkoopbaar).getType().toString());
-
-            consoleTxt.setVisible(false);
-            genreTxt.setVisible(false);
         }
 
         uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", Verkoopbaar.getUitgever()));
-
-        genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)Verkoopbaar).getGenre()));
     }
     
 }

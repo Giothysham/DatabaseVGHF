@@ -1,7 +1,7 @@
 be/kuleuven/dbproject/controller/MoreInfoController.java
  be.kuleuven.dbproject.controller.MoreInfoController
-be/kuleuven/dbproject/controller/VerkoopbaarAddController.java
- be.kuleuven.dbproject.controller.VerkoopbaarAddController
+be/kuleuven/dbproject/controller/PaneHolderController.java
+ be.kuleuven.dbproject.controller.PaneHolderController
 be/kuleuven/dbproject/model/api/ExtraApi.java
  be.kuleuven.dbproject.model.api.ExtraApi
 be/kuleuven/dbproject/model/Uitgever.java
@@ -22,14 +22,14 @@ be/kuleuven/dbproject/interfaces/BuyScreenInterface.java
  be.kuleuven.dbproject.interfaces.BuyScreenInterface
 be/kuleuven/dbproject/interfaces/VerkoopbaarApiInterface.java
  be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface
-be/kuleuven/dbproject/controller/FilterSchermController.java
- be.kuleuven.dbproject.controller.FilterSchermController
+be/kuleuven/dbproject/controller/WinkelAddController.java
+ be.kuleuven.dbproject.controller.WinkelAddController
 be/kuleuven/dbproject/model/enums/Console.java
  be.kuleuven.dbproject.model.enums.Console
-be/kuleuven/dbproject/controller/PaneHolderController.java
- be.kuleuven.dbproject.controller.PaneHolderController
-be/kuleuven/dbproject/controller/UitgeverAddScherm.java
- be.kuleuven.dbproject.controller.UitgeverAddScherm
+be/kuleuven/dbproject/controller/GenreAddController.java
+ be.kuleuven.dbproject.controller.GenreAddController
+be/kuleuven/dbproject/controller/VerkoopbaarAddController.java
+ be.kuleuven.dbproject.controller.VerkoopbaarAddController
 be/kuleuven/dbproject/model/enums/Type.java
  be.kuleuven.dbproject.model.enums.Type
 be/kuleuven/dbproject/controller/ProjectMainController.java
@@ -38,8 +38,8 @@ be/kuleuven/dbproject/ProjectMain.java
  be.kuleuven.dbproject.ProjectMain
 be/kuleuven/dbproject/model/Winkel.java
  be.kuleuven.dbproject.model.Winkel
-be/kuleuven/dbproject/controller/WinkelAddController.java
- be.kuleuven.dbproject.controller.WinkelAddController
+be/kuleuven/dbproject/controller/UitgeverAddScherm.java
+ be.kuleuven.dbproject.controller.UitgeverAddScherm
 be/kuleuven/dbproject/model/api/GenreApi.java
  be.kuleuven.dbproject.model.api.GenreApi
 be/kuleuven/dbproject/model/Game.java
@@ -48,8 +48,8 @@ be/kuleuven/dbproject/model/api/WinkelApi.java
  be.kuleuven.dbproject.model.api.WinkelApi
 be/kuleuven/dbproject/interfaces/VerkoopbaarInterface.java
  be.kuleuven.dbproject.interfaces.VerkoopbaarInterface
-be/kuleuven/dbproject/controller/GenreAddController.java
- be.kuleuven.dbproject.controller.GenreAddController
+be/kuleuven/dbproject/controller/FilterSchermController.java
+ be.kuleuven.dbproject.controller.FilterSchermController
 be/kuleuven/dbproject/model/User.java
  be.kuleuven.dbproject.model.User
 be/kuleuven/dbproject/model/Extra.java

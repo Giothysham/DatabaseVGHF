@@ -79,7 +79,14 @@ public class VerkoopbaarAddController {
 
         aantalUitgeleend.setDisable(true);
 
-        viewVerkoopbaarPageBtn.setOnAction(e -> changeWindowToMoreInfo("moreinfoverkoopbaar"));
+        viewVerkoopbaarPageBtn.setOnAction(e -> {
+            if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                changeWindowToMoreInfo("moreinfogame");
+            }
+            else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+                changeWindowToMoreInfo("moreinfoextra");
+            }
+        });   
 
         viewVerkoopbaarPageBtn.setDisable(update);
 
@@ -94,7 +101,7 @@ public class VerkoopbaarAddController {
             var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
             var root = loader.load();
 
-             var controller = (VerkoopbaarMoreInfoController) loader.getController();
+            var controller = (VerkoopbaarMoreInfoController) loader.getController();
             controller.setdbConnection(dbConnection);
             controller.setVerkoopbaar(verkoopbaar);
 

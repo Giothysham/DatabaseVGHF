@@ -74,7 +74,7 @@ public class UserApi {
                         factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
-                    //entityManager.merge(user);
+                    
                     entityManager.persist(factuur);
                 }
                 else{
@@ -87,6 +87,9 @@ public class UserApi {
             
             for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
                 verkoopbaar.setTempToStock();
+                if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                    user.getUitgeleendeGames().add((Game)verkoopbaar);
+                }
             }
 
             entityManager.getTransaction().commit();

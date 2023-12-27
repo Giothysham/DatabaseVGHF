@@ -147,7 +147,7 @@ public class UitgeleendeGameController {
     public void onClickVerkoopbaar(MouseEvent event) {
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
-            openNewWindow("moreinfoverkoopbaar",gameSelected);
+            openNewWindow("moreinfogame",gameSelected);
         }
     }
 
