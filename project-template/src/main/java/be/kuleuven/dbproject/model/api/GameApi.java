@@ -106,6 +106,12 @@ public class GameApi implements VerkoopbaarApiInterface {
             System.out.println(searchGenre.getNaam());
         }
     }
+
+    public void clearSearchQuerry(){
+        searchConsole = null;
+        searchWinkel = null;
+        searchGenre = null;
+    }
     
     public List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam){
 

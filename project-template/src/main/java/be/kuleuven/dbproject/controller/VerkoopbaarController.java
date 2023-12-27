@@ -114,6 +114,12 @@ public class VerkoopbaarController implements BuyScreenInterface{
         visualFilters = new ArrayList<VisualFilter>();  
     }
 
+    public void removeFilters(){
+        visualFilters.clear();
+        verkoopbaarApi.clearSearchQuerry();
+        scrlPaneFilters.getChildren().clear();
+    }
+
     private void removeSelectedVerkoopbaar() {
         var tempList = tblVerkoopbaar.getSelectionModel().getSelectedItems();
         

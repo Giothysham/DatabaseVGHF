@@ -14,6 +14,8 @@ public interface VerkoopbaarApiInterface {
 
     void deleteVerkoopbaar(List<VerkoopbaarInterface> verkoopbaar);
 
+    void clearSearchQuerry();
+
     List<VerkoopbaarInterface> getVerkoopbaarVoorUser();
 
     List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam);

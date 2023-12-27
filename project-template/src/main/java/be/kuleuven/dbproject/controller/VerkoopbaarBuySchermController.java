@@ -142,6 +142,7 @@ public class VerkoopbaarBuySchermController {
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
+            parentController.removeFilters();
             window.close();
         } 
         catch (Exception e) {

@@ -38,6 +38,11 @@ public class ExtraApi implements VerkoopbaarApiInterface{
     public Winkel getSearchWinkel() {
         return this.searchWinkel;
     }
+
+    public void clearSearchQuerry(){
+        searchType = null;
+        searchWinkel = null;
+    }
     
     public List<VerkoopbaarInterface> getVerkoopbaarVoorUser(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
