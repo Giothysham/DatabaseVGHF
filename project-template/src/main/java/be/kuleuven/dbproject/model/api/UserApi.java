@@ -25,21 +25,25 @@ public class UserApi {
         entityManager = dbConnection.getEntityManager();
     }
 
-    public User chekUserAndWachtwoord(String email, String Wachtwoord) throws Exception{
+    public User chekUserAndWachtwoord(String email, String wachtwoord) throws Exception{
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(User.class);
         var root = query.from(User.class);
 
         var predicateEmail = criteriaBuilder.equal(root.get("email"), email);
-        var predicateWachtwoord = criteriaBuilder.equal(root.get("wachtwoord"), Wachtwoord);
 
-        var predicateAnd = criteriaBuilder.and(predicateEmail, predicateWachtwoord);
+        var result = entityManager.createQuery(query.where(predicateEmail)).getResultList();
 
-        var result = entityManager.createQuery(query.where(predicateAnd)).getResultList();
 
         if(!result.isEmpty()){
-            return result.get(0);
+            if(wachtwoord.equals(result.get(0).getWachtwoord())){
+                return result.get(0);
+            }
+            else{
+                throw new Exception("wrong Email or Password");
+
+            }
         }
         else{
             throw new Exception("wrong Email or Password");

@@ -81,7 +81,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Factuur> factuur;
 
-    @Transient
+    @Column(name = "key")
     private SecretKey key;
 
     @Transient
@@ -90,10 +90,11 @@ public class User {
     @Transient
     private String algorithm;
 
-    @Transient
-    private KeyGenerator keygen;
-
     public User() {
+        if(key != null){
+            iv = new IvParameterSpec(key.getEncoded());
+            algorithm = "AES/CBC/PKCS5Padding";
+        }
     }
 
 
@@ -110,7 +111,7 @@ public class User {
         this.email = email;
 
         try {
-            keygen = KeyGenerator.getInstance("AES");
+            var keygen = KeyGenerator.getInstance("AES");
             key = keygen.generateKey();
             iv = new IvParameterSpec(key.getEncoded());
         } catch (NoSuchAlgorithmException e) {
@@ -183,14 +184,18 @@ public class User {
     }
 
     public String getWachtwoord() {
-        Cipher cipher = null;
-        try {
-            cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.DECRYPT_MODE, key, iv);
-            byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
-            return new String(wachtwoordByte);
-        } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException("wachtwoord decryptie mislukt");
+        if(key != null){
+            try {
+                var cipher = Cipher.getInstance(algorithm);
+                cipher.init(Cipher.DECRYPT_MODE, key, iv);
+                byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
+                return new String(wachtwoordByte);
+            } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
+                throw new RuntimeException("wachtwoord decryptie mislukt");
+            }
+        }
+        else{
+            return this.wachtwoord;
         }
     }
 
