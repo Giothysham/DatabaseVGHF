@@ -1,9 +1,7 @@
 package be.kuleuven.dbproject.model;
 
- import java.security.CryptoPrimitive;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
@@ -131,6 +129,7 @@ public class User {
             return Base64.getEncoder().encodeToString(encText);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
             throw new RuntimeException("wachtwoord encryptie mislukt");
         }
     }

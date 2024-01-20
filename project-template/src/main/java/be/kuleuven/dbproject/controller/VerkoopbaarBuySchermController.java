@@ -5,6 +5,7 @@ import java.util.List;
 
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
+import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.enums.Console;
@@ -59,7 +60,7 @@ public class VerkoopbaarBuySchermController {
 
     private User user;
 
-    private String product;
+    private VerkoopbaarInterface verkoopbaar;
 
     private VerkoopbaarApiInterface verkoopbaarApi;
 
@@ -102,12 +103,12 @@ public class VerkoopbaarBuySchermController {
 
         for(String id: checkoutListID){
             try{
-                if(product == "Game"){
-                    verkoopbaarApi = new GameApi(dbConnection);
+                if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                    verkoopbaarApi = new GameApi(dbConnection, user);
                 }
 
-                else if (product == "Extra"){
-                    verkoopbaarApi = new ExtraApi(dbConnection);
+                else if (verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+                    verkoopbaarApi = new ExtraApi(dbConnection, user);
                 }
                 
                 var tempVerkoopbaar = verkoopbaarApi.getVerkoopbaarById(id);
@@ -126,17 +127,18 @@ public class VerkoopbaarBuySchermController {
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){
         try {
-            if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
-                var tempList = new ArrayList<Game>();
-
-                for(VerkoopbaarInterface verkoopbaar: wantToRentList){
-                    tempList.add((Game) verkoopbaar);
-                }
-
-                user.addToListGames(tempList);
-            }
-
             userApi.createFactuurForVerkoopbaar(wantToRentList, user);
+
+            // if(wantToRentList.get(0).getClass().isAssignableFrom(Game.class)){
+            //     var tempList = new ArrayList<Game>();
+
+            //     for(VerkoopbaarInterface verkoopbaar: wantToRentList){
+            //         tempList.add((Game) verkoopbaar);
+            //     }
+
+            //     user.addToListGames(tempList);
+            // } TODO: gebeurt nu in factuur functie hierboven, hopelijk is dit niet erg (anders wordt het nooit gecommit, zie inner join)
+
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
@@ -148,6 +150,8 @@ public class VerkoopbaarBuySchermController {
             a.setContentText(e.getMessage());
             a.show();
             e.printStackTrace();
+            var window =  (Stage) removeBtn.getScene().getWindow();
+            window.close();
         }
     }
 
@@ -155,15 +159,15 @@ public class VerkoopbaarBuySchermController {
         this.user = user;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProduct(VerkoopbaarInterface product) {
+        verkoopbaar = product;
 
-        if(product == "Game"){
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             TableColumn<VerkoopbaarInterface,Console> consoleColumn = new TableColumn<>("console");
             consoleColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Console>("console"));
             tblVerkoopbaar.getColumns().add(consoleColumn);
         } 
-        else if(product == "Extra"){
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
             TableColumn<VerkoopbaarInterface,Type> typeColumn = new TableColumn<>("type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<VerkoopbaarInterface,Type>("type"));
             tblVerkoopbaar.getColumns().add(typeColumn);

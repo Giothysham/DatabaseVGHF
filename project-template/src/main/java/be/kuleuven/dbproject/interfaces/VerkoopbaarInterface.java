@@ -30,4 +30,6 @@ public interface VerkoopbaarInterface {
     void setTempStock(Integer tempStock);
 
     void setTempToStock();
+
+    void setWinkel(Winkel winkel);
 }

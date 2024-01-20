@@ -113,7 +113,7 @@ public class UitgeleendeGameController {
                 //         System.out.println("gothere 2--------------------------------------------");
                 //         listgames.add(uit);
                 //     }
-                // } WAYO?
+                // } 
             }
             // TODO: aan wouter fix vragen => nog een bekijken wat dit is
             else{
@@ -147,7 +147,7 @@ public class UitgeleendeGameController {
     public void onClickVerkoopbaar(MouseEvent event) {
         if(event.getClickCount() == 2 && tblUitgeleendeGames.getSelectionModel().getSelectedItem() != null){
             Game gameSelected = tblUitgeleendeGames.getSelectionModel().getSelectedItem();
-            openNewWindow("moreinfoverkoopbaar",gameSelected);
+            openNewWindow("moreinfogame",gameSelected);
         }
     }
 

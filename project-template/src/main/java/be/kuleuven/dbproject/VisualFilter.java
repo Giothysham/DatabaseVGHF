@@ -4,7 +4,6 @@ import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Winkel;
-import be.kuleuven.dbproject.model.api.ExtraApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
 import javafx.geometry.Pos;
@@ -45,6 +44,9 @@ public class VisualFilter<T> {
         }
         else if(usedFilter.getClass() == Genre.class){
             text.setText(((Genre) usedFilter).getNaam());
+        }
+        else if(usedFilter.getClass() == Type.class){
+            text.setText(((Type) usedFilter).toString());
         }
 
         text.setFill(Paint.valueOf("#000000"));

@@ -11,6 +11,7 @@ import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
+import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Console;
 
@@ -26,9 +27,12 @@ public class GameApi implements VerkoopbaarApiInterface {
 
     private Genre searchGenre;
 
-    public GameApi(DbConnection dbConnection){
+    private User user;
+
+    public GameApi(DbConnection dbConnection, User user){
         sessionFactory = dbConnection.getsessionFactory();
         entityManager = dbConnection.getEntityManager();
+        this.user = user;
     }
 
     public Console getSearchConsole() {
@@ -48,9 +52,15 @@ public class GameApi implements VerkoopbaarApiInterface {
 
         var query = criteriaBuilder.createQuery(Game.class);
         var root = query.from(Game.class);
-        var select = query.select(root);
         
-        List<Game> gameList = entityManager.createQuery(select).getResultList();
+        if(user.getBevoegdheid() == 1){ //testen met ergens user = null
+            query.select(root);
+        }
+        else if(user.getBevoegdheid() == 0){
+            query.where(criteriaBuilder.greaterThan(root.get("stock"), 0));
+        }
+        
+        List<Game> gameList = entityManager.createQuery(query).getResultList();
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
      
         for(Game game : gameList){
@@ -122,6 +132,10 @@ public class GameApi implements VerkoopbaarApiInterface {
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
 
+        if(user.getBevoegdheid() == 0 ){
+            querryFilterList.add(criteriaBuilder.greaterThan(root.get("stock"), 0));
+        }
+
         Predicate predicate = criteriaBuilder.and(querryFilterList.toArray(new Predicate[querryFilterList.size()]));
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
@@ -149,7 +163,8 @@ public class GameApi implements VerkoopbaarApiInterface {
                 entityManager.getTransaction().begin();
                 for(VerkoopbaarInterface game: games){
                     var delete = entityManager.find(Game.class, game.getID());
-                    entityManager.remove(delete);
+                    delete.setStock(0);
+                    entityManager.merge(delete);
                     entityManager.getTransaction().commit();
                 }
             }

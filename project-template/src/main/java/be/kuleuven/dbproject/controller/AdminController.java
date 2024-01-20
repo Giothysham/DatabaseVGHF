@@ -140,6 +140,10 @@ public class AdminController {
             user.setBevoegdheid(admin);
         }
 
+        entityManager.getTransaction().begin();
+        entityManager.merge(user);
+        entityManager.getTransaction().commit();
+
         this.setUser();
     }
 

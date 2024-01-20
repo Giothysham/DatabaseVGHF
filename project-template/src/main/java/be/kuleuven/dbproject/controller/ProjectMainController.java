@@ -3,6 +3,8 @@ package be.kuleuven.dbproject.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import be.kuleuven.dbproject.model.Extra;
+import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import javafx.event.ActionEvent;
@@ -61,7 +63,7 @@ public class ProjectMainController {
         btnGames.setOnAction(e -> {
             try {
                 changeButtonStyle(listOfButtons, e);
-                paneHolderController.setProduct("Game");
+                paneHolderController.setProduct(new Game());
                 paneHolderController.changeChildTo("verkoopbaarscherm",dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -90,7 +92,7 @@ public class ProjectMainController {
         btnExtras.setOnAction(e -> {
             changeButtonStyle(listOfButtons, e);
             try {
-                paneHolderController.setProduct("Extra");
+                paneHolderController.setProduct(new Extra());
                 paneHolderController.changeChildTo("verkoopbaarscherm", dbConnection);
             } catch (IOException e1) {
                 e1.printStackTrace();

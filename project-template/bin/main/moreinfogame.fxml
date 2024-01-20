@@ -8,11 +8,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.textfield.*?>
 
-<<<<<<< HEAD:project-template/build/resources/main/moreinfoextra.fxml
-<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.MoreInfoExtraController" alignment="CENTER">
-=======
 <AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarMoreInfoController">
->>>>>>> 0503d5008e93cb19cd17b94e0eb91d02f0afd4e0:project-template/bin/main/moreinfoverkoopbaar.fxml
     <children>
         <VBox spacing="10" style="-fx-padding: 0 10 10 10;" alignment="CENTER">
             <HBox alignment="CENTER">
@@ -37,11 +33,6 @@
                 <HBox fx:id="genreHBox" spacing="10">
                     <Text text="genre: " style="-fx-font-size: 14;"/>
                     <Text fx:id="genreTxt" style="-fx-font-size: 14;"/>
-                </HBox>
-                <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <HBox fx:id="typeHbox" spacing="10">
-                    <Text text="type: " style="-fx-font-size: 14;"/>
-                    <Text fx:id="typeTxt" style="-fx-font-size: 14;"/>
                 </HBox>
             </HBox>
             <HBox alignment="CENTER">

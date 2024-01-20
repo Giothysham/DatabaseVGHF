@@ -99,6 +99,10 @@ public class Extra implements VerkoopbaarInterface {
         return this.winkel;
     }
 
+    public void setWinkel(Winkel winkel){
+        this.winkel = winkel;
+    }
+
     public Uitgever getUitgever() {
         return this.uitgever;
     }

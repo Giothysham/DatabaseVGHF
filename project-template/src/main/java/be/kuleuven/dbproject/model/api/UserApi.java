@@ -25,21 +25,21 @@ public class UserApi {
         entityManager = dbConnection.getEntityManager();
     }
 
-    public User chekUserAndWachtwoord(String email, String Wachtwoord) throws Exception{
+    public User chekUserAndWachtwoord(String email, String wachtwoord) throws Exception{
         var criteriaBuilder = sessionFactory.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(User.class);
         var root = query.from(User.class);
 
         var predicateEmail = criteriaBuilder.equal(root.get("email"), email);
-        var predicateWachtwoord = criteriaBuilder.equal(root.get("wachtwoord"), Wachtwoord);
+        //var predicateWachtwoord = criteriaBuilder.equal(root.get("wachtwoord"), wachtwoord);
 
-        var predicateAnd = criteriaBuilder.and(predicateEmail, predicateWachtwoord);
+        //var predicateAnd = criteriaBuilder.and(predicateEmail, predicateWachtwoord); TODO: geen idee als dit een goeie fix is
 
-        var result = entityManager.createQuery(query.where(predicateAnd)).getResultList();
-
-        if(!result.isEmpty()){
-            return result.get(0);
+        User result = entityManager.createQuery(query.where(predicateEmail)).getResultList().get(0);
+        System.out.println("ww: " + result.getAchternaam() + "--------------------------------------");
+        if(true){ //result.getWachtwoord().equals(wachtwoord) TODO: FIX PLS
+            return result;
         }
         else{
             throw new Exception("wrong Email or Password");
@@ -74,19 +74,23 @@ public class UserApi {
                         factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
-                    //entityManager.persist(user);
+                    
                     entityManager.persist(factuur);
                 }
                 else{
                     //over gaan werkt maar als er dan een element verwijderd wordt wordt het programma boos. 
                     //veranderingen blijven bestaan zelfs na de rol back => vragen aan wouter. => game wordt zwz geupdate => roll back fixed dit niet
+
                     entityManager.getTransaction().rollback();
                     throw new Exception("more items selected than avaible");
                 }
             }
-            
+
             for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
                 verkoopbaar.setTempToStock();
+                if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                    user.getUitgeleendeGames().add((Game)verkoopbaar);
+                }
             }
 
             entityManager.getTransaction().commit();

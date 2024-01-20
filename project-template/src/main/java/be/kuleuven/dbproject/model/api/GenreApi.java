@@ -18,20 +18,6 @@ public class GenreApi {
         entityManager = dbConnection.getEntityManager();
     }
 
-    // private void createGenre(){
-    //     Genre genre1 = new Genre(0, "Real-time strategy", "test niet goed");
-    //     Genre genre2 = new Genre(0, "Fixed shooter", "test niet goed");
-    //     Genre genre3 = new Genre(0, "FPS", "test niet goed");
-    //     Genre genre4 = new Genre(0, "Action", "test niet goed");
-
-    //     entityManager.getTransaction().begin();
-    //     entityManager.persist(genre1);
-    //     entityManager.persist(genre2);
-    //     entityManager.persist(genre3);
-    //     entityManager.persist(genre4);
-    //     entityManager.getTransaction().commit();
-    // }
-
     public List<Genre> getGenres() {
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 

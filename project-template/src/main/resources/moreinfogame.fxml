@@ -34,11 +34,6 @@
                     <Text text="genre: " style="-fx-font-size: 14;"/>
                     <Text fx:id="genreTxt" style="-fx-font-size: 14;"/>
                 </HBox>
-                <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <HBox fx:id="typeHbox" spacing="10">
-                    <Text text="type: " style="-fx-font-size: 14;"/>
-                    <Text fx:id="typeTxt" style="-fx-font-size: 14;"/>
-                </HBox>
             </HBox>
             <HBox alignment="CENTER">
                 <Text text="locatie: " style="-fx-font-size: 14;"/>
