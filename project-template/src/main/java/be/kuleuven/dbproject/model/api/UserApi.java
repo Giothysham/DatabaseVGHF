@@ -68,8 +68,6 @@ public class UserApi {
                 if(stock > 0){
                     verkoopbaar.setTempStock(stock-1);
                     stock = stock - 1;
-
-                    System.out.println("hier");
                     
                     if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                         factuur = new Factuur(0,user,verkoopbaar.getKostPrijs(),(Game)verkoopbaar,null, verkoopbaar.getWinkel());
@@ -89,7 +87,6 @@ public class UserApi {
             }
 
             for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
-                System.out.println("hier2");
                 verkoopbaar.setTempToStock();
                 if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                     user.getUitgeleendeGames().add((Game)verkoopbaar);

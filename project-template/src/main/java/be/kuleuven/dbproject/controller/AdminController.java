@@ -33,8 +33,6 @@ public class AdminController {
     @FXML
     private Button addWinkelBtn ,removeUitgeverBtn ,removeWinkelBtn ,removeGenreBtn , addGenreBtn, addUitgeverBtn, maakAdminBtn, removeAdmingBtn;
 
-    //Todo: zorg dat als je genre of ander verwijderd dat het dan niet crashed
-
     @FXML
     private TableView<Winkel> tblWinkels;
 
@@ -132,10 +130,6 @@ public class AdminController {
 
         maakAdminBtn.setOnAction(e -> switchAdmin(true));
 
-        //TODO: fix
-        //als een van de bedrijven ofzo wordt verwijderd dan ook games van deze verwijderen => implementeren. 
-        //zorg dat als ze op verwijderen klikken dat ze een ben je zker pop up krijgen. 
-
         removeUitgeverBtn.setOnAction(e -> {
             var uitgever  = tblUitgever.getSelectionModel().getSelectedItem();
             
@@ -197,7 +191,6 @@ public class AdminController {
     private void handleUitgeverKlick(MouseEvent event){
         var selectedItem = tblUitgever.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selectedItem != null){
-            //System.out.println("uitgeverklick: " + tblUitgever.getSelectionModel().getSelectedItem().getNaam());
             try {
                 openNewWindow("uitgeveraddscherm", selectedItem);
             } catch (IOException e) {
@@ -209,7 +202,6 @@ public class AdminController {
     private void handleGenreKlick(MouseEvent event) {
         var selectedItem = tblGenre.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selectedItem != null){
-            //System.out.println("genreKlick : " + tblGenre.getSelectionModel().getSelectedItem().getNaam());
             try {
                 openNewWindow("genreaddscherm", selectedItem);
             } catch (IOException e) {
@@ -221,7 +213,6 @@ public class AdminController {
     private void handleWinkelKlick(MouseEvent event) {
         var selected = tblWinkels.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selected != null){
-            //System.out.println("winkelklick: " + tblWinkels.getSelectionModel().getSelectedItem().getWinkelID());
             try {
                 openNewWindow("winkeladdscherm", selected);
             } catch (IOException e) {
@@ -260,8 +251,8 @@ public class AdminController {
                 winkelAddController.setWinkel(winkel.getWinkelID());
             }
         }
-        else if(childController.getClass() == UitgeverAddScherm.class){
-            var uitgeverAddScherm = (UitgeverAddScherm) childController;
+        else if(childController.getClass() == UitgeverAddController.class){
+            var uitgeverAddScherm = (UitgeverAddController) childController;
             uitgeverAddScherm.setDbConnection(dbConnection); 
             uitgeverAddScherm.setParentController(this);
 

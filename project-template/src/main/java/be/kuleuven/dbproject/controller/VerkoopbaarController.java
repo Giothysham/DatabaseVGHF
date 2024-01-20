@@ -327,8 +327,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
                 typeMenu.getItems().add(menuItem);
             }
         }
-<<<<<<< HEAD
-=======
         
         for(Uitgever uitgever: uitgeverApi.getUitgevers()){
             var menuItem = new MenuItem(uitgever.getNaam());
@@ -340,7 +338,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
             });
             uitgeverMenu.getItems().add(menuItem);
         }
->>>>>>> b820bab556fefb6a0b34b454dc9aa282a46f01e0
 
         for(Winkel winkel: winkelApi.getWinkels()){
             var menuItem = new MenuItem(winkel.getFullAdressWithID());

@@ -102,7 +102,7 @@ public class LoginController {
             changeWindow("main.fxml");
         } catch (Exception e) {
             Alert a = new Alert(AlertType.ERROR);
-            a.setContentText(e.getMessage());
+            a.setContentText("Incorrecte login gegevens");
             a.show();
             e.printStackTrace();
         }
