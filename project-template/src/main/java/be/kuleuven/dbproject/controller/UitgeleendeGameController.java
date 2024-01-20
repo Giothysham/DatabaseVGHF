@@ -28,6 +28,8 @@ import java.util.List;
 
 public class UitgeleendeGameController {
 
+    //TODO: search werkt niet
+
     @FXML
     private Button searchBtn, returnBtn;
 
@@ -55,6 +57,8 @@ public class UitgeleendeGameController {
 
     private DbConnection dbConnection;
 
+    private UserApi userApi;
+
     private User user;
 
     public void initialize(){
@@ -76,7 +80,6 @@ public class UitgeleendeGameController {
 
     private void returnGame() {
         var tempList = tblUitgeleendeGames.getSelectionModel().getSelectedItems();
-        var userApi = new UserApi(dbConnection);
 
         if(tempList.size() > 0){
             var uitgeleendeGames = user.getUitgeleendeGames();
@@ -99,39 +102,25 @@ public class UitgeleendeGameController {
 
     public void updateOrSearchTable(Boolean update){
         tblUitgeleendeGames.getItems().clear();
+        var autoCompleteText = autoCompleteSearch.getText();
 
-        if(update){
+        if(update || autoCompleteText.length() == 0){
             listgames = user.getUitgeleendeGames();
         }
-        else{
-            var autoCompleteText = autoCompleteSearch.getText();
-            if(autoCompleteText.length() != 0){
-                // var templist = user.getUitgeleendeGames();
-                // for(Game uit: templist){
-                //     System.out.println("gothere 1--------------------------------------------");
-                //     if(uit.getNaam().contains(autoCompleteText)){
-                //         System.out.println("gothere 2--------------------------------------------");
-                //         listgames.add(uit);
-                //     }
-                // } WAYO?
-            }
-            // TODO: aan wouter fix vragen => nog een bekijken wat dit is
-            else{
-                listgames = user.getUitgeleendeGames();
-            }
+        else{   
+            listgames = userApi.getGameByNameForUser(user, autoCompleteText);
         }
-
         tblUitgeleendeGames.getItems().setAll(listgames);
     }
 
     public void initTable() {
-            listgames = user.getUitgeleendeGames();
+        listgames = user.getUitgeleendeGames();
             
-            for(Game game: listgames){
-                if(!autoCompleteWords.contains(game.getNaam())){
-                    autoCompleteWords.add(game.getNaam());
-                }
+        for(Game game: listgames){
+            if(!autoCompleteWords.contains(game.getNaam())){
+                autoCompleteWords.add(game.getNaam());
             }
+        }
 
         TextFields.bindAutoCompletion(autoCompleteSearch, autoCompleteWords);
 
@@ -140,7 +129,6 @@ public class UitgeleendeGameController {
         tblUitgeleendeGames.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tblUitgeleendeGames.getItems().addAll(listgames);
-
     }
 
     @FXML
@@ -180,6 +168,7 @@ public class UitgeleendeGameController {
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
+        userApi = new UserApi(dbConnection);
     }
 
    public void setUser(User user){

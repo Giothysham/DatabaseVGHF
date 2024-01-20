@@ -152,4 +152,27 @@ public class UserApi {
         var result = entityManager.createQuery(query.where(predicateUser)).getResultList();
         return result;
     }
+
+    public List<Game> getGameByNameForUser(User user,String name){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(User.class);
+
+        var root = query.from(User.class);
+
+        var predicateUser = criteriaBuilder.equal(root.get("userId"), user.getUserId());
+
+        var result = entityManager.createQuery(query.where(predicateUser)).getResultList();
+
+        var gameList = new ArrayList<Game>();
+
+        for(Game game: result.get(0).getUitgeleendeGames()){
+            if(game.getNaam().equals(name)){
+                gameList.add(game);
+            }
+        }
+        //TODO: bespreken met edmond
+        System.out.println(gameList.size());
+        return gameList;
+    }
 }

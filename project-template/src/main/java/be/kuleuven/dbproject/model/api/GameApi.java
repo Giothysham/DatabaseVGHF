@@ -149,8 +149,6 @@ public class GameApi implements VerkoopbaarApiInterface {
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
 
-        System.out.println(result);
-
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
      
         for(Game game : result){
