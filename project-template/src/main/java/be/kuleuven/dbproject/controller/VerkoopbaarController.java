@@ -10,12 +10,14 @@ import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.Genre;
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.ExtraApi;
 import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.GenreApi;
+import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
@@ -42,7 +44,7 @@ import javafx.stage.Stage;
 public class VerkoopbaarController implements BuyScreenInterface{
 
     @FXML
-    private Menu consoleMenu, winkelMenu, genreMenu, typeMenu;
+    private Menu consoleMenu, winkelMenu, genreMenu, typeMenu, uitgeverMenu;
 
     @FXML
     private Button VerkoopbaarAddBtn, deleteBtn, buyBtn, searchBtn, addToCartBtn; //filterBtn;
@@ -288,6 +290,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
     public void setUpFilters(){
         var winkelApi = new WinkelApi(dbConnection);
         var genreApi = new GenreApi(dbConnection);
+        var uitgeverApi = new UitgeverApi(dbConnection);
 
         if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
             for(Console console: Console.values()){
@@ -326,8 +329,16 @@ public class VerkoopbaarController implements BuyScreenInterface{
             }
         }
         
-
-        
+        for(Uitgever uitgever: uitgeverApi.getUitgevers()){
+            var menuItem = new MenuItem(uitgever.getNaam());
+            menuItem.setOnAction(e -> {
+                verkoopbaarApi.creatSearchQuerry(uitgever);
+                verkoopbaarApi.searchVerkoopbaarByFilters(null);
+                this.updateOrSearchTable(false);
+                addFilterToPane(uitgever);
+            });
+            uitgeverMenu.getItems().add(menuItem);
+        }
 
         for(Winkel winkel: winkelApi.getWinkels()){
             var menuItem = new MenuItem(winkel.getFullAdressWithID());
@@ -342,10 +353,12 @@ public class VerkoopbaarController implements BuyScreenInterface{
     }
 
     private <T> void addFilterToPane(T filter){
-
-        //TODO mauro optimize
         
         if(verkoopbaarApi.getSearchWinkel() != null){
+            searchAndDeleteVisualFilterByType(filter);
+        }
+
+        if(verkoopbaarApi.getSearchUitgever() != null){
             searchAndDeleteVisualFilterByType(filter);
         }
 

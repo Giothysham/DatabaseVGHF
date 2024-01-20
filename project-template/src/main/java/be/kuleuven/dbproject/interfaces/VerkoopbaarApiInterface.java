@@ -1,5 +1,6 @@
 package be.kuleuven.dbproject.interfaces;
 
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface VerkoopbaarApiInterface {
 
     Winkel getSearchWinkel();
+
+    Uitgever getSearchUitgever();
 
     <T> void creatSearchQuerry(T filterValue);
 

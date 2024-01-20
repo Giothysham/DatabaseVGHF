@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:controller="be.kuleuven.dbproject.controller.HomePageController" xmlns:fx="http://javafx.com/fxml">
-    <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
-        <VBox fx:id="HeadVbox">
+    <HBox alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="450" style="-fx-padding: 10 0 0 150;">
+        <VBox fx:id="HeadVbox" maxWidth="Infinity">
             <HBox alignment="CENTER">
-                <Label text="VGHF" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 60px;"/>
+                <Label text="~VGHF~" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 60px;"/>
             </HBox>
             <HBox alignment="CENTER">
-                <Label fx:id="homePageText" prefHeight="300.0" prefWidth="300" style="-fx-font-size: 10px;"/>
+                <Label fx:id="homePageText" prefHeight="300.0" prefWidth="300" style="-fx-font-size: 15px;"/>
             </HBox>
         </VBox>
     </HBox>
