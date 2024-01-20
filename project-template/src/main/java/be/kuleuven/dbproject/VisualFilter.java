@@ -3,6 +3,7 @@ package be.kuleuven.dbproject;
 import be.kuleuven.dbproject.interfaces.BuyScreenInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Genre;
+import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.enums.Console;
 import be.kuleuven.dbproject.model.enums.Type;
@@ -24,6 +25,8 @@ public class VisualFilter<T> {
     }
     
     public HBox getVisualFilter(VerkoopbaarApiInterface verkoopbaarApi,BuyScreenInterface parentController){
+
+        System.out.println(parentController);
 
         visualFilterHbox = new HBox();
         visualFilterHbox.setSpacing(5.0);
@@ -48,6 +51,9 @@ public class VisualFilter<T> {
         else if(usedFilter.getClass() == Type.class){
             text.setText(((Type) usedFilter).toString());
         }
+        else if(usedFilter.getClass() == Uitgever.class){
+            text.setText(((Uitgever) usedFilter).getNaam());
+        }
 
         text.setFill(Paint.valueOf("#000000"));
 
@@ -55,6 +61,7 @@ public class VisualFilter<T> {
             verkoopbaarApi.removeFilterByClass(usedFilter);
             parentController.getScrlPaneFilters().getChildren().remove(visualFilterHbox);
             parentController.updateOrSearchTable(false);
+            System.out.println("Filter verwijderd");
         });
 
         vbox.getChildren().add(text);

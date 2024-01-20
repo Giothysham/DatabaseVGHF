@@ -24,6 +24,8 @@ public class ExtraApi implements VerkoopbaarApiInterface {
 
     private Winkel searchWinkel;
 
+    private Uitgever searchUitgever;
+
     private User user;
     
     public ExtraApi(DbConnection dbConnection,User user){
@@ -38,6 +40,10 @@ public class ExtraApi implements VerkoopbaarApiInterface {
 
     public Winkel getSearchWinkel() {
         return this.searchWinkel;
+    }
+
+    public Uitgever getSearchUitgever() {
+        return this.searchUitgever;
     }
 
     public void clearSearchQuerry(){
@@ -118,6 +124,9 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         else if(filterValue.getClass() == Winkel.class){
             searchWinkel = (Winkel) filterValue;
         }
+        else if(filterValue.getClass() == Uitgever.class){
+            searchUitgever = (Uitgever) filterValue;
+        }
     }
 
     public List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam){
@@ -136,6 +145,10 @@ public class ExtraApi implements VerkoopbaarApiInterface {
             querryFilterList.add(criteriaBuilder.equal(root.get("winkel"), searchWinkel));
         }
 
+        if(searchUitgever != null){
+            querryFilterList.add(criteriaBuilder.equal(root.get("uitgever"), searchUitgever));
+        }
+
         if(naam != null){
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
@@ -147,17 +160,12 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         Predicate predicate = criteriaBuilder.and(querryFilterList.toArray(new Predicate[querryFilterList.size()]));
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
-        if(result.size() > 0){
-            List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
-     
-            for(Extra extra : result){
-                verkoopbaarList.add((VerkoopbaarInterface) extra);
-            }
-            return verkoopbaarList;
+        List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
+    
+        for(Extra extra : result){
+            verkoopbaarList.add((VerkoopbaarInterface) extra);
         }
-        else{
-            throw new IllegalArgumentException("no extra found with filters and name: "+ naam);
-        }
+        return verkoopbaarList;
     }
     
     public <T> void removeFilterByClass(T filterValue) {
@@ -166,6 +174,9 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         }
         else if(filterValue.getClass() == Winkel.class){
             searchWinkel = null;
+        }
+        else if(filterValue.getClass() == Uitgever.class){
+            searchUitgever = null;
         }
     }
 

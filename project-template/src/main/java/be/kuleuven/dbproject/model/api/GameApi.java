@@ -28,6 +28,8 @@ public class GameApi implements VerkoopbaarApiInterface {
 
     private Genre searchGenre;
 
+    private Uitgever searchUitgever;
+
     private User user;
 
     public GameApi(DbConnection dbConnection, User user){
@@ -46,6 +48,10 @@ public class GameApi implements VerkoopbaarApiInterface {
 
     public Genre getSearchGenre() {
         return this.searchGenre;
+    }
+
+    public Uitgever getSearchUitgever() {
+        return this.searchUitgever;
     }
     
     public List<VerkoopbaarInterface> getVerkoopbaarVoorUser(){
@@ -103,6 +109,10 @@ public class GameApi implements VerkoopbaarApiInterface {
             searchGenre = (Genre) filterValue;
             System.out.println(searchGenre.getNaam());
         }
+        else if(filterValue.getClass() == Uitgever.class){
+            searchUitgever = (Uitgever) filterValue;
+            System.out.println(searchUitgever.getNaam());
+        }
     }
 
     public void clearSearchQuerry(){
@@ -122,6 +132,10 @@ public class GameApi implements VerkoopbaarApiInterface {
         if(searchConsole != null){
             System.out.println("searching for console: "+searchConsole);
            querryFilterList.add(criteriaBuilder.equal(root.get("console"), searchConsole));
+        }
+
+        if(searchUitgever != null){
+            querryFilterList.add( criteriaBuilder.equal(root.get("uitgever"), searchUitgever));
         }
         
         if(searchGenre != null){
@@ -192,6 +206,9 @@ public class GameApi implements VerkoopbaarApiInterface {
         }
         else if(filterValue.getClass() == Genre.class){
             searchGenre = null;
+        }
+        else if(filterValue.getClass() == Uitgever.class){
+            searchUitgever = null;
         }
     }
 

@@ -30,7 +30,7 @@ public class ProjectMainController {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private Button logOutBtn,adminBtn,btnUitgeleendeGames,btnExtras, btnGames, factuurBtn;
+    private Button logOutBtn,adminBtn,btnUitgeleendeGames,btnExtras, btnGames, factuurBtn, homeButton;
     @FXML 
     private PaneHolderController paneHolderController ;
     @FXML
@@ -58,6 +58,14 @@ public class ProjectMainController {
         listOfButtons.add(btnUitgeleendeGames);
         listOfButtons.add(btnExtras);
         listOfButtons.add(factuurBtn);
+
+        homeButton.setOnAction(e -> {
+            try {
+                paneHolderController.changeChildTo("homepage",dbConnection);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         logOutBtn.setOnAction(e -> {
             try {

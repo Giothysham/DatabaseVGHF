@@ -9,6 +9,8 @@ public interface VerkoopbaarApiInterface {
 
     Winkel getSearchWinkel();
 
+    Uitgever getSearchUitgever();
+
     <T> void creatSearchQuerry(T filterValue);
 
     <T> void removeFilterByClass(T filterValue);
