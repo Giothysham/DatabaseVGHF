@@ -171,8 +171,6 @@ public class UserApi {
                 gameList.add(game);
             }
         }
-        //TODO: bespreken met edmond
-        System.out.println(gameList.size());
         return gameList;
     }
 }

@@ -115,6 +115,7 @@ public class LoginController {
         
         var stage = new Stage();
         var loader = new FXMLLoader(getClass().getClassLoader().getResource(id));
+        stage.setResizable(false);
         Parent root = loader.load();
         var controller = loader.getController();
 

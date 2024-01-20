@@ -12,18 +12,18 @@ be/kuleuven/dbproject/controller/CreateAccountTweedeController.java
  be.kuleuven.dbproject.controller.CreateAccountTweedeController
 be/kuleuven/dbproject/model/api/DbConnection.java
  be.kuleuven.dbproject.model.api.DbConnection
-be/kuleuven/dbproject/model/User.java
- be.kuleuven.dbproject.model.User
+be/kuleuven/dbproject/controller/FilterSchermController.java
+ be.kuleuven.dbproject.controller.FilterSchermController
 be/kuleuven/dbproject/model/api/UitgeverApi.java
  be.kuleuven.dbproject.model.api.UitgeverApi
-be/kuleuven/dbproject/interfaces/BuyScreenInterface.java
- be.kuleuven.dbproject.interfaces.BuyScreenInterface
-be/kuleuven/dbproject/VisualFilter.java
- be.kuleuven.dbproject.VisualFilter
-be/kuleuven/dbproject/model/Factuur.java
- be.kuleuven.dbproject.model.Factuur
 be/kuleuven/dbproject/controller/GenreAddController.java
  be.kuleuven.dbproject.controller.GenreAddController
+be/kuleuven/dbproject/VisualFilter.java
+ be.kuleuven.dbproject.VisualFilter
+be/kuleuven/dbproject/controller/PaneHolderController.java
+ be.kuleuven.dbproject.controller.PaneHolderController
+be/kuleuven/dbproject/controller/HomePageController.java
+ be.kuleuven.dbproject.controller.HomePageController
 be/kuleuven/dbproject/model/enums/Console.java
  be.kuleuven.dbproject.model.enums.Console
 be/kuleuven/dbproject/controller/WinkelAddController.java
@@ -34,32 +34,36 @@ be/kuleuven/dbproject/model/enums/Type.java
  be.kuleuven.dbproject.model.enums.Type
 be/kuleuven/dbproject/controller/ProjectMainController.java
  be.kuleuven.dbproject.controller.ProjectMainController
+be/kuleuven/dbproject/controller/RoutingController.java
+ be.kuleuven.dbproject.controller.RoutingController
 be/kuleuven/dbproject/ProjectMain.java
  be.kuleuven.dbproject.ProjectMain
 be/kuleuven/dbproject/model/Winkel.java
  be.kuleuven.dbproject.model.Winkel
-be/kuleuven/dbproject/model/Extra.java
- be.kuleuven.dbproject.model.Extra
-be/kuleuven/dbproject/model/api/GenreApi.java
- be.kuleuven.dbproject.model.api.GenreApi
 be/kuleuven/dbproject/interfaces/VerkoopbaarApiInterface.java
  be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface
+be/kuleuven/dbproject/model/api/GenreApi.java
+ be.kuleuven.dbproject.model.api.GenreApi
+be/kuleuven/dbproject/controller/VerkoopbaarController.java
+ be.kuleuven.dbproject.controller.VerkoopbaarController
 be/kuleuven/dbproject/model/Game.java
  be.kuleuven.dbproject.model.Game
 be/kuleuven/dbproject/model/api/WinkelApi.java
  be.kuleuven.dbproject.model.api.WinkelApi
 be/kuleuven/dbproject/interfaces/VerkoopbaarInterface.java
  be.kuleuven.dbproject.interfaces.VerkoopbaarInterface
+be/kuleuven/dbproject/interfaces/BuyScreenInterface.java
+ be.kuleuven.dbproject.interfaces.BuyScreenInterface
+be/kuleuven/dbproject/model/User.java
+ be.kuleuven.dbproject.model.User
+be/kuleuven/dbproject/model/Extra.java
+ be.kuleuven.dbproject.model.Extra
 be/kuleuven/dbproject/controller/VerkoopbaarAddController.java
  be.kuleuven.dbproject.controller.VerkoopbaarAddController
-be/kuleuven/dbproject/controller/VerkoopbaarController.java
- be.kuleuven.dbproject.controller.VerkoopbaarController
-be/kuleuven/dbproject/controller/CreateAccountDerdeController.java
- be.kuleuven.dbproject.controller.CreateAccountDerdeController
-be/kuleuven/dbproject/controller/FilterSchermController.java
- be.kuleuven.dbproject.controller.FilterSchermController
 be/kuleuven/dbproject/model/api/GameApi.java
  be.kuleuven.dbproject.model.api.GameApi
+be/kuleuven/dbproject/model/Factuur.java
+ be.kuleuven.dbproject.model.Factuur
 be/kuleuven/dbproject/controller/FactuurController.java
  be.kuleuven.dbproject.controller.FactuurController
 be/kuleuven/dbproject/model/api/UserApi.java
@@ -72,7 +76,7 @@ be/kuleuven/dbproject/controller/LoginController.java
  be.kuleuven.dbproject.controller.LoginController
 be/kuleuven/dbproject/controller/AdminController.java
  be.kuleuven.dbproject.controller.AdminController
-be/kuleuven/dbproject/controller/PaneHolderController.java
- be.kuleuven.dbproject.controller.PaneHolderController
+be/kuleuven/dbproject/controller/CreateAccountDerdeController.java
+ be.kuleuven.dbproject.controller.CreateAccountDerdeController
 be/kuleuven/dbproject/controller/UitgeleendeGameController.java
  be.kuleuven.dbproject.controller.UitgeleendeGameController

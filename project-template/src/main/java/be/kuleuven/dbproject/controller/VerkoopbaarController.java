@@ -258,6 +258,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     public void setDbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
+        //Todo van die string af !! denk ik ??
         if(product == "Game"){
             verkoopbaarApi = new GameApi(dbConnection, user);
         }

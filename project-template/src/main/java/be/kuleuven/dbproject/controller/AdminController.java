@@ -31,6 +31,8 @@ public class AdminController {
     @FXML
     private Button addWinkelBtn ,removeUitgeverBtn ,removeWinkelBtn ,removeGenreBtn , addGenreBtn, addUitgeverBtn, maakAdminBtn, removeAdmingBtn;
 
+    //Todo: zorg dat als je genre of ander verwijderd dat het dan niet crashed
+
     @FXML
     private TableView<Winkel> tblWinkels;
 

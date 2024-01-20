@@ -22,15 +22,26 @@
             <Pane maxWidth="-Infinity" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
             <Label fx:id="naamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
             <Label fx:id="achternaamTxt" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
-            <Button fx:id="logOutBtn" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
-              <graphic>
-                <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@/image/icons8-logout-50.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
+            <HBox alignment="CENTER">
+              <Button fx:id="logOutBtn" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
+                <graphic>
+                  <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                      <Image url="@/image/icons8-logout-50.png" />
+                    </image>
+                  </ImageView>
+                </graphic>
+              </Button>
+              <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-color: #4f46e5;">
+                <graphic>
+                  <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                      <Image url="@/image/icons8-home-page-50.png" />
+                    </image>
+                  </ImageView>
+                </graphic>
+              </Button>
+            </HBox>
         </VBox>
     </left>
     <center>

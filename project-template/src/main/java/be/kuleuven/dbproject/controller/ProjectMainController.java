@@ -43,6 +43,12 @@ public class ProjectMainController {
 
     public void initialize() {
 
+        try {
+            paneHolderController.changeChildTo("homepage",dbConnection);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         listOfButtons = new ArrayList<>();
 
         listOfButtons.add(adminBtn);
@@ -53,7 +59,7 @@ public class ProjectMainController {
 
         logOutBtn.setOnAction(e -> {
             try {
-                changeWindow();
+                logOut();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -122,7 +128,7 @@ public class ProjectMainController {
         }
     }
 
-    private void changeWindow() throws IOException{
+    private void logOut() throws IOException{
         Stage oldStage = (Stage) btnGames.getScene().getWindow();
         oldStage.close();
 
