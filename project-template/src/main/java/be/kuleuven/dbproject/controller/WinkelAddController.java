@@ -47,6 +47,7 @@ public class WinkelAddController {
         }
         else{
             if(winkelStraatNaam != "" && stad != "" && stad != "" && postcode != "" && provincie != "" && land != ""){
+                System.out.println("-----------------------------------------------------------------");
                 var winkel = new Winkel(0,0,winkelStraatNaam,stad, postcode,provincie,land); 
                 winkelApi.postWinkel(winkel);
 

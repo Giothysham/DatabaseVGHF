@@ -71,26 +71,27 @@ public class UserApi {
                     
                     if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                         factuur = new Factuur(0,user,verkoopbaar.getKostPrijs(),(Game)verkoopbaar,null, verkoopbaar.getWinkel());
+                        user.getUitgeleendeGames().add((Game)verkoopbaar);
                     } 
 
                     else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
                         factuur = new Factuur(0,user ,verkoopbaar.getKostPrijs(), null,(Extra) verkoopbaar, verkoopbaar.getWinkel());
                     }
                        
-                    entityManager.merge(user);
                     entityManager.persist(factuur);
+                    entityManager.merge(user);
                 }
                 else{
                     entityManager.getTransaction().rollback();
+                    for(VerkoopbaarInterface deleteVerkoopbaar: verkoopbaarLijst){
+                        user.getUitgeleendeGames().remove(deleteVerkoopbaar);
+                    }
                     throw new Exception("more items selected than avaible");
                 }
             }
 
             for(VerkoopbaarInterface verkoopbaar: verkochteVerkoopbaar){
-                verkoopbaar.setTempToStock();
-                if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
-                    user.getUitgeleendeGames().add((Game)verkoopbaar);
-                }
+                verkoopbaar.setTempToStock();                
             }
 
             entityManager.getTransaction().commit();
