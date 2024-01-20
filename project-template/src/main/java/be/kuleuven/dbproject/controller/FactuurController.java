@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FactuurController {
     
-    //TODO: wanneer game weg gaat dan wat met factuur ?
     @FXML
     private TableColumn<Factuur,Integer> factuurIDColumn;
 

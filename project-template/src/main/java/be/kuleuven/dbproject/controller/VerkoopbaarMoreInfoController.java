@@ -4,7 +4,6 @@ import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
-import be.kuleuven.dbproject.model.api.DbConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,8 +18,6 @@ import javafx.stage.Stage;
 
 public class 
 VerkoopbaarMoreInfoController {
-
-    private DbConnection dbConnection;
 
     @FXML
     private Text consoleTxt, stockTxt, uitgeverTxt, locatieTxt, genreTxt, typeTxt;
@@ -39,10 +36,6 @@ VerkoopbaarMoreInfoController {
 
     public void initialize(){
         //TODO => zorg dat plek waar het aanwezig is te zien is. 
-    }
-    
-    public void setdbConnection(DbConnection dbConnection){
-        this.dbConnection = dbConnection;
     }
 
     public <T> void schermSwitch(String id,T variable){
@@ -89,25 +82,10 @@ VerkoopbaarMoreInfoController {
             genreTxt.setText(((Game)Verkoopbaar).getGenre().getNaam());
 
             genreHBox.setOnMouseClicked(e -> schermSwitch("moreinfo", ((Game)Verkoopbaar).getGenre()));
-
-            typeHbox.getChildren().clear();
-
-            mainVbox.getChildren().remove(typeHbox);
-
-            typeTxt.setVisible(false);
         } 
 
         else if(Verkoopbaar.getClass().isAssignableFrom(Extra.class)){
-            typeTxt.setText(((Extra)Verkoopbaar).getType().toString());
-
-            consoleHbox.getChildren().clear();
-            genreHBox.getChildren().clear();            
-
-            mainVbox.getChildren().remove(consoleHbox);
-            mainVbox.getChildren().remove(genreHBox);
-
-            consoleTxt.setVisible(false);
-            genreTxt.setVisible(false);
+            typeTxt.setText(((Extra)Verkoopbaar).getType().toString());   
         }
 
         uitgeverHbox.setOnMousePressed(e -> schermSwitch("moreinfo", Verkoopbaar.getUitgever()));

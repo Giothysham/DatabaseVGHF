@@ -4,6 +4,7 @@ package be.kuleuven.dbproject.controller;
 import java.util.List;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
@@ -80,6 +81,8 @@ public class VerkoopbaarAddController {
 
     private User user;
 
+    private VerkoopbaarApiInterface verkoopbaarApi;
+
     public void initialize(){        
         submitVerkoopbaarBtn.setOnAction(e -> {
                 if(update){
@@ -115,7 +118,6 @@ public class VerkoopbaarAddController {
             var root = loader.load();
 
             var controller = (VerkoopbaarMoreInfoController) loader.getController();
-            controller.setdbConnection(dbConnection);
             controller.setVerkoopbaar(verkoopbaar);
 
             var scene = new Scene((Parent) root);
@@ -202,8 +204,11 @@ public class VerkoopbaarAddController {
 
     private void updateVerkoopbaar(){
         try{
-            var entityManager = dbConnection.getEntityManager();
-            entityManager.getTransaction().begin();
+            verkoopbaar.setStock(Integer.parseInt(this.aantalStock.getText()));
+            var uitgeverName = (String) uitgeverIDDropDown.getValue();
+            var uitgeverApi = new UitgeverApi(dbConnection);
+            verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
+
             if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                 ((Game)verkoopbaar).setBeschrijving(this.beschrijving.getText()); 
                 ((Game)verkoopbaar).setConsole((Console) consoleDropDown.getValue());
@@ -216,14 +221,10 @@ public class VerkoopbaarAddController {
                 ((Extra)verkoopbaar).setType((Type) typeDropDown.getValue());
                 verkoopbaar.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
                 verkoopbaar.setNaam(this.naam.getText());
-                verkoopbaar.setStock(Integer.parseInt(this.aantalStock.getText()));
-                
-                var uitgeverName = (String) uitgeverIDDropDown.getValue();
-                var uitgeverApi = new UitgeverApi(dbConnection);
-                verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
-                
-                entityManager.getTransaction().commit();
             }
+            
+            verkoopbaarApi.updateVerkoopbaar(verkoopbaar);
+
         }catch(Exception e){
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
@@ -321,6 +322,12 @@ public class VerkoopbaarAddController {
 
     public void setDbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+            verkoopbaarApi = new GameApi(dbConnection, user);
+        }
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
+        }
     }
     
     public void setUpdate(boolean update){

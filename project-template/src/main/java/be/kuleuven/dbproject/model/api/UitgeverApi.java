@@ -60,4 +60,12 @@ public class UitgeverApi {
         entityManager.persist(uitgever);
         entityManager.getTransaction().commit();
     }
+
+    public void deleteSelectedUitgever(Uitgever uitgever){
+        
+        entityManager.getTransaction().begin();
+        entityManager.remove(uitgever);
+        entityManager.getTransaction().commit();
+        
+    }
 }

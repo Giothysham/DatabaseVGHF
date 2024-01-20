@@ -8,14 +8,14 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.textfield.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarMoreInfoController">
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="parentAnchorPane" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarMoreInfoController">
     <children>
-        <VBox spacing="10" style="-fx-padding: 0 10 10 10;" alignment="CENTER">
+        <VBox fx:id="mainVbox" spacing="10" style="-fx-padding: 0 10 10 10;" alignment="CENTER">
             <HBox alignment="CENTER">
                 <Label fx:id="verkoopbaarNameTxt" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
             </HBox>
             <HBox>
-                <HBox spacing="10">
+                <HBox fx:id="consoleHbox" spacing="10">
                     <Text text="console: " style="-fx-font-size: 14;"/>
                     <Text fx:id="consoleTxt" style="-fx-font-size: 14;"/>
                 </HBox>

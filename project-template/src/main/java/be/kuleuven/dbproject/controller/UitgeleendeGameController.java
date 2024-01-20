@@ -150,7 +150,6 @@ public class UitgeleendeGameController {
 
             if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
-                verkoopbaarMoreInfoController.setdbConnection(dbConnection);
                 verkoopbaarMoreInfoController.setVerkoopbaar(gameSelected);
             }
 
