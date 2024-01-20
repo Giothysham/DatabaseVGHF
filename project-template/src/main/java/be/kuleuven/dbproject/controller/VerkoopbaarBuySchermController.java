@@ -82,15 +82,10 @@ public class VerkoopbaarBuySchermController {
     public void deleteVerkoopbaar(){
         VerkoopbaarInterface Verkoopbaar = tblVerkoopbaar.getSelectionModel().getSelectedItem();
         checkoutListID.remove(Integer.toString(Verkoopbaar.getID()));
-        checkoutListVerkoopbaar.remove(Verkoopbaar);
         parentController.setCheckoutList(checkoutListID);
+        checkoutListVerkoopbaar.clear();
+        populateListAndSetPrice(checkoutListID);
         tblVerkoopbaar.getItems().setAll(checkoutListVerkoopbaar);
-
-        var price = 0.0;
-        for(VerkoopbaarInterface tempVerkoopbaar: checkoutListVerkoopbaar){
-            price =+ tempVerkoopbaar.getKostPrijs();
-        }
-        amountTxt.setText( " " + price + "$");
     }
 
     public void setparentController(VerkoopbaarController controller){
@@ -98,8 +93,23 @@ public class VerkoopbaarBuySchermController {
     }
 
     public void setWantToRent(ArrayList<String> wantToRentList) {
-        Double price = 0.0;
         this.checkoutListID = wantToRentList;
+
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+            verkoopbaarApi = new GameApi(dbConnection, user);
+        }
+
+        else if (verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
+        }
+
+        populateListAndSetPrice(wantToRentList);
+
+        tblVerkoopbaar.getItems().setAll(this.checkoutListVerkoopbaar);
+    }
+    
+    private void populateListAndSetPrice(ArrayList<String> wantToRentList){
+        Double price = 0.0;
 
         for(String id: checkoutListID){
             try{
@@ -119,10 +129,8 @@ public class VerkoopbaarBuySchermController {
                 System.out.println(e);
             }
         }
-        
-        amountTxt.setText( " "+price + "$");
 
-        tblVerkoopbaar.getItems().setAll(this.checkoutListVerkoopbaar);
+        amountTxt.setText( " "+price + "$");
     }
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){
@@ -142,16 +150,16 @@ public class VerkoopbaarBuySchermController {
             var window = (Stage) removeBtn.getScene().getWindow();
             parentController.updateOrSearchTable(true);
             parentController.setCheckoutList(new ArrayList<>());
+            parentController.removeFilters();
             window.close();
         } 
-        
         catch (Exception e) {
+            var window = (Stage) removeBtn.getScene().getWindow();
+            window.close();
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
             a.show();
             e.printStackTrace();
-            var window =  (Stage) removeBtn.getScene().getWindow();
-            window.close();
         }
     }
 

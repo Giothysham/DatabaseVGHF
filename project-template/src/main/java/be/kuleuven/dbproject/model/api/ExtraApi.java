@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.Predicate;
-
 import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.User;
@@ -26,7 +25,7 @@ public class ExtraApi implements VerkoopbaarApiInterface {
 
     private User user;
     
-    public ExtraApi(DbConnection dbConnection, User user){
+    public ExtraApi(DbConnection dbConnection,User user){
         sessionFactory = dbConnection.getsessionFactory();
         entityManager = dbConnection.getEntityManager();
         this.user = user;
@@ -39,21 +38,28 @@ public class ExtraApi implements VerkoopbaarApiInterface {
     public Winkel getSearchWinkel() {
         return this.searchWinkel;
     }
+
+    public void clearSearchQuerry(){
+        searchType = null;
+        searchWinkel = null;
+    }
     
-    public List<VerkoopbaarInterface> getVerkoopbaar(){
+    public List<VerkoopbaarInterface> getVerkoopbaarVoorUser(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Extra.class);
         var root = query.from(Extra.class);
-    
-        if(user.getBevoegdheid() == 1){ //testen met ergens user = null
-            query.select(root);
+        List<Extra> extraList = new ArrayList<>();
+
+        if(user.getBevoegdheid() == 1){
+            var select = query.select(root); 
+            extraList = entityManager.createQuery(select).getResultList();
         }
-        else if(user.getBevoegdheid() == 0){
+        else{    
             query.where(criteriaBuilder.greaterThan(root.get("stock"), 0));
+            extraList = entityManager.createQuery(query).getResultList();
         }
 
-        List<Extra> extraList = entityManager.createQuery(query).getResultList();
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
      
         for(Extra extra : extraList){
@@ -151,7 +157,6 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         else{
             throw new IllegalArgumentException("no extra found with filters and name: "+ naam);
         }
-
     }
     
     public <T> void removeFilterByClass(T filterValue) {

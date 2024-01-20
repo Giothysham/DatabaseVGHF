@@ -38,14 +38,14 @@ public class Game implements VerkoopbaarInterface{
     @Id
     private int gameID;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "winkelID")
     private Winkel winkel;
 
     @Column(name = "kostprijs")
     private double kostPrijs;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "genreID")
     private Genre genre;
 
@@ -58,7 +58,7 @@ public class Game implements VerkoopbaarInterface{
     @Transient
     private Integer tempStock;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "uitgeverID")
 	private Uitgever uitgever;
 
@@ -179,6 +179,7 @@ public class Game implements VerkoopbaarInterface{
 
     public void setTempToStock(){
         var tempverkocht = stock - tempStock;
+        System.out.println("tempStock: "+tempStock);
         this.stock = tempStock;
         this.verkocht = tempverkocht + verkocht;
     }

@@ -21,19 +21,19 @@ import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 
-public class CreatAccountController {
+public class CreatAccountBeginController {
 
     @FXML
     private GridPane creatAccountPane;
 
     @FXML
-    private Button creatAccountBtn;
+    private Button nextBtn;
 
     @FXML
-    private TextField achterNaamTxtField, voorNaamTxtField, straatNaamTxt, stadTxtField,postcodeTxtField, provincieTxtField,landTxtField,telefoonNummerTxtField,emailTxtField,wachtwoordTxtField,wachtwoordHerhaalTxtField;
+    private TextField emailTxtField,wachtwoordTxtField,wachtwoordHerhaalTxtField;
 
     @FXML
-    private Text wachtwoordText, wachtwoordHerhaalText, foutMeldingTxt, telText, emailTxt;
+    private Text wachtwoordText, wachtwoordHerhaalText, foutMeldingTxt, emailTxt;
     //10 digits.
 
     private User user;
@@ -43,33 +43,25 @@ public class CreatAccountController {
     private DbConnection dbConnection;
 
     public void initialize(){
-        creatAccountBtn.setOnAction(e -> creatAccount());
+        nextBtn.setOnAction(e -> creatAccount());
     }
 
     public void creatAccount(){
-        var voorNaam = voorNaamTxtField.getText();
-        var achternaam = achterNaamTxtField.getText();
-        var straatNaam = straatNaamTxt.getText();
-        var stad = stadTxtField.getText();
-        var postcode = postcodeTxtField.getText();
-        var provincie = provincieTxtField.getText();
-        var land = landTxtField.getText();
-        var tel = telefoonNummerTxtField.getText();
         var email = emailTxtField.getText();
         var wachtwoord = wachtwoordTxtField.getText();
         var harhaalWachtwoord = wachtwoordHerhaalTxtField.getText();
         var uitgeleendeGame =  new ArrayList<Game>();
 
-        if(tel.length()  != 10){
-            wachtwoordText.setFill(Color.BLACK);
-            wachtwoordHerhaalText.setFill(Color.BLACK);
-            emailTxt.setFill(Color.BLACK);
-            telText.setFill(Color.RED);
-            foutMeldingTxt.setText("fout in tel nummer");
+        userApi = new UserApi(dbConnection);
+        try {
+            userApi.checkIfUserExistWithEmail(email);
+        } catch (Exception e) {
+            foutMeldingTxt.setText("user bestaat al met dit email adres");
             foutMeldingTxt.setFill(Color.RED);
+            return;
         }
-        else if(!email.contains("@")){
-            telText.setFill(Color.BLACK);
+
+        if(!email.contains("@")){
             wachtwoordText.setFill(Color.BLACK);
             wachtwoordHerhaalText.setFill(Color.BLACK);
             emailTxt.setFill(Color.RED);
@@ -77,7 +69,6 @@ public class CreatAccountController {
             foutMeldingTxt.setFill(Color.RED);
         }
         else if(!wachtwoord.equals(harhaalWachtwoord) || wachtwoord == ""){
-            telText.setFill(Color.BLACK);
             wachtwoordText.setFill(Color.RED);
             wachtwoordHerhaalText.setFill(Color.RED);
             emailTxt.setFill(Color.BLACK);
@@ -85,14 +76,14 @@ public class CreatAccountController {
             foutMeldingTxt.setFill(Color.RED);
         }
         else{
-            user = new User(achternaam,voorNaam,tel,straatNaam,stad,postcode,provincie,land,0,email,wachtwoord,0,uitgeleendeGame);
+            user = new User("","","","","","","","",0,email,wachtwoord,0,uitgeleendeGame);
 
             try{
-                userApi.creatUser(user);
-                openWindow("main.fxml");
+                // userApi.creatUser(user);
+                openWindow("createaccountschermtweede.fxml");
             }
             catch(Exception e){
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }   
         }
     }
@@ -114,12 +105,15 @@ public class CreatAccountController {
         Parent root = loader.load();
         var controller = loader.getController();
 
+        System.out.println(controller.getClass());
         
-        if(controller.getClass() == ProjectMainController.class){
-            var projectMainController = (ProjectMainController) controller;
-            projectMainController.setDbConnection(this.dbConnection);
-            projectMainController.setUser(user);
-            var window = (Stage) creatAccountBtn.getScene().getWindow();
+        if(controller.getClass() == CreateAccountTweedeController.class){
+            System.out.println("test");
+            var createAccountTweedeController = (CreateAccountTweedeController) controller;
+            createAccountTweedeController.setDbConnection(this.dbConnection);
+            createAccountTweedeController.setUser(this.user);
+            createAccountTweedeController.setUpOnClose(stage);
+            var window = (Stage) nextBtn.getScene().getWindow();
             window.close();
         }
         else if(controller.getClass() == LoginController.class){

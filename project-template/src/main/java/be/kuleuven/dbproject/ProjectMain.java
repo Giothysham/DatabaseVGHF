@@ -37,6 +37,7 @@ public class ProjectMain extends Application {
         Scene scene = new Scene((Parent) root);
         stage.setTitle("store softwear by budo");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

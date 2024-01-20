@@ -41,15 +41,13 @@ public class PaneHolderController {
             verkoopbaarController.setUser(user);
             verkoopbaarController.setDbConnection(dbConnection);
             verkoopbaarController.setUpFilters();
-        }
-        
+        }   
         else if(childController.getClass() == UitgeleendeGameController.class){
             var uitgeleendeGameController = (UitgeleendeGameController) childController;
             uitgeleendeGameController.setUser(user);
             uitgeleendeGameController.setDbConnection(dbConnection);
             
         }
-
         else if(childController.getClass() == AdminController.class){
             var AdminController = (AdminController) childController;
             AdminController.setdbConnection(dbConnection);
@@ -57,6 +55,11 @@ public class PaneHolderController {
             AdminController.setUitgever();
             AdminController.setWinkel();
             AdminController.setUser();
+        }
+        else if(childController.getClass() == FactuurController.class){
+            var factuurController = (FactuurController) childController;
+            factuurController.setUser(user);
+            factuurController.setTable(dbConnection);
         }
 
         rootLoader.autosize();

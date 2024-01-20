@@ -84,6 +84,10 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private VerkoopbaarInterface verkoopbaar;
 
+    private VerkoopbaarInterface placeHolderProduct;
+
+    //TODO: werken met een place holder ?
+
     public void initialize(){
         checkoutList = new ArrayList<>();
 
@@ -110,6 +114,12 @@ public class VerkoopbaarController implements BuyScreenInterface{
         visualFilters = new ArrayList<VisualFilter>();  
     }
 
+    public void removeFilters(){
+        visualFilters.clear();
+        verkoopbaarApi.clearSearchQuerry();
+        scrlPaneFilters.getChildren().clear();
+    }
+
     private void removeSelectedVerkoopbaar() {
         var tempList = tblVerkoopbaar.getSelectionModel().getSelectedItems();
         
@@ -134,7 +144,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
         tblVerkoopbaar.getItems().clear();
 
         if(update){
-            verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaar();
+            verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaarVoorUser();
         }
         else{
             var autoCompleteText = autoCompleteSearch.getText();
@@ -150,7 +160,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
     }
 
     public void initTable() {
-        verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaar();
+        verkoobareLijst = (ArrayList<VerkoopbaarInterface>) verkoopbaarApi.getVerkoopbaarVoorUser();
 
         for(VerkoopbaarInterface verkoopbaar: verkoobareLijst){
             if(!autoCompleteWords.contains(verkoopbaar.getNaam())){
@@ -206,18 +216,20 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
             if(controller.getClass() == VerkoopbaarAddController.class){
                 VerkoopbaarAddController verkoopbaarAddController = (VerkoopbaarAddController) controller;
-                verkoopbaarAddController.setProduct(verkoopbaar);
+                
+                if(user.getBevoegdheid() == 1 && verkoopbaarSelected != null){
+                    verkoopbaarAddController.setProductAndUser(verkoopbaarSelected, user);
+                    verkoopbaarAddController.setUpdate(true);
+                    verkoopbaarAddController.initializeUpdate();
+                }else{
+                    //geen verkoopbaar aangemaakt dus wil niet openen;
+                    verkoopbaarAddController.setProductAndUser(placeHolderProduct, user);
+                    verkoopbaarAddController.setUpdate(false);
+                }
+
                 verkoopbaarAddController.setupDropDown(dbConnection);
                 verkoopbaarAddController.setDbConnection(dbConnection);
                 verkoopbaarAddController.setParentController(this);
-                
-                //TODO: iets beter maken verkoopbaar != null is geen goede opl
-                if(user.getBevoegdheid() == 1 && verkoopbaarSelected != null){
-                    verkoopbaarAddController.setUpdate(true);
-                    verkoopbaarAddController.initializeUpdate(verkoopbaarSelected);
-                }else{
-                    verkoopbaarAddController.setUpdate(false);
-                }
             }
             else if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
@@ -310,8 +322,8 @@ public class VerkoopbaarController implements BuyScreenInterface{
                     this.updateOrSearchTable(false);
                     addFilterToPane(type);
                 });
-            typeMenu.getItems().add(menuItem);
-        }
+                typeMenu.getItems().add(menuItem);
+            }
         }
         
 

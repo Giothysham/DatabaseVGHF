@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -32,14 +32,19 @@ public class LoginController {
     private TextField emailTxtField;
 
     @FXML
-    private Text visableWachtwoordTxt;
+    private TextField wachtwoordTxtFieldVissible;
 
     @FXML
-    private PasswordField wachtwoordTxtField;
+    private PasswordField wachtwoordTxtFieldInvissible;
+
+    @FXML
+    private HBox wachtwoordHbox;
 
     private UserApi userApi;
 
     private DbConnection dbConnection;
+
+    private String wachtwoord;
 
     private User user;
 
@@ -48,35 +53,50 @@ public class LoginController {
     public void initialize(){
         loginBtn.setOnAction(e -> checkLoginCredentials());
 
-        emailTxtField.setText("tsampanis.edmond@student.uhasselt.be");
-        wachtwoordTxtField.setText("test");
+        showPassword = false;
+
+        emailTxtField.setText("vranckx.mauro@student.uhasselt.be");
+
+        wachtwoord = "";
 
         crtAccountBtn.setOnAction(e -> {
             try {
-                changeWindow("createaccountscherm.fxml");
+                changeWindow("createaccountschermbegin.fxml");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         });
 
-        showPassword = false;
+        eyeImageView.setOnMousePressed(e -> togglePassword());
 
-        eyeImageView.setOnMousePressed(e -> togleWw());
+        wachtwoordTxtFieldInvissible = new PasswordField();
+        wachtwoordTxtFieldVissible = new TextField();
 
-        wachtwoordTxtField.setOnKeyPressed(e -> visableWachtwoordTxt.setText(wachtwoordTxtField.getText()));
+        showPassword = true;
+
+        togglePassword();
     }
 
-    private void togleWw(){
-        showPassword = !showPassword;
+    private void togglePassword(){
+        showPassword =! showPassword;
         if(showPassword){
-            visableWachtwoordTxt.setText(wachtwoordTxtField.getText());
+            wachtwoord = wachtwoordTxtFieldInvissible.getText();
+            wachtwoordHbox.getChildren().remove(wachtwoordTxtFieldInvissible);
+            wachtwoordHbox.getChildren().add(wachtwoordTxtFieldVissible);
+            wachtwoordTxtFieldVissible.setText(wachtwoord);
+            wachtwoordTxtFieldVissible.textProperty().addListener((ods, oldText, newText) -> wachtwoord = newText);
         }
-        visableWachtwoordTxt.setVisible(showPassword);
+        else{
+            wachtwoord = wachtwoordTxtFieldVissible.getText();
+            wachtwoordHbox.getChildren().remove(wachtwoordTxtFieldVissible);
+            wachtwoordHbox.getChildren().add(wachtwoordTxtFieldInvissible);
+            wachtwoordTxtFieldInvissible.setText(wachtwoord);
+            wachtwoordTxtFieldInvissible.textProperty().addListener((ods, oldText, newText) -> wachtwoord = newText);
+        }
     }
 
     private void checkLoginCredentials(){
         var email = emailTxtField.getText();
-        var wachtwoord = wachtwoordTxtField.getText();
         try {
             this.user = userApi.chekUserAndWachtwoord(email, wachtwoord);
             changeWindow("main.fxml");
@@ -95,6 +115,7 @@ public class LoginController {
         
         var stage = new Stage();
         var loader = new FXMLLoader(getClass().getClassLoader().getResource(id));
+        stage.setResizable(false);
         Parent root = loader.load();
         var controller = loader.getController();
 
@@ -104,8 +125,8 @@ public class LoginController {
             projectMainController.setDbConnection(this.dbConnection);
             projectMainController.setUser(user);
         }
-        else if(controller.getClass() == CreatAccountController.class){
-            var CreatAccountController = (CreatAccountController) controller;
+        else if(controller.getClass() == CreatAccountBeginController.class){
+            var CreatAccountController = (CreatAccountBeginController) controller;
             CreatAccountController.setDbConnection(dbConnection);
             CreatAccountController.setUpOnClose(stage);
         }

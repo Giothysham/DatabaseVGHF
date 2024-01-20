@@ -19,6 +19,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -71,7 +72,7 @@ public class User {
     @Column(name = "bevoegdheid")
     private Integer bevoegdheid;
 
-    @ManyToMany(targetEntity = Game.class, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER,targetEntity = Game.class, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "game_user",
     joinColumns = { @JoinColumn(name = "userID") }, 
     inverseJoinColumns = { @JoinColumn(name = "gameID") })
@@ -80,7 +81,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Factuur> factuur;
 
-    @Transient
+    @Column(name = "key")
     private SecretKey key;
 
     @Transient
@@ -89,10 +90,11 @@ public class User {
     @Transient
     private String algorithm;
 
-    @Transient
-    private KeyGenerator keygen;
-
     public User() {
+        if(key != null){
+            iv = new IvParameterSpec(key.getEncoded());
+            algorithm = "AES/CBC/PKCS5Padding";
+        }
     }
 
 
@@ -109,7 +111,7 @@ public class User {
         this.email = email;
 
         try {
-            keygen = KeyGenerator.getInstance("AES");
+            var keygen = KeyGenerator.getInstance("AES");
             key = keygen.generateKey();
             iv = new IvParameterSpec(key.getEncoded());
         } catch (NoSuchAlgorithmException e) {
@@ -183,14 +185,18 @@ public class User {
     }
 
     public String getWachtwoord() {
-        Cipher cipher = null;
-        try {
-            cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.DECRYPT_MODE, key, iv);
-            byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
-            return new String(wachtwoordByte);
-        } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException("wachtwoord decryptie mislukt");
+        if(key != null){
+            try {
+                var cipher = Cipher.getInstance(algorithm);
+                cipher.init(Cipher.DECRYPT_MODE, key, iv);
+                byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
+                return new String(wachtwoordByte);
+            } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
+                throw new RuntimeException("wachtwoord decryptie mislukt");
+            }
+        }
+        else{
+            return this.wachtwoord;
         }
     }
 
@@ -205,6 +211,38 @@ public class User {
         else{
             bevoegdheid = 0;
         }
+    }
+
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
+    }
+
+    public void setTelefoonnummer(String telefoonnummer) {
+        this.telefoonnummer = telefoonnummer;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public void setStad(String stad) {
+        this.stad = stad;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setProvincie(String provincie) {
+        this.provincie = provincie;
+    }
+
+    public void setLand(String land) {
+        this.land = land;
     }
 
 }

@@ -47,7 +47,7 @@ public class GameApi implements VerkoopbaarApiInterface {
         return this.searchGenre;
     }
     
-    public List<VerkoopbaarInterface> getVerkoopbaar(){
+    public List<VerkoopbaarInterface> getVerkoopbaarVoorUser(){
         var criteriaBuilder = entityManager.getCriteriaBuilder();
 
         var query = criteriaBuilder.createQuery(Game.class);
@@ -103,6 +103,12 @@ public class GameApi implements VerkoopbaarApiInterface {
             System.out.println(searchGenre.getNaam());
         }
     }
+
+    public void clearSearchQuerry(){
+        searchConsole = null;
+        searchWinkel = null;
+        searchGenre = null;
+    }
     
     public List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam){
 
@@ -131,6 +137,10 @@ public class GameApi implements VerkoopbaarApiInterface {
             System.out.println("searching for name: "+naam);
             querryFilterList.add( criteriaBuilder.equal(root.get("naam"), naam));
         }
+        
+        if(user.getBevoegdheid() == 0){
+            querryFilterList.add(criteriaBuilder.greaterThan(root.get("stock"), 0));
+        }
 
         if(user.getBevoegdheid() == 0 ){
             querryFilterList.add(criteriaBuilder.greaterThan(root.get("stock"), 0));
@@ -139,8 +149,6 @@ public class GameApi implements VerkoopbaarApiInterface {
         Predicate predicate = criteriaBuilder.and(querryFilterList.toArray(new Predicate[querryFilterList.size()]));
 
         var result = entityManager.createQuery(query.where(predicate)).getResultList();
-
-        System.out.println(result);
 
         List<VerkoopbaarInterface> verkoopbaarList = new ArrayList<>();
      
