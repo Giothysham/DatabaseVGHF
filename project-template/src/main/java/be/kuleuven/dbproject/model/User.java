@@ -5,8 +5,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-//later fixen specifieke imports
-
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -91,10 +89,7 @@ public class User {
     private String algorithm;
 
     public User() {
-        if(key != null){
-            iv = new IvParameterSpec(key.getEncoded());
-            algorithm = "AES/CBC/PKCS5Padding";
-        }
+    
     }
 
 
@@ -187,11 +182,20 @@ public class User {
     public String getWachtwoord() {
         if(key != null){
             try {
+                iv = new IvParameterSpec(key.getEncoded());  
+                System.out.println("-----------------------dezez"); 
+                algorithm = "AES/CBC/PKCS5Padding";
+                System.out.println("hier0");
                 var cipher = Cipher.getInstance(algorithm);
+                System.out.println("hier"+ iv);
                 cipher.init(Cipher.DECRYPT_MODE, key, iv);
+                System.out.println("hier2");
                 byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
+                System.out.println("hier3");
                 return new String(wachtwoordByte);
             } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
+                e.printStackTrace();
+                System.out.println("_________________________________________________");
                 throw new RuntimeException("wachtwoord decryptie mislukt");
             }
         }
