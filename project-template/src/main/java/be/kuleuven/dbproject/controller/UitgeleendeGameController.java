@@ -28,8 +28,6 @@ import java.util.List;
 
 public class UitgeleendeGameController {
 
-    //TODO: search werkt niet
-
     @FXML
     private Button searchBtn, returnBtn;
 
@@ -72,8 +70,6 @@ public class UitgeleendeGameController {
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
 
-        //name is deprecated => inittabel is meer => zien hoe optimalizeren
-        //de manieren waarop gefixt => ductape geprogrameer => is bekijke samen. 
     }
 
     private void returnGame() {
@@ -83,7 +79,6 @@ public class UitgeleendeGameController {
             var uitgeleendeGames = user.getUitgeleendeGames();
 
             for (int i = 0; i<tempList.size(); i++) {
-                //vragen of dit hard code cava is. 
                 var gameID = ((Game) tempList.get(i)).getID();
                 for(Game game: uitgeleendeGames){
                     if(gameID == game.getID()){

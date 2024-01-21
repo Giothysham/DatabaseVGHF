@@ -16,6 +16,7 @@ import be.kuleuven.dbproject.model.api.UserApi;
 import be.kuleuven.dbproject.model.api.WinkelApi;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -103,6 +104,7 @@ public class AdminController {
         tblWinkels.setOnMouseClicked(mouseEvent -> handleWinkelKlick(mouseEvent));
         tblGenre.setOnMouseClicked(mouseEvent -> handleGenreKlick(mouseEvent));
         tblUitgever.setOnMouseClicked(mouseEvent -> handleUitgeverKlick(mouseEvent));
+        tblUser.setOnMouseClicked(mouseEvent -> handleUserKlick(mouseEvent));
 
         addGenreBtn.setOnAction(e -> {
             try {
@@ -188,6 +190,17 @@ public class AdminController {
         this.setUser();
     }
 
+    private void handleUserKlick(MouseEvent event){
+        var selectedItem = tblUser.getSelectionModel().getSelectedItem();
+        if(event.getClickCount() == 2 && selectedItem != null){
+            try {
+                openNewWindow("moreinfouserscherm", selectedItem);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void handleUitgeverKlick(MouseEvent event){
         var selectedItem = tblUitgever.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selectedItem != null){
@@ -226,7 +239,7 @@ public class AdminController {
         
         var stage = new Stage();
         var loader = new FXMLLoader(getClass().getClassLoader().getResource(resourceName));
-        var root = (GridPane) loader.load();
+        var root = loader.load();
         var childController = loader.getController();
 
         
@@ -261,8 +274,15 @@ public class AdminController {
                 uitgeverAddScherm.setUitgever(uitgever.getUitgeverID());
             }
         }
+        else if(childController.getClass() == MoreInfoUserController.class){
+            var moreInfoUserController = (MoreInfoUserController) childController;
+            if(variable != null && variable.getClass() == User.class){
+                var user = (User) variable;
+                moreInfoUserController.setUpClass(dbConnection, user);
+            }
+        }
 
-        var scene = new Scene(root);
+        var scene = new Scene((Parent) root);
         stage.setScene(scene);
         stage.setTitle("budo/"+ resourceName);
         stage.initOwner(ProjectMain.getRootStage());
