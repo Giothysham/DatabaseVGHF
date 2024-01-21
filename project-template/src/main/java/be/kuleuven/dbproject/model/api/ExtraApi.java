@@ -100,7 +100,7 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         entityManager.getTransaction().commit();
     }
 
-    public void deleteVerkoopbaar (List<VerkoopbaarInterface> extras){ //try rond gooien om mislopende transactie te rollbacken4
+    public void deleteVerkoopbaar (List<VerkoopbaarInterface> extras){
         try{ 
             if(extras.size() > 0){
                 entityManager.getTransaction().begin();
@@ -178,5 +178,44 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         else if(filterValue.getClass() == Uitgever.class){
             searchUitgever = null;
         }
+    }
+
+    public boolean gebruiktUitgever(Uitgever uitgever){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Extra.class);
+        var root = query.from(Extra.class);
+
+        query.where(criteriaBuilder.equal(root.get("uitgever"), uitgever));
+        var result = entityManager.createQuery(query).getResultList();
+
+        if(result.isEmpty()){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public boolean gebruiktWinkel(Winkel winkel) {
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Extra.class);
+        var root = query.from(Extra.class);
+
+        query.where(criteriaBuilder.equal(root.get("winkel"), winkel));
+        var result = entityManager.createQuery(query).getResultList();
+
+        if(result.isEmpty()){
+            return false;
+        } else{
+            return true;
+        }
+        
+    }
+
+    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(verkoopbaar);
+        entityManager.getTransaction().commit();
     }
 }

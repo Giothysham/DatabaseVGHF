@@ -86,7 +86,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private VerkoopbaarInterface verkoopbaar;
 
-    private VerkoopbaarInterface placeHolderProduct;
+    private VerkoopbaarInterface placeHolderProduct; //TODO: vervangen door verkoopbaar bij verkoopbaaraddcontroller, mag weg?
 
     //TODO: werken met een place holder ?
 
@@ -225,7 +225,7 @@ public class VerkoopbaarController implements BuyScreenInterface{
                     verkoopbaarAddController.initializeUpdate();
                 }else{
                     //geen verkoopbaar aangemaakt dus wil niet openen;
-                    verkoopbaarAddController.setProductAndUser(placeHolderProduct, user);
+                    verkoopbaarAddController.setProductAndUser(verkoopbaar, user);
                     verkoopbaarAddController.setUpdate(false);
                 }
 
@@ -235,7 +235,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
             }
             else if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
-                verkoopbaarMoreInfoController.setdbConnection(dbConnection);
                 verkoopbaarMoreInfoController.setVerkoopbaar(verkoopbaarSelected);
             }
             else if(controller.getClass() == VerkoopbaarBuySchermController.class){

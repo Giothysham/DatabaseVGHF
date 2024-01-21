@@ -180,7 +180,7 @@ public class GameApi implements VerkoopbaarApiInterface {
         entityManager.getTransaction().commit();
     }
 
-    public void deleteVerkoopbaar(List<VerkoopbaarInterface> games){ //try rond gooien om mislopende transactie te rollbacken4
+    public void deleteVerkoopbaar(List<VerkoopbaarInterface> games){
         try{ 
             if(games.size() > 0){
                 entityManager.getTransaction().begin();
@@ -210,5 +210,60 @@ public class GameApi implements VerkoopbaarApiInterface {
         else if(filterValue.getClass() == Uitgever.class){
             searchUitgever = null;
         }
+    }
+
+    public boolean gebruiktUitgever(Uitgever uitgever){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game.class);
+        var root = query.from(Game.class);
+
+        query.where(criteriaBuilder.equal(root.get("uitgever"), uitgever));
+        var result = entityManager.createQuery(query).getResultList();
+
+        if(result.isEmpty()){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public boolean gebruiktWinkel(Winkel winkel) {
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game.class);
+        var root = query.from(Game.class);
+
+        query.where(criteriaBuilder.equal(root.get("winkel"), winkel));
+        var result = entityManager.createQuery(query).getResultList();
+
+        if(result.isEmpty()){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public boolean gebruiktGenre(Genre genre){
+        var criteriaBuilder = sessionFactory.getCriteriaBuilder();
+
+        var query = criteriaBuilder.createQuery(Game.class);
+        var root = query.from(Game.class);
+
+        query.where(criteriaBuilder.equal(root.get("genre"), genre));
+        var result = entityManager.createQuery(query).getResultList();
+
+        if(result.isEmpty()){
+            return false;
+        } else{
+            return true;
+        } 
+
+    }
+
+    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(verkoopbaar);
+        entityManager.getTransaction().commit();
     }
 }

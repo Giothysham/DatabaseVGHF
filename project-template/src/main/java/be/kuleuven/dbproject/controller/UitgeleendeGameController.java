@@ -55,8 +55,6 @@ public class UitgeleendeGameController {
 
     private List<Game> listgames;
 
-    private DbConnection dbConnection;
-
     private UserApi userApi;
 
     private User user;
@@ -150,7 +148,6 @@ public class UitgeleendeGameController {
 
             if(controller.getClass() == VerkoopbaarMoreInfoController.class){
                 VerkoopbaarMoreInfoController verkoopbaarMoreInfoController = (VerkoopbaarMoreInfoController) controller;
-                verkoopbaarMoreInfoController.setdbConnection(dbConnection);
                 verkoopbaarMoreInfoController.setVerkoopbaar(gameSelected);
             }
 
@@ -167,7 +164,6 @@ public class UitgeleendeGameController {
     }
 
     public void setDbConnection(DbConnection dbConnection){
-        this.dbConnection = dbConnection;
         userApi = new UserApi(dbConnection);
     }
 

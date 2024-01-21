@@ -2,14 +2,14 @@ package be.kuleuven.dbproject.controller;
 
 import java.io.IOException;
 
-import javax.persistence.EntityManager;
-
 import be.kuleuven.dbproject.ProjectMain;
 import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
+import be.kuleuven.dbproject.model.api.ExtraApi;
+import be.kuleuven.dbproject.model.api.GameApi;
 import be.kuleuven.dbproject.model.api.GenreApi;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
 import be.kuleuven.dbproject.model.api.UserApi;
@@ -17,9 +17,11 @@ import be.kuleuven.dbproject.model.api.WinkelApi;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -30,8 +32,6 @@ public class AdminController {
     
     @FXML
     private Button addWinkelBtn ,removeUitgeverBtn ,removeWinkelBtn ,removeGenreBtn , addGenreBtn, addUitgeverBtn, maakAdminBtn, removeAdmingBtn;
-
-    //Todo: zorg dat als je genre of ander verwijderd dat het dan niet crashed
 
     @FXML
     private TableView<Winkel> tblWinkels;
@@ -71,7 +71,17 @@ public class AdminController {
 
     private DbConnection dbConnection;
 
-    private EntityManager entityManager;
+    private UitgeverApi uitgeverApi;
+
+    private ExtraApi extraApi;
+
+    private GameApi gameApi;
+
+    private WinkelApi WinkelApi;
+
+    private GenreApi genreApi;
+
+    private UserApi userApi;
 
     public void initialize(){
         idColumnWinkel.setCellValueFactory(new PropertyValueFactory<Winkel, Integer>("winkelID"));
@@ -120,14 +130,45 @@ public class AdminController {
 
         maakAdminBtn.setOnAction(e -> switchAdmin(true));
 
-        //fix
-        //als een van de bedrijven ofzo wordt verwijderd dan ook games van deze verwijderen => implementeren. 
-        //zorg dat als ze op verwijderen klikken dat ze een ben je zker pop up krijgen. 
-        removeUitgeverBtn.setOnAction(e -> deleteSelectedUitgever());
+        removeUitgeverBtn.setOnAction(e -> {
+            var uitgever  = tblUitgever.getSelectionModel().getSelectedItem();
+            
+            if(!extraApi.gebruiktUitgever(uitgever) && !gameApi.gebruiktUitgever(uitgever)){
+                uitgeverApi.deleteSelectedUitgever(uitgever);
+                this.setUitgever();
+            } else{
+                Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("Uitgever is in gebruikt");
+                a.show();
+            }
+        });
 
-        removeWinkelBtn.setOnAction(e -> deleteSelectedWinkel());
+        removeWinkelBtn.setOnAction(e ->{
+            var winkel = tblWinkels.getSelectionModel().getSelectedItem();
+            
+            if(!extraApi.gebruiktWinkel(winkel) && !gameApi.gebruiktWinkel(winkel)){
+                WinkelApi.deleteSelectedWinkel(winkel);
+                this.setWinkel();
+            } else{
+                Alert a = new Alert(AlertType.ERROR);
+                a.setContentText("Winkel is in gebruikt");
+                a.show();
+            }
+        });
 
-        removeGenreBtn.setOnAction(e -> deleteSelectedGenre());
+        removeGenreBtn.setOnAction(e -> {
+        
+        var genre = tblGenre.getSelectionModel().getSelectedItem();
+            
+        if(!gameApi.gebruiktGenre(genre)){
+            genreApi.deleteSelectedGenre(genre);
+            this.setGenre();
+        } else{
+            Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Genre is in gebruikt");
+            a.show();
+        }
+    });
 
         removeAdmingBtn.setOnAction(e -> switchAdmin(false));
     }
@@ -142,41 +183,14 @@ public class AdminController {
             user.setBevoegdheid(admin);
         }
 
-        entityManager.getTransaction().begin();
-        entityManager.merge(user);
-        entityManager.getTransaction().commit();
+        userApi.updateUser(user);
 
         this.setUser();
-    }
-
-    private void deleteSelectedUitgever(){
-        Uitgever uitgever  = tblUitgever.getSelectionModel().getSelectedItem();
-        entityManager.getTransaction().begin();
-        entityManager.remove(uitgever);
-        entityManager.getTransaction().commit();
-        this.setUitgever();
-    }
-
-    private void deleteSelectedWinkel(){
-        var winkel = tblWinkels.getSelectionModel().getSelectedItem();
-        entityManager.getTransaction().begin();
-        entityManager.remove(winkel);
-        entityManager.getTransaction().commit();
-        this.setWinkel();
-    }
-
-    private void deleteSelectedGenre(){
-        var genre = tblGenre.getSelectionModel().getSelectedItem();
-        entityManager.getTransaction().begin();
-        entityManager.remove(genre);
-        entityManager.getTransaction().commit();
-        this.setGenre();
     }
 
     private void handleUitgeverKlick(MouseEvent event){
         var selectedItem = tblUitgever.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selectedItem != null){
-            //System.out.println("uitgeverklick: " + tblUitgever.getSelectionModel().getSelectedItem().getNaam());
             try {
                 openNewWindow("uitgeveraddscherm", selectedItem);
             } catch (IOException e) {
@@ -188,7 +202,6 @@ public class AdminController {
     private void handleGenreKlick(MouseEvent event) {
         var selectedItem = tblGenre.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selectedItem != null){
-            //System.out.println("genreKlick : " + tblGenre.getSelectionModel().getSelectedItem().getNaam());
             try {
                 openNewWindow("genreaddscherm", selectedItem);
             } catch (IOException e) {
@@ -200,7 +213,6 @@ public class AdminController {
     private void handleWinkelKlick(MouseEvent event) {
         var selected = tblWinkels.getSelectionModel().getSelectedItem();
         if(event.getClickCount() == 2 && selected != null){
-            //System.out.println("winkelklick: " + tblWinkels.getSelectionModel().getSelectedItem().getWinkelID());
             try {
                 openNewWindow("winkeladdscherm", selected);
             } catch (IOException e) {
@@ -239,8 +251,8 @@ public class AdminController {
                 winkelAddController.setWinkel(winkel.getWinkelID());
             }
         }
-        else if(childController.getClass() == UitgeverAddScherm.class){
-            var uitgeverAddScherm = (UitgeverAddScherm) childController;
+        else if(childController.getClass() == UitgeverAddController.class){
+            var uitgeverAddScherm = (UitgeverAddController) childController;
             uitgeverAddScherm.setDbConnection(dbConnection); 
             uitgeverAddScherm.setParentController(this);
 
@@ -296,6 +308,11 @@ public class AdminController {
 
     public void setdbConnection(DbConnection dbConnection){
         this.dbConnection = dbConnection;
-        this.entityManager = dbConnection.getEntityManager();
+        uitgeverApi = new UitgeverApi(dbConnection);
+        extraApi = new ExtraApi(dbConnection, null);
+        gameApi = new GameApi(dbConnection, null);
+        WinkelApi = new WinkelApi(dbConnection);
+        genreApi = new GenreApi(dbConnection);
+        userApi = new UserApi(dbConnection);
     }
 }

@@ -46,4 +46,10 @@ public class WinkelApi {
         entityManager.persist(winkel);
         entityManager.getTransaction().commit();
     }
+
+    public void deleteSelectedWinkel(Winkel winkel){
+        entityManager.getTransaction().begin();
+        entityManager.remove(winkel);
+        entityManager.getTransaction().commit();
+    }
 }

@@ -6,42 +6,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane style="-fx-padding: 0 5 10 5;" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarAddController">
-    <children>
-        <Label text="stock:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="aantalStock" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        
-        <Label text="aantal uitegeleend:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="aantalUitgeleend" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        
-        <Label text="console:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <ComboBox fx:id="consoleDropDown" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+<AnchorPane fx:id="parentAnchorPane" style="-fx-padding: 10 5 5 5;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.VerkoopbaarAddController">
+    <VBox alignment="center" spacing="10" style="-fx-padding: 10 5 0 5;">
+        <HBox spacing="5">
+            <Label text="stock:"/>
+            <TextField fx:id="aantalStock" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+        </HBox>
 
-        <Label text="winkel:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <ComboBox fx:id="winkelDropDown" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <HBox spacing="5">
+            <Label text="aantal uitegeleend:"/>
+            <TextField fx:id="aantalUitgeleend" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+        </HBox>
 
-        <Label text="genre:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-        <ComboBox fx:id="genreIDDropDown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <HBox spacing="5" fx:id="consoleHbox">
+            <Label text="console:"/>
+            <ComboBox fx:id="consoleDropDown"/>
+        </HBox>
 
-        <Label text="uitgever:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <ComboBox fx:id="uitgeverIDDropDown" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <HBox spacing="5">
+            <Label text="winkel:"/>
+            <ComboBox fx:id="winkelDropDown"/>
+        </HBox>
 
-        <Label text="kostPrijs:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-        <TextField fx:id="kostPijs"  GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <HBox spacing="5" fx:id="genreHbox">
+            <Label text="genre:"/>
+            <ComboBox fx:id="genreIDDropDown"/>
+        </HBox>
 
-        <Label text="naam:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-        <TextField fx:id="naam"  GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <HBox spacing="5" fx:id="typeHbox">
+            <Label text="type:" />
+            <ComboBox fx:id="typeDropDown"/>
+        </HBox>
 
-        <Label text="type:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-        <ComboBox fx:id="typeDropDown" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <HBox spacing="5">
+            <Label text="uitgever:"/>
+            <ComboBox fx:id="uitgeverIDDropDown"/>
+        </HBox>
 
-        <Label text="beschrijving:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-        <TextArea fx:id="beschrijving"  GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <HBox spacing="5">
+            <Label text="kostPrijs:"/>
+            <TextField fx:id="kostPijs" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+        </HBox>
 
-        <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="10">
+        <HBox spacing="5">
+            <Label text="naam:"/>
+            <TextField fx:id="naam" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Label text="beschrijving:" />
+            <TextArea fx:id="beschrijving" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <HBox alignment="CENTER">
             <Button fx:id="viewVerkoopbaarPageBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="view verkoopvaar page" />
             <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
             <Button fx:id="submitVerkoopbaarBtn" style="-fx-background-color: #4f46e5; -fx-text-fill: white;" text="submit verkoopbaar"/>
         </HBox>
-    </children>
-</GridPane>
+    </VBox>
+</AnchorPane>

@@ -39,15 +39,25 @@ public class WinkelAddController {
             winkel.setPostcode(postcode);
             winkel.setProvincie(provincie);
             winkel.setLand(land);
+
+            parentController.setWinkel();
+
+            var stage = (Stage) stadTxt.getScene().getWindow();
+            stage.close();
         }
         else{
-            var winkel = new Winkel(0,0,winkelStraatNaam,stad, postcode,provincie,land); 
-            winkelApi.postWinkel(winkel);
-        }
-        parentController.setWinkel();
+            if(winkelStraatNaam != "" && stad != "" && stad != "" && postcode != "" && provincie != "" && land != ""){
+                System.out.println("-----------------------------------------------------------------");
+                var winkel = new Winkel(0,0,winkelStraatNaam,stad, postcode,provincie,land); 
+                winkelApi.postWinkel(winkel);
 
-        var stage = (Stage) stadTxt.getScene().getWindow();
-        stage.close();
+                parentController.setWinkel();
+
+                var stage = (Stage) stadTxt.getScene().getWindow();
+                stage.close();
+            }
+        }
+        
     }
 
     public void setWinkel(Integer id){

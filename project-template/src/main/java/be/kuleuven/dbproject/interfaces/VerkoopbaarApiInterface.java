@@ -24,5 +24,11 @@ public interface VerkoopbaarApiInterface {
     List<VerkoopbaarInterface> searchVerkoopbaarByFilters(String naam);
 
     VerkoopbaarInterface getVerkoopbaarById(String ID) throws Exception;
+
+    boolean gebruiktUitgever(Uitgever uitgever);
+
+    boolean gebruiktWinkel(Winkel winkel);
+
+    void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar);
     
 }

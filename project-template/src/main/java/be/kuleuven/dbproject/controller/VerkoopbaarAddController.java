@@ -4,6 +4,7 @@ package be.kuleuven.dbproject.controller;
 import java.util.List;
 
 import be.kuleuven.dbproject.ProjectMain;
+import be.kuleuven.dbproject.interfaces.VerkoopbaarApiInterface;
 import be.kuleuven.dbproject.interfaces.VerkoopbaarInterface;
 import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Game;
@@ -51,7 +52,7 @@ public class VerkoopbaarAddController {
     private ComboBox<Type> typeDropDown;
     
     @FXML
-    private ComboBox<String> winkelDropDown, uitgeverIDDropDown, genreIDDropDown; //Todo: genre weg halen (wrm?)
+    private ComboBox<String> winkelDropDown, uitgeverIDDropDown, genreIDDropDown;
 
     @FXML
     private TextField aantalStock, aantalUitgeleend, naam, kostPijs; 
@@ -79,6 +80,8 @@ public class VerkoopbaarAddController {
     private List<Genre> genres;
 
     private User user;
+
+    private VerkoopbaarApiInterface verkoopbaarApi;
 
     public void initialize(){        
         submitVerkoopbaarBtn.setOnAction(e -> {
@@ -115,7 +118,6 @@ public class VerkoopbaarAddController {
             var root = loader.load();
 
             var controller = (VerkoopbaarMoreInfoController) loader.getController();
-            controller.setdbConnection(dbConnection);
             controller.setVerkoopbaar(verkoopbaar);
 
             var scene = new Scene((Parent) root);
@@ -172,6 +174,7 @@ public class VerkoopbaarAddController {
             typeDropDown.setItems(listInstance); 
             genreHbox.getChildren().clear();
             consoleHbox.getChildren().clear();
+            beschrijving.setDisable(true);
             parentAnchorPane.getChildren().remove(genreHbox);
             parentAnchorPane.getChildren().remove(consoleHbox);
         }
@@ -202,8 +205,22 @@ public class VerkoopbaarAddController {
 
     private void updateVerkoopbaar(){
         try{
-            var entityManager = dbConnection.getEntityManager();
-            entityManager.getTransaction().begin();
+            verkoopbaar.setStock(Integer.parseInt(this.aantalStock.getText()));
+
+            var uitgeverName = (String) uitgeverIDDropDown.getValue();
+            var uitgeverApi = new UitgeverApi(dbConnection);
+            verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
+
+            if(Double.parseDouble(this.kostPijs.getText()) < 0){
+                throw new Exception("Ongeldige kostprijs");
+            }else if(naam.getText() == ""){
+                throw new Exception("Ongeldige naam");
+            }
+
+            verkoopbaar.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
+
+            verkoopbaar.setNaam(this.naam.getText());
+
             if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
                 ((Game)verkoopbaar).setBeschrijving(this.beschrijving.getText()); 
                 ((Game)verkoopbaar).setConsole((Console) consoleDropDown.getValue());
@@ -214,16 +231,10 @@ public class VerkoopbaarAddController {
             } 
             else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
                 ((Extra)verkoopbaar).setType((Type) typeDropDown.getValue());
-                verkoopbaar.setKostPrijs(Double.parseDouble(this.kostPijs.getText()));
-                verkoopbaar.setNaam(this.naam.getText());
-                verkoopbaar.setStock(Integer.parseInt(this.aantalStock.getText()));
-                
-                var uitgeverName = (String) uitgeverIDDropDown.getValue();
-                var uitgeverApi = new UitgeverApi(dbConnection);
-                verkoopbaar.setUitgever(((Uitgever) uitgeverApi.getUitgeverByName(uitgeverName)));
-                
-                entityManager.getTransaction().commit();
             }
+            
+            verkoopbaarApi.updateVerkoopbaar(verkoopbaar);
+
         }catch(Exception e){
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText(e.getMessage());
@@ -246,37 +257,43 @@ public class VerkoopbaarAddController {
     }
 
     private void submitVerkoopbaar(){
+        try{
+            var aantalStock = Integer.parseInt(this.aantalStock.getText());
+            var kostPrijs = Double.parseDouble(this.kostPijs.getText());
+            var naam = this.naam.getText();
+            var beschrijving = this.beschrijving.getText();
+            Winkel winkel = null;
+            Uitgever uitgever = null;
+            String nameWinkel = (String) winkelDropDown.getValue();
+            String nameUitgever = (String) uitgeverIDDropDown.getValue();
 
-        var aantalStock = Integer.parseInt(this.aantalStock.getText());
-        var kostPrijs = Double.parseDouble(this.kostPijs.getText());
-        var naam = this.naam.getText();
-        var beschrijving = this.beschrijving.getText();
-        Winkel winkel = null;
-        Uitgever uitgever = null;
-        String nameWinkel = (String) winkelDropDown.getValue();
-        String nameUitgever = (String) uitgeverIDDropDown.getValue(); 
-        for (Winkel testwinkel : winkels) {
-            if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
-                winkel = testwinkel;
-                break;
+            if(kostPrijs < 0){
+                throw new Exception("Ongeldige kostprijs");
+            } else if(naam == ""){
+                throw new Exception("Ongeldige naam");
             }
-        } 
 
-        for(Uitgever testuitgever: uitgevers){
-            if(nameUitgever.contains(testuitgever.getNaam())){
-                uitgever = testuitgever;
-                break;
+            for (Winkel testwinkel : winkels) {
+                if(nameWinkel.contains(testwinkel.getFullAdressWithID())){
+                    winkel = testwinkel;
+                    break;
+                }
+            } 
+
+            for(Uitgever testuitgever: uitgevers){
+                if(nameUitgever.contains(testuitgever.getNaam())){
+                    uitgever = testuitgever;
+                    break;
+                }
             }
-        }
 
-        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
-            Console console = (Console) consoleDropDown.getValue();
-            var genreNaam = (String) genreIDDropDown.getValue();
-            var genreApi = new GenreApi(dbConnection);
-            var genre = genreApi.getGenreByName(genreNaam);
-            tempVerkoopbaar = new Game(aantalStock, 0, console, 0,winkel, kostPrijs, genre, naam, beschrijving, uitgever);
+            if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+                Console console = (Console) consoleDropDown.getValue();
+                var genreNaam = (String) genreIDDropDown.getValue();
+                var genreApi = new GenreApi(dbConnection);
+                var genre = genreApi.getGenreByName(genreNaam);
+                tempVerkoopbaar = new Game(aantalStock, 0, console, 0,winkel, kostPrijs, genre, naam, beschrijving, uitgever);
 
-            try {
                 var verkoopbaarApi = new GameApi(dbConnection, this.user);
 
                 verkoopbaarApi.postVerkoopbaar(tempVerkoopbaar);
@@ -285,18 +302,13 @@ public class VerkoopbaarAddController {
 
                 var stage = (Stage) submitVerkoopbaarBtn.getScene().getWindow();
                 stage.close();
-            } 
-            catch (Exception e) {
-                System.out.println("er is iet misgegaan met de game "+naam);
-                System.out.println(e);
-            }
-        } 
-        
-        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
-            Type type = (Type) typeDropDown.getValue();
-            var tempVerkoopbaar= new Extra(aantalStock, 0, 0, winkel, uitgever, kostPrijs, type, naam);
 
-            try {
+            } 
+            
+            else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+                Type type = (Type) typeDropDown.getValue();
+                var tempVerkoopbaar= new Extra(aantalStock, 0, 0, winkel, uitgever, kostPrijs, type, naam);
+                    
                 var verkoopbaarApi = new ExtraApi(dbConnection, user);
 
                 verkoopbaarApi.postVerkoopbaar(tempVerkoopbaar);
@@ -305,11 +317,12 @@ public class VerkoopbaarAddController {
 
                 var stage = (Stage) submitVerkoopbaarBtn.getScene().getWindow();
                 stage.close();
-            } 
-            catch (Exception e) {
-                System.out.println("er is iet misgegaan met de extra "+naam);
-                System.out.println(e);
             }
+        }catch(Exception e){
+            Alert a = new Alert(AlertType.ERROR);
+            a.setContentText(e.getMessage());
+            a.show();
+            e.printStackTrace();
         }
         //logica voor te zien of iets null is of niet 
         System.out.println("geen verkoopbaar geselecteerd");
@@ -321,6 +334,12 @@ public class VerkoopbaarAddController {
 
     public void setDbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
+        if(verkoopbaar.getClass().isAssignableFrom(Game.class)){
+            verkoopbaarApi = new GameApi(dbConnection, user);
+        }
+        else if(verkoopbaar.getClass().isAssignableFrom(Extra.class)){
+            verkoopbaarApi = new ExtraApi(dbConnection, user);
+        }
     }
     
     public void setUpdate(boolean update){

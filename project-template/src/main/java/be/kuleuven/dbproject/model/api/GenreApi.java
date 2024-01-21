@@ -53,4 +53,10 @@ public class GenreApi {
         entityManager.persist(genre);
         entityManager.getTransaction().commit();
     }
+
+    public void deleteSelectedGenre(Genre genre){
+        entityManager.getTransaction().begin();
+        entityManager.remove(genre);
+        entityManager.getTransaction().commit();
+    }
 }

@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class UitgeverAddScherm {
+public class UitgeverAddController {
 
     private UitgeverApi uitgeverApi;
 
@@ -37,15 +37,24 @@ public class UitgeverAddScherm {
         if(uitgever != null){
             uitgever.setBeschrijving(beschrijving);
             uitgever.setNaam(name);
+
+            parentController.setUitgever();
+
+            var stage = (Stage) naamTxt.getScene().getWindow();
+            stage.close();
         }
         else{
-            var uitgever = new Uitgever(name, beschrijving, 0);
-            uitgeverApi.postUitgever(uitgever);
-        }
-        parentController.setUitgever();
+            if(name != "" && beschrijving != ""){
+                var uitgever = new Uitgever(name, beschrijving, 0);
+                uitgeverApi.postUitgever(uitgever);
 
-        var stage = (Stage) naamTxt.getScene().getWindow();
-        stage.close();
+                parentController.setUitgever();
+
+                var stage = (Stage) naamTxt.getScene().getWindow();
+                stage.close();
+            }
+        }
+        
         
     }
 

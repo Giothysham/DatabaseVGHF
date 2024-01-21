@@ -130,7 +130,7 @@ public class VerkoopbaarBuySchermController {
             }
         }
 
-        amountTxt.setText( " "+price + "$");
+        amountTxt.setText( " "+ String.format("%.2f",price) + "$");
     }
 
     public void buyVerkoopbaar(List<VerkoopbaarInterface> wantToRentList, User user){

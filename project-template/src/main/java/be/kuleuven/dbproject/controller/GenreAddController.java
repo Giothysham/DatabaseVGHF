@@ -42,17 +42,26 @@ public class GenreAddController {
         if(genre != null){
             genre.setNaam(name);
             genre.setBeschrijving(beschrijving);
+
+            parentController.setGenre();
+
+            var stage = (Stage) naamTxt.getScene().getWindow();
+            stage.close();
         }
         else{
-            Genre genre = new Genre(name, beschrijving);
+            if(name != "" && beschrijving != ""){
+                Genre genre = new Genre(name, beschrijving);
 
-            var genreApi = new GenreApi(dbConnection);
-            genreApi.postGenre(genre);
+                var genreApi = new GenreApi(dbConnection);
+                genreApi.postGenre(genre);
+
+                parentController.setGenre();
+
+                var stage = (Stage) naamTxt.getScene().getWindow();
+                stage.close();
+            }
         }
-        parentController.setGenre();
-
-        var stage = (Stage) naamTxt.getScene().getWindow();
-        stage.close();
+        
     }
     
     public void setDbConnection(DbConnection dbConnection){
