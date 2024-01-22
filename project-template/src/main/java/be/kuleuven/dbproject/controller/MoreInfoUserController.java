@@ -1,7 +1,4 @@
 package be.kuleuven.dbproject.controller;
-
-import org.hibernate.mapping.Table;
-
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
 import be.kuleuven.dbproject.model.api.DbConnection;
@@ -28,8 +25,6 @@ public class MoreInfoUserController {
 
     private DbConnection dbConnection;
 
-    private User user;
-
     public void initialize() {
         naamColumn.setCellValueFactory(new PropertyValueFactory<Game,String>("naam"));
         consoleColumn.setCellValueFactory(new PropertyValueFactory<Game,Console>("console"));
@@ -37,7 +32,6 @@ public class MoreInfoUserController {
 
     public void setUpClass(DbConnection dbConnection,User user){
         dbConnection = this.dbConnection;
-        this.user = user;
 
         tellText.setText(user.getTelefoonnummer());
         nameText.setText(user.getVoornaam() + " "+ user.getAchternaam());
