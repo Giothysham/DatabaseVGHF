@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.jvnet.fastinfoset.EncodingAlgorithmException;
+
 import be.kuleuven.dbproject.model.Genre;
 
 public class GenreApi {
@@ -48,15 +50,27 @@ public class GenreApi {
 
     }
 
-    public void postGenre(Genre genre){
+    public void postGenre(Genre genre) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.persist(genre);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(genre);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("genre kan niet aangemaakt worden");
+        }
     }
 
-    public void deleteSelectedGenre(Genre genre){
+    public void deleteSelectedGenre(Genre genre) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.remove(genre);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.remove(genre);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("genre kan niet verwijderd worden");
+        }
     }
 }

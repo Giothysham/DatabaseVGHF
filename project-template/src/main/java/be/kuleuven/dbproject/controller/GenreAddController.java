@@ -4,6 +4,7 @@ import be.kuleuven.dbproject.model.Genre;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.GenreApi;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -53,12 +54,21 @@ public class GenreAddController {
                 Genre genre = new Genre(name, beschrijving);
 
                 var genreApi = new GenreApi(dbConnection);
-                genreApi.postGenre(genre);
+                try{
+                    genreApi.postGenre(genre);
 
-                parentController.setGenre();
+                    parentController.setGenre();
 
-                var stage = (Stage) naamTxt.getScene().getWindow();
-                stage.close();
+                    var stage = (Stage) naamTxt.getScene().getWindow();
+                    stage.close();
+                }
+                catch(Exception e){
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setTitle("store error");
+                    a.setHeaderText("Error");
+                    a.setContentText("genre can niet geupdate worden");
+                    a.show();
+                }
             }
         }
         

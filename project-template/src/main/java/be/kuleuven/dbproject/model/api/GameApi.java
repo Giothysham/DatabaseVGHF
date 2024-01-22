@@ -174,10 +174,17 @@ public class GameApi implements VerkoopbaarApiInterface {
         return verkoopbaarList;
     }
     
-    public void postVerkoopbaar(VerkoopbaarInterface game){
+    public void postVerkoopbaar(VerkoopbaarInterface game) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.persist(game);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(game);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("game kan niet aangemaakt worden");
+        }
+        
     }
 
     public void deleteVerkoopbaar(List<VerkoopbaarInterface> games){
@@ -261,9 +268,15 @@ public class GameApi implements VerkoopbaarApiInterface {
 
     }
 
-    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) {
+    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) throws Exception {
         entityManager.getTransaction().begin();
-        entityManager.merge(verkoopbaar);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.merge(verkoopbaar);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("game kan niet aangepast worden");
+        }
     }
 }

@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javafx.scene.control.Alert.AlertType;
 
 import be.kuleuven.dbproject.model.Winkel;
+import javafx.scene.control.Alert;
 
 public class WinkelApi {
     
@@ -41,15 +43,27 @@ public class WinkelApi {
         return result.get(0);
     }
 
-    public void postWinkel(Winkel winkel){
+    public void postWinkel(Winkel winkel) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.persist(winkel);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(winkel);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("winkel could not be created");
+        }
     }
 
-    public void deleteSelectedWinkel(Winkel winkel){
+    public void deleteSelectedWinkel(Winkel winkel) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.remove(winkel);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.remove(winkel);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("winkel could not be deleted");
+        }
     }
 }

@@ -29,6 +29,6 @@ public interface VerkoopbaarApiInterface {
 
     boolean gebruiktWinkel(Winkel winkel);
 
-    void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar);
+    void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) throws Exception;
     
 }

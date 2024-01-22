@@ -25,7 +25,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -136,11 +135,17 @@ public class AdminController {
             var uitgever  = tblUitgever.getSelectionModel().getSelectedItem();
             
             if(!extraApi.gebruiktUitgever(uitgever) && !gameApi.gebruiktUitgever(uitgever)){
-                uitgeverApi.deleteSelectedUitgever(uitgever);
-                this.setUitgever();
+                try{
+                    uitgeverApi.deleteSelectedUitgever(uitgever);
+                    this.setUitgever();
+                } catch (Exception f){
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setContentText("Uitgever kan niet verwijderd worden");
+                    a.show();
+                }
             } else{
                 Alert a = new Alert(AlertType.ERROR);
-                a.setContentText("Uitgever is in gebruikt");
+                a.setContentText("Uitgever is in gebruik");
                 a.show();
             }
         });
@@ -149,8 +154,15 @@ public class AdminController {
             var winkel = tblWinkels.getSelectionModel().getSelectedItem();
             
             if(!extraApi.gebruiktWinkel(winkel) && !gameApi.gebruiktWinkel(winkel)){
-                WinkelApi.deleteSelectedWinkel(winkel);
-                this.setWinkel();
+                try{
+                    WinkelApi.deleteSelectedWinkel(winkel);
+                    this.setWinkel();
+                }
+                catch(Exception f){
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setContentText("Winkel kan niet verwijderd worden");
+                    a.show();
+                }
             } else{
                 Alert a = new Alert(AlertType.ERROR);
                 a.setContentText("Winkel is in gebruikt");
@@ -163,8 +175,16 @@ public class AdminController {
         var genre = tblGenre.getSelectionModel().getSelectedItem();
             
         if(!gameApi.gebruiktGenre(genre)){
-            genreApi.deleteSelectedGenre(genre);
-            this.setGenre();
+            try{
+                genreApi.deleteSelectedGenre(genre);
+                this.setGenre();
+            }
+            catch(Exception f){
+                Alert a = new Alert(AlertType.ERROR);
+                a.setHeaderText("store error");
+                a.setContentText("Genre kan niet verwijderd worden");
+                a.show();
+            }
         } else{
             Alert a = new Alert(AlertType.ERROR);
             a.setContentText("Genre is in gebruikt");
@@ -185,7 +205,13 @@ public class AdminController {
             user.setBevoegdheid(admin);
         }
 
-        userApi.updateUser(user);
+        try {
+            userApi.updateUser(user);
+        } catch (Exception e){
+            Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("User could not be updated");
+            a.show();
+        }
 
         this.setUser();
     }

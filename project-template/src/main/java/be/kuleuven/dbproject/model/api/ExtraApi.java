@@ -94,10 +94,16 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         }
     }
     
-    public void postVerkoopbaar(VerkoopbaarInterface extra){
+    public void postVerkoopbaar(VerkoopbaarInterface extra) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.persist(extra);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(extra);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("kan extra niet aanmaken");
+        }
     }
 
     public void deleteVerkoopbaar (List<VerkoopbaarInterface> extras){
@@ -213,9 +219,15 @@ public class ExtraApi implements VerkoopbaarApiInterface {
         
     }
 
-    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) {
+    public void updateVerkoopbaar(VerkoopbaarInterface verkoopbaar) throws Exception {
         entityManager.getTransaction().begin();
-        entityManager.merge(verkoopbaar);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.merge(verkoopbaar);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("extra kan niet geupdate worden");
+        }
     }
 }

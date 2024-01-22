@@ -11,6 +11,8 @@ import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class UserApi {
     
@@ -42,7 +44,6 @@ public class UserApi {
             }
             else{
                 throw new Exception("wrong Email or Password");
-
             }
         }
         else{
@@ -101,10 +102,15 @@ public class UserApi {
         }
     }
 
-    public void creatUser(User user){
+    public void creatUser(User user) throws Exception{
         entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        } catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("user could not be created");
+        }
     }
 
     public List<User> getUsers() {
@@ -132,14 +138,14 @@ public class UserApi {
         }
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) throws Exception{
         try{
             entityManager.getTransaction().begin();
             entityManager.merge(user);
             entityManager.getTransaction().commit();
         } catch(Exception e){
-            e.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw new Exception("user could not be updated");
         }
     }
 

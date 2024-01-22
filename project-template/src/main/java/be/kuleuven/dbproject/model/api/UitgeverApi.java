@@ -55,17 +55,28 @@ public class UitgeverApi {
         return result.get(0);
     }
 
-    public void postUitgever(Uitgever uitgever) {
+    public void postUitgever(Uitgever uitgever) throws Exception {
         entityManager.getTransaction().begin();
-        entityManager.persist(uitgever);
-        entityManager.getTransaction().commit();
+        try{
+            entityManager.persist(uitgever);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("uitgever could not be created");
+        }
     }
 
-    public void deleteSelectedUitgever(Uitgever uitgever){
+    public void deleteSelectedUitgever(Uitgever uitgever) throws Exception{
         
         entityManager.getTransaction().begin();
-        entityManager.remove(uitgever);
-        entityManager.getTransaction().commit();
-        
+        try{
+            entityManager.remove(uitgever);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+            entityManager.getTransaction().rollback();
+            throw new Exception("uitgever could not be deleted");
+        }
     }
 }

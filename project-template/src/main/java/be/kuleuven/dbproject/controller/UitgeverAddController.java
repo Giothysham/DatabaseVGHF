@@ -4,6 +4,7 @@ import be.kuleuven.dbproject.model.Uitgever;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.UitgeverApi;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,12 +47,21 @@ public class UitgeverAddController {
         else{
             if(name != "" && beschrijving != ""){
                 var uitgever = new Uitgever(name, beschrijving, 0);
-                uitgeverApi.postUitgever(uitgever);
+                try{
+                    uitgeverApi.postUitgever(uitgever);
 
-                parentController.setUitgever();
+                    parentController.setUitgever();
 
-                var stage = (Stage) naamTxt.getScene().getWindow();
-                stage.close();
+                    var stage = (Stage) naamTxt.getScene().getWindow();
+                    stage.close();
+                }
+                catch(Exception e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("store error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("de uitgever kan niet geupdate worden");
+                    alert.show();
+                }
             }
         }
         

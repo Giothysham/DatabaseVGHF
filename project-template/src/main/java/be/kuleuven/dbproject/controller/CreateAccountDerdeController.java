@@ -58,6 +58,8 @@ public class CreateAccountDerdeController {
                 openWindow("main.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                foutMeldingTxt.setText("er is iets mis gegaan");
             }
         }
     }

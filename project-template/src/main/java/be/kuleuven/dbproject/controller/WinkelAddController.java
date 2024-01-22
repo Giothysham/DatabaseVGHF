@@ -4,8 +4,10 @@ import be.kuleuven.dbproject.model.Winkel;
 import be.kuleuven.dbproject.model.api.DbConnection;
 import be.kuleuven.dbproject.model.api.WinkelApi;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class WinkelAddController {
@@ -47,9 +49,17 @@ public class WinkelAddController {
         }
         else{
             if(winkelStraatNaam != "" && stad != "" && stad != "" && postcode != "" && provincie != "" && land != ""){
-                System.out.println("-----------------------------------------------------------------");
                 var winkel = new Winkel(0,0,winkelStraatNaam,stad, postcode,provincie,land); 
-                winkelApi.postWinkel(winkel);
+                try{
+                    winkelApi.postWinkel(winkel);
+                }
+                catch(Exception e){
+                    var alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("store error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("the winkel could not be updated");
+                    alert.show();
+                }
 
                 parentController.setWinkel();
 
