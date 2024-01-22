@@ -57,7 +57,6 @@ public class Factuur {
         this.game = game;
         this.extra = extra;
         this.winkel = winkel;
-        System.out.println("------------------hier------------------");
         if(game != null) {
             this.gameName = game.getNaam();
             this.gamePrice = game.getKostPrijs();

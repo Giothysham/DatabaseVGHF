@@ -86,9 +86,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private VerkoopbaarInterface verkoopbaar;
 
-    private VerkoopbaarInterface placeHolderProduct; //TODO: vervangen door verkoopbaar bij verkoopbaaraddcontroller, mag weg?
-
-    //TODO: werken met een place holder ?
 
     public void initialize(){
         checkoutList = new ArrayList<>();

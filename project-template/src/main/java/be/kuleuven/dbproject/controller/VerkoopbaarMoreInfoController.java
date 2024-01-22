@@ -35,7 +35,7 @@ VerkoopbaarMoreInfoController {
     private VBox mainVbox;
 
     public void initialize(){
-        //TODO => zorg dat plek waar het aanwezig is te zien is. 
+
     }
 
     public <T> void schermSwitch(String id,T variable){

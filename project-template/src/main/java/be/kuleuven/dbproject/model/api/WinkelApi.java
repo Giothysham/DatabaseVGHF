@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javafx.scene.control.Alert.AlertType;
 
 import be.kuleuven.dbproject.model.Winkel;
-import javafx.scene.control.Alert;
 
 public class WinkelApi {
     

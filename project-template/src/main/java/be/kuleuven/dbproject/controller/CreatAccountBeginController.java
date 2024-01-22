@@ -108,7 +108,6 @@ public class CreatAccountBeginController {
         System.out.println(controller.getClass());
         
         if(controller.getClass() == CreateAccountTweedeController.class){
-            System.out.println("test");
             var createAccountTweedeController = (CreateAccountTweedeController) controller;
             createAccountTweedeController.setDbConnection(this.dbConnection);
             createAccountTweedeController.setUser(this.user);

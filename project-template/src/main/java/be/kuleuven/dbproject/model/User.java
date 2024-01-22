@@ -125,7 +125,6 @@ public class User {
             byte[] encText = cipher.doFinal(password.getBytes());
             return Base64.getEncoder().encodeToString(encText);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             throw new RuntimeException("wachtwoord encryptie mislukt");
         }
@@ -183,19 +182,13 @@ public class User {
         if(key != null){
             try {
                 iv = new IvParameterSpec(key.getEncoded());  
-                System.out.println("-----------------------dezez"); 
                 algorithm = "AES/CBC/PKCS5Padding";
-                System.out.println("hier0");
                 var cipher = Cipher.getInstance(algorithm);
-                System.out.println("hier"+ iv);
                 cipher.init(Cipher.DECRYPT_MODE, key, iv);
-                System.out.println("hier2");
                 byte[] wachtwoordByte = cipher.doFinal(Base64.getDecoder().decode(this.wachtwoord));
-                System.out.println("hier3");
                 return new String(wachtwoordByte);
             } catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
                 e.printStackTrace();
-                System.out.println("_________________________________________________");
                 throw new RuntimeException("wachtwoord decryptie mislukt");
             }
         }

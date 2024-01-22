@@ -93,7 +93,6 @@ public class UitgeleendeGameController {
             try {
                 userApi.updateUser(user);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 Alert a = new Alert(AlertType.ERROR);
                 a.setContentText("Er is iets misgelopen bij het terugbrengen van de games");
             }
