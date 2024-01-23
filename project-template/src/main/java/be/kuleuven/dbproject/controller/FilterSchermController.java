@@ -31,7 +31,6 @@ public class FilterSchermController {
 
     private VerkoopbaarController verkoopbaarParentController;
 
-    //TODO => niet nodig. het wordt niet meer gebruikt. (alles in commentaar mag weg?)
     public void initialize(){
         returnBtn.setOnAction(e ->{ 
             verkoopbaarParentController.updateOrSearchTable(false);

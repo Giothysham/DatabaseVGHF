@@ -41,7 +41,6 @@ public class GenreApi {
         var result = entityManager.createQuery(query).getResultList();
 
         if(result.size() > 1){
-            //TODO: throw exception
             return null;
         }
         else{
