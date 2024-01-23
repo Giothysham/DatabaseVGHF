@@ -51,7 +51,6 @@ public class FilterSchermController {
             var searchconsole = ((GameApi) filterbaar).getSearchConsole();
             if(searchconsole != null){
                 consoleMenu.setText(searchconsole.name());
-                //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(searchconsole, consoleMenu,"Console", gameApi,hboxConsoleMenu));
             }
 
             for(Console console: Console.values()){
@@ -59,7 +58,6 @@ public class FilterSchermController {
                 menuItem.setOnAction(e ->{
                     ((GameApi) filterbaar).creatSearchQuerry((console));
                     consoleMenu.setText(console.name());
-                    //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(console, consoleMenu,"Console", gameApi,hboxConsoleMenu));
                 });
                 consoleMenu.getItems().add(menuItem);
             }   
@@ -68,7 +66,6 @@ public class FilterSchermController {
 
             if(searchGenre != null){
                 genreMenu.setText(searchGenre.getNaam());
-                //hboxGenreMenu.getChildren().add(setRemoveFilterButton(searchGenre, genreMenu,"Genre", gameApi,hboxGenreMenu));
             }
 
             for(Genre genre: genreApi.getGenres()){
@@ -76,7 +73,6 @@ public class FilterSchermController {
                 menuItem.setOnAction(e -> {
                     ((GameApi) filterbaar).creatSearchQuerry(genre);
                     genreMenu.setText(genre.getNaam());
-                    //hboxGenreMenu.getChildren().add(setRemoveFilterButton(genre, genreMenu,"Genre", gameApi, hboxGenreMenu));
                 });
                 genreMenu.getItems().add(menuItem);
             }
@@ -86,7 +82,6 @@ public class FilterSchermController {
 
         if(searchWinkel != null){
             winkelMenu.setText(searchWinkel.getSmallAdress());
-           // hboxWinkelMenu.getChildren().add(setRemoveFilterButton(searchWinkel, winkelMenu,"Winkel", gameApi,hboxWinkelMenu));
         }
 
         for(Winkel winkel: winkelApi.getWinkels()){
@@ -94,7 +89,6 @@ public class FilterSchermController {
             menuItem.setOnAction(e -> {
                 filterbaar.creatSearchQuerry(winkel);
                 winkelMenu.setText(winkel.getSmallAdress());
-                //hboxWinkelMenu.getChildren().add(setRemoveFilterButton(winkel, winkelMenu,"Winkel", gameApi, hboxWinkelMenu));
             });
             winkelMenu.getItems().add(menuItem);
         }
@@ -106,7 +100,6 @@ public class FilterSchermController {
 
             if(searchtype != null){
                 typeMenu.setText(searchtype.name());
-                //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(searchconsole, consoleMenu,"Console", gameApi,hboxConsoleMenu));
             }
 
             for(Type type: Type.values()){
@@ -114,7 +107,6 @@ public class FilterSchermController {
                 menuItem.setOnAction(e ->{
                     ((ExtraApi) filterbaar).creatSearchQuerry((type));
                     typeMenu.setText(type.name());
-                    //hboxConsoleMenu.getChildren().add(setRemoveFilterButton(console, consoleMenu,"Console", gameApi,hboxConsoleMenu));
                 });
                 typeMenu.getItems().add(menuItem);
             }

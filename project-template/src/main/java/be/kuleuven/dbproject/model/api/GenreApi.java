@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import org.jvnet.fastinfoset.EncodingAlgorithmException;
-
 import be.kuleuven.dbproject.model.Genre;
 
 public class GenreApi {

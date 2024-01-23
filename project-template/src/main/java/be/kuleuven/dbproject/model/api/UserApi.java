@@ -11,8 +11,6 @@ import be.kuleuven.dbproject.model.Extra;
 import be.kuleuven.dbproject.model.Factuur;
 import be.kuleuven.dbproject.model.Game;
 import be.kuleuven.dbproject.model.User;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class UserApi {
     

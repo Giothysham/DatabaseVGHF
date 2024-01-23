@@ -86,8 +86,6 @@ public class VerkoopbaarController implements BuyScreenInterface{
 
     private VerkoopbaarInterface verkoopbaar;
 
-    private VerkoopbaarInterface placeHolderProduct; 
-
     public void initialize(){
         checkoutList = new ArrayList<>();
 

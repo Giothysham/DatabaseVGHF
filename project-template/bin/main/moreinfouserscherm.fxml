@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.textfield.*?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.dbproject.controller.MoreInfoUserController">
+    <children>
+        <VBox alignment="CENTER" spacing="10" style="-fx-padding: 0 10 10 10;">
+            <Label alignment="CENTER" fx:id="nameText" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 40px;"/>
+            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                <VBox>
+                    <HBox alignment="CENTER">
+                        <Label text="email " style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    </HBox>
+                    <Label fx:id="emailText" style=" -fx-font-size: 20px;"/>
+                </VBox>
+                <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                <VBox>
+                    <HBox alignment="CENTER">
+                        <Label text="tell" style="-fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    </HBox>
+                    <Label fx:id="tellText" style="-fx-font-size: 20px;"/>
+                </VBox>
+            </HBox>
+            <TableView fx:id="tblUitgeleendeGames" prefHeight="246.0" prefWidth="567.0">
+                <columns>
+                    <TableColumn text="naam" fx:id="naamColumn" />
+                    <TableColumn text="console" fx:id="consoleColumn" />
+                </columns>
+            </TableView>
+        </VBox>
+    </children>
+</AnchorPane>
